@@ -510,27 +510,6 @@
 <rectangle x1="-24.384" y1="-7.754" x2="-23.876" y2="-7.246" layer="51"/>
 <rectangle x1="23.876" y1="-7.754" x2="24.384" y2="-7.246" layer="51"/>
 </package>
-<package name="GPS_NEO7M_W-PPS_&amp;_ANT">
-<wire x1="-20.15" y1="13" x2="-20.15" y2="-13" width="0.127" layer="21"/>
-<wire x1="-20.15" y1="-13" x2="20.15" y2="-13" width="0.127" layer="21"/>
-<wire x1="20.15" y1="-13" x2="20.15" y2="13" width="0.127" layer="21"/>
-<wire x1="20.15" y1="13" x2="-20.15" y2="13" width="0.127" layer="21"/>
-<wire x1="10.85" y1="-10" x2="10.85" y2="10" width="0.127" layer="20"/>
-<wire x1="10.85" y1="10" x2="7.85" y2="13" width="0.127" layer="20" curve="90"/>
-<wire x1="7.85" y1="13" x2="-12.15" y2="13" width="0.127" layer="20"/>
-<wire x1="-12.15" y1="13" x2="-15.15" y2="10" width="0.127" layer="20" curve="90"/>
-<wire x1="-15.15" y1="10" x2="-15.15" y2="-10" width="0.127" layer="20"/>
-<wire x1="-15.15" y1="-10" x2="-12.15" y2="-13" width="0.127" layer="20" curve="90"/>
-<wire x1="-12.15" y1="-13" x2="7.85" y2="-13" width="0.127" layer="20"/>
-<wire x1="7.85" y1="-13" x2="10.85" y2="-10" width="0.127" layer="20" curve="90"/>
-<hole x="-17.65" y="10.5" drill="3"/>
-<hole x="-17.65" y="-10.5" drill="3"/>
-<pad name="TX" x="-18.45" y="0" drill="1.016" shape="octagon"/>
-<pad name="RX" x="-18.45" y="-2.54" drill="1.016" shape="octagon"/>
-<pad name="GND" x="-18.45" y="2.54" drill="1.016" shape="octagon"/>
-<pad name="VCC" x="-18.45" y="5.08" drill="1.016" shape="octagon"/>
-<pad name="PPS" x="-18.45" y="-5.08" drill="1.016" shape="square"/>
-</package>
 </packages>
 <symbols>
 <symbol name="STM32F401_BOARD">
@@ -576,18 +555,6 @@
 <pin name="PC13" x="15.24" y="-22.86" length="middle" rot="R180"/>
 <pin name="VBAT" x="15.24" y="-25.4" length="middle" rot="R180"/>
 <text x="-7.62" y="27.94" size="1.778" layer="95">&gt;NAME</text>
-</symbol>
-<symbol name="GPS_NEO7M_W-PPS">
-<wire x1="-2.54" y1="7.62" x2="-2.54" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
-<wire x1="5.08" y1="7.62" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
-<pin name="PPS" x="-7.62" y="-5.08" length="middle"/>
-<pin name="RX" x="-7.62" y="-2.54" length="middle"/>
-<pin name="TX" x="-7.62" y="0" length="middle"/>
-<pin name="GND" x="-7.62" y="2.54" length="middle"/>
-<pin name="VCC" x="-7.62" y="5.08" length="middle"/>
-<text x="-2.54" y="10.16" size="1.27" layer="95">&gt;NAME</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -635,25 +602,6 @@
 <connect gate="G$1" pin="PC14" pad="3"/>
 <connect gate="G$1" pin="PC15" pad="4"/>
 <connect gate="G$1" pin="VBAT" pad="1"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="GPS_NEO7M_W-PPS">
-<gates>
-<gate name="G$1" symbol="GPS_NEO7M_W-PPS" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="GPS_NEO7M_W-PPS_&amp;_ANT">
-<connects>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="PPS" pad="PPS"/>
-<connect gate="G$1" pin="RX" pad="RX"/>
-<connect gate="G$1" pin="TX" pad="TX"/>
-<connect gate="G$1" pin="VCC" pad="VCC"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -722,6 +670,25 @@
 <text x="-3.5" y="3.5" size="1.27" layer="21">&gt;NAME</text>
 <rectangle x1="-0.1" y1="2.4" x2="3" y2="3.3" layer="21"/>
 </package>
+<package name="GPS_NEO7M_W-PPS_&amp;_ANT">
+<wire x1="-20.15" y1="13" x2="-20.15" y2="-13" width="0.127" layer="21"/>
+<wire x1="-20.15" y1="-13" x2="20.15" y2="-13" width="0.127" layer="21"/>
+<wire x1="20.15" y1="-13" x2="20.15" y2="13" width="0.127" layer="21"/>
+<wire x1="20.15" y1="13" x2="-20.15" y2="13" width="0.127" layer="21"/>
+<wire x1="10.85" y1="-10" x2="10.85" y2="10" width="0.127" layer="20"/>
+<wire x1="10.85" y1="10" x2="7.85" y2="13" width="0.127" layer="20" curve="90"/>
+<wire x1="7.85" y1="13" x2="-12.15" y2="13" width="0.127" layer="20"/>
+<wire x1="-12.15" y1="13" x2="-15.15" y2="10" width="0.127" layer="20" curve="90"/>
+<wire x1="-15.15" y1="10" x2="-15.15" y2="-10" width="0.127" layer="20"/>
+<wire x1="-15.15" y1="-10" x2="-12.15" y2="-13" width="0.127" layer="20" curve="90"/>
+<wire x1="-12.15" y1="-13" x2="7.85" y2="-13" width="0.127" layer="20"/>
+<wire x1="7.85" y1="-13" x2="10.85" y2="-10" width="0.127" layer="20" curve="90"/>
+<pad name="TX" x="-18.45" y="0" drill="0.6" shape="octagon"/>
+<pad name="RX" x="-18.45" y="-2.54" drill="0.6" shape="octagon"/>
+<pad name="GND" x="-18.45" y="2.54" drill="0.6" shape="octagon"/>
+<pad name="VCC" x="-18.45" y="5.08" drill="0.6" shape="octagon"/>
+<pad name="PPS" x="-18.45" y="-5.08" drill="0.6" shape="square"/>
+</package>
 </packages>
 <symbols>
 <symbol name="MP1584-B">
@@ -786,6 +753,18 @@
 <pin name="P" x="2.54" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
 <pin name="S" x="5.08" y="5.08" visible="pad" length="short" direction="pas" rot="R270"/>
 <pin name="O" x="0" y="5.08" visible="pad" length="short" direction="pas" rot="R270"/>
+</symbol>
+<symbol name="GPS_NEO7M_W-PPS">
+<wire x1="-2.54" y1="7.62" x2="-2.54" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
+<pin name="PPS" x="-7.62" y="-5.08" length="middle"/>
+<pin name="RX" x="-7.62" y="-2.54" length="middle"/>
+<pin name="TX" x="-7.62" y="0" length="middle"/>
+<pin name="GND" x="-7.62" y="2.54" length="middle"/>
+<pin name="VCC" x="-7.62" y="5.08" length="middle"/>
+<text x="-2.54" y="10.16" size="1.27" layer="95">&gt;NAME</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -858,6 +837,25 @@
 <connect gate="G$1" pin="O" pad="P$3"/>
 <connect gate="G$1" pin="P" pad="P$1"/>
 <connect gate="G$1" pin="S" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="GPS_NEO7M_W-PPS">
+<gates>
+<gate name="G$1" symbol="GPS_NEO7M_W-PPS" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="GPS_NEO7M_W-PPS_&amp;_ANT">
+<connects>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="PPS" pad="PPS"/>
+<connect gate="G$1" pin="RX" pad="RX"/>
+<connect gate="G$1" pin="TX" pad="TX"/>
+<connect gate="G$1" pin="VCC" pad="VCC"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8193,7 +8191,6 @@ Distributor Buerklin, 11G810</description>
 <part name="U$2" library="NEON-BLADE-2024" deviceset="STM32F401_BOARD" device=""/>
 <part name="DC-DC_5V" library="NEON-BLADE-2023" deviceset="MP1584-B" device=""/>
 <part name="DC-DC_3V3" library="NEON-BLADE-2023" deviceset="MP1584-B" device=""/>
-<part name="U$3" library="NEON-BLADE-2024" deviceset="GPS_NEO7M_W-PPS" device=""/>
 <part name="PHOTORES" library="NEON-BLADE-2023" deviceset="PHOTORES_VT93N1" device=""/>
 <part name="R17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="191k/2k"/>
 <part name="3V3" library="NEON-BLADE-2023" deviceset="VIAS-CONNECT" device=""/>
@@ -8208,6 +8205,7 @@ Distributor Buerklin, 11G810</description>
 <part name="JP2" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X9" device="" package3d_urn="urn:adsk.eagle:package:22483/2"/>
 <part name="JP1" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X9" device="" package3d_urn="urn:adsk.eagle:package:22483/2"/>
 <part name="JP3" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X15" device="" package3d_urn="urn:adsk.eagle:package:22424/2"/>
+<part name="U$3" library="NEON-BLADE-2023" deviceset="GPS_NEO7M_W-PPS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8222,9 +8220,6 @@ Distributor Buerklin, 11G810</description>
 </instance>
 <instance part="DC-DC_3V3" gate="G$1" x="162.56" y="114.3" smashed="yes">
 <attribute name="NAME" x="160.02" y="119.38" size="1.27" layer="95"/>
-</instance>
-<instance part="U$3" gate="G$1" x="205.74" y="121.92" smashed="yes" rot="R180">
-<attribute name="NAME" x="208.28" y="111.76" size="1.27" layer="95" rot="R180"/>
 </instance>
 <instance part="PHOTORES" gate="G$1" x="218.44" y="78.74" smashed="yes">
 <attribute name="NAME" x="220.98" y="78.74" size="1.778" layer="95"/>
@@ -8280,6 +8275,9 @@ Distributor Buerklin, 11G810</description>
 <attribute name="NAME" x="100.33" y="74.295" size="1.778" layer="95"/>
 <attribute name="VALUE" x="100.33" y="30.48" size="1.778" layer="96"/>
 </instance>
+<instance part="U$3" gate="G$1" x="205.74" y="104.14" smashed="yes" rot="R180">
+<attribute name="NAME" x="208.28" y="93.98" size="1.27" layer="95" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -8294,11 +8292,6 @@ Distributor Buerklin, 11G810</description>
 <wire x1="175.26" y1="116.84" x2="185.42" y2="116.84" width="0.1524" layer="91"/>
 <label x="180.34" y="116.84" size="1.778" layer="95"/>
 <pinref part="DC-DC_3V3" gate="G$1" pin="OUT-"/>
-</segment>
-<segment>
-<wire x1="213.36" y1="119.38" x2="220.98" y2="119.38" width="0.1524" layer="91"/>
-<label x="215.9" y="119.38" size="1.778" layer="95"/>
-<pinref part="U$3" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="218.44" y1="83.82" x2="218.44" y2="91.44" width="0.1524" layer="91"/>
@@ -8336,6 +8329,21 @@ Distributor Buerklin, 11G810</description>
 <wire x1="104.14" y1="58.42" x2="86.36" y2="58.42" width="0.1524" layer="91"/>
 <label x="86.36" y="58.42" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="149.86" y1="134.62" x2="137.16" y2="134.62" width="0.1524" layer="91"/>
+<label x="137.16" y="134.62" size="1.778" layer="95"/>
+<pinref part="DC-DC_5V" gate="G$1" pin="IN-"/>
+</segment>
+<segment>
+<wire x1="149.86" y1="116.84" x2="137.16" y2="116.84" width="0.1524" layer="91"/>
+<label x="137.16" y="116.84" size="1.778" layer="95"/>
+<pinref part="DC-DC_3V3" gate="G$1" pin="IN-"/>
+</segment>
+<segment>
+<wire x1="213.36" y1="101.6" x2="220.98" y2="101.6" width="0.1524" layer="91"/>
+<label x="215.9" y="101.6" size="1.778" layer="95"/>
+<pinref part="U$3" gate="G$1" pin="GND"/>
+</segment>
 </net>
 <net name="3V3" class="0">
 <segment>
@@ -8371,11 +8379,6 @@ Distributor Buerklin, 11G810</description>
 <pinref part="DC-DC_5V" gate="G$1" pin="OUT+"/>
 </segment>
 <segment>
-<wire x1="213.36" y1="116.84" x2="220.98" y2="116.84" width="0.1524" layer="91"/>
-<label x="215.9" y="114.3" size="1.778" layer="95"/>
-<pinref part="U$3" gate="G$1" pin="VCC"/>
-</segment>
-<segment>
 <wire x1="226.06" y1="50.8" x2="236.22" y2="50.8" width="0.1524" layer="91"/>
 <label x="233.68" y="50.8" size="1.778" layer="95"/>
 <pinref part="5V" gate="G$1" pin="2"/>
@@ -8385,12 +8388,10 @@ Distributor Buerklin, 11G810</description>
 <wire x1="132.08" y1="53.34" x2="116.84" y2="53.34" width="0.1524" layer="91"/>
 <label x="116.84" y="53.34" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="SPI4_SCK" class="0">
 <segment>
-<wire x1="63.5" y1="144.78" x2="53.34" y2="144.78" width="0.1524" layer="91"/>
-<label x="53.34" y="144.78" size="1.778" layer="95"/>
-<pinref part="U$2" gate="G$1" pin="PB13"/>
+<wire x1="220.98" y1="99.06" x2="213.36" y2="99.06" width="0.1524" layer="91"/>
+<label x="218.44" y="99.06" size="1.778" layer="95"/>
+<pinref part="U$3" gate="G$1" pin="VCC"/>
 </segment>
 </net>
 <net name="4MOSI" class="0">
@@ -8398,6 +8399,11 @@ Distributor Buerklin, 11G810</description>
 <wire x1="93.98" y1="114.3" x2="104.14" y2="114.3" width="0.1524" layer="91"/>
 <label x="96.52" y="114.3" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="PA1"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="A" pin="3"/>
+<wire x1="132.08" y1="78.74" x2="114.3" y2="78.74" width="0.1524" layer="91"/>
+<label x="114.3" y="78.74" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="V_BAT" class="0">
@@ -8422,26 +8428,26 @@ Distributor Buerklin, 11G810</description>
 </net>
 <net name="GPS_TX" class="0">
 <segment>
-<wire x1="213.36" y1="121.92" x2="220.98" y2="121.92" width="0.1524" layer="91"/>
-<label x="215.9" y="121.92" size="1.778" layer="95"/>
-<pinref part="U$3" gate="G$1" pin="TX"/>
-</segment>
-<segment>
 <wire x1="63.5" y1="124.46" x2="53.34" y2="124.46" width="0.1524" layer="91"/>
 <label x="48.26" y="124.46" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="PA15"/>
 </segment>
+<segment>
+<wire x1="213.36" y1="104.14" x2="220.98" y2="104.14" width="0.1524" layer="91"/>
+<label x="215.9" y="104.14" size="1.778" layer="95"/>
+<pinref part="U$3" gate="G$1" pin="TX"/>
+</segment>
 </net>
 <net name="GPS_RX" class="0">
-<segment>
-<wire x1="213.36" y1="124.46" x2="220.98" y2="124.46" width="0.1524" layer="91"/>
-<label x="215.9" y="124.46" size="1.778" layer="95"/>
-<pinref part="U$3" gate="G$1" pin="RX"/>
-</segment>
 <segment>
 <wire x1="63.5" y1="121.92" x2="53.34" y2="121.92" width="0.1524" layer="91"/>
 <label x="48.26" y="121.92" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="PB3"/>
+</segment>
+<segment>
+<wire x1="213.36" y1="106.68" x2="220.98" y2="106.68" width="0.1524" layer="91"/>
+<label x="215.9" y="106.68" size="1.778" layer="95"/>
+<pinref part="U$3" gate="G$1" pin="RX"/>
 </segment>
 </net>
 <net name="PHOTORES" class="0">
@@ -8539,17 +8545,17 @@ Distributor Buerklin, 11G810</description>
 <wire x1="104.14" y1="45.72" x2="86.36" y2="45.72" width="0.1524" layer="91"/>
 <label x="86.36" y="45.72" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="JP1" gate="A" pin="4"/>
-<wire x1="132.08" y1="76.2" x2="114.3" y2="76.2" width="0.1524" layer="91"/>
-<label x="114.3" y="76.2" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="4MISO" class="0">
 <segment>
 <wire x1="63.5" y1="129.54" x2="53.34" y2="129.54" width="0.1524" layer="91"/>
 <label x="48.26" y="129.54" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="PA11"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="A" pin="4"/>
+<wire x1="132.08" y1="76.2" x2="114.3" y2="76.2" width="0.1524" layer="91"/>
+<label x="114.3" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="5MOSI" class="0">
@@ -8562,11 +8568,6 @@ Distributor Buerklin, 11G810</description>
 <pinref part="JP3" gate="A" pin="10"/>
 <wire x1="104.14" y1="48.26" x2="86.36" y2="48.26" width="0.1524" layer="91"/>
 <label x="86.36" y="48.26" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="JP1" gate="A" pin="3"/>
-<wire x1="132.08" y1="78.74" x2="114.3" y2="78.74" width="0.1524" layer="91"/>
-<label x="114.3" y="78.74" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SDIO_CK" class="0">
@@ -8628,11 +8629,6 @@ Distributor Buerklin, 11G810</description>
 <wire x1="104.14" y1="50.8" x2="86.36" y2="50.8" width="0.1524" layer="91"/>
 <label x="86.36" y="50.8" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="JP1" gate="A" pin="2"/>
-<wire x1="132.08" y1="81.28" x2="114.3" y2="81.28" width="0.1524" layer="91"/>
-<label x="114.3" y="81.28" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="1MOSI" class="0">
 <segment>
@@ -8692,20 +8688,6 @@ Distributor Buerklin, 11G810</description>
 <pinref part="JP3" gate="A" pin="12"/>
 <wire x1="104.14" y1="43.18" x2="86.36" y2="43.18" width="0.1524" layer="91"/>
 <label x="86.36" y="43.18" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$2" class="0">
-<segment>
-<wire x1="149.86" y1="134.62" x2="137.16" y2="134.62" width="0.1524" layer="91"/>
-<label x="137.16" y="134.62" size="1.778" layer="95"/>
-<pinref part="DC-DC_5V" gate="G$1" pin="IN-"/>
-</segment>
-</net>
-<net name="N$3" class="0">
-<segment>
-<wire x1="149.86" y1="116.84" x2="137.16" y2="116.84" width="0.1524" layer="91"/>
-<label x="137.16" y="116.84" size="1.778" layer="95"/>
-<pinref part="DC-DC_3V3" gate="G$1" pin="IN-"/>
 </segment>
 </net>
 <net name="N$4" class="0">
@@ -8813,6 +8795,18 @@ Distributor Buerklin, 11G810</description>
 <wire x1="63.5" y1="137.16" x2="53.34" y2="137.16" width="0.1524" layer="91"/>
 <label x="48.26" y="137.16" size="1.778" layer="95"/>
 <pinref part="U$2" gate="G$1" pin="PA8"/>
+</segment>
+</net>
+<net name="4SCK" class="0">
+<segment>
+<pinref part="JP1" gate="A" pin="2"/>
+<wire x1="132.08" y1="81.28" x2="114.3" y2="81.28" width="0.1524" layer="91"/>
+<label x="114.3" y="81.28" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="63.5" y1="144.78" x2="53.34" y2="144.78" width="0.1524" layer="91"/>
+<label x="53.34" y="144.78" size="1.778" layer="95"/>
+<pinref part="U$2" gate="G$1" pin="PB13"/>
 </segment>
 </net>
 </nets>
