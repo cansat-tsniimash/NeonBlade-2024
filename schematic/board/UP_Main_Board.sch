@@ -8421,6 +8421,11 @@ Distributor Buerklin, 11G810</description>
 <pinref part="S2" gate="1" pin="P"/>
 <pinref part="LED7" gate="G$1" pin="A"/>
 </segment>
+<segment>
+<pinref part="JP3" gate="A" pin="14"/>
+<wire x1="104.14" y1="38.1" x2="86.36" y2="38.1" width="0.1524" layer="91"/>
+<label x="86.36" y="38.1" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="GPS_TX" class="0">
 <segment>
@@ -8696,12 +8701,6 @@ Distributor Buerklin, 11G810</description>
 <segment>
 <pinref part="JP3" gate="A" pin="13"/>
 <wire x1="104.14" y1="40.64" x2="86.36" y2="40.64" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$20" class="0">
-<segment>
-<pinref part="JP3" gate="A" pin="14"/>
-<wire x1="104.14" y1="38.1" x2="86.36" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$21" class="0">
