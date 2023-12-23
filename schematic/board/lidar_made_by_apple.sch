@@ -10972,11 +10972,6 @@ APD+</text>
 <label x="177.8" y="40.64" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$12" gate="G$1" pin="IN"/>
-<wire x1="38.1" y1="-48.26" x2="33.02" y2="-48.26" width="0.1524" layer="91"/>
-<label x="30.48" y="-48.26" size="1.778" layer="95"/>
-</segment>
-<segment>
 <label x="248.92" y="101.6" size="1.778" layer="95"/>
 <pinref part="L2" gate="G$1" pin="2"/>
 <wire x1="251.46" y1="106.68" x2="251.46" y2="104.14" width="0.1524" layer="91"/>
@@ -11074,6 +11069,11 @@ APD+</text>
 <pinref part="JP4" gate="A" pin="1"/>
 <wire x1="330.2" y1="63.5" x2="314.96" y2="63.5" width="0.1524" layer="91"/>
 <label x="314.96" y="63.5" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$12" gate="G$1" pin="IN"/>
+<wire x1="38.1" y1="-48.26" x2="33.02" y2="-48.26" width="0.1524" layer="91"/>
+<label x="30.48" y="-48.26" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="4MOSI" class="0">
