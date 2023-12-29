@@ -358,6 +358,30 @@
 <smd name="P$10" x="4" y="-7.25" dx="1.5" dy="1.5" layer="1" roundness="100"/>
 <text x="-7" y="4.5" size="1.27" layer="25">&gt;NAME</text>
 </package>
+<package name="BUZZER">
+<circle x="0" y="0" radius="6" width="0.127" layer="21"/>
+<pad name="P$1" x="-3.8" y="0" drill="1"/>
+<pad name="P$2" x="3.8" y="0" drill="1"/>
+<text x="-3" y="7" size="1.27" layer="21">&gt;NAME</text>
+</package>
+<package name="BUZZER-S8R12">
+<circle x="0" y="0" radius="6" width="0.127" layer="21"/>
+<pad name="P$1" x="-4" y="0" drill="1" shape="octagon"/>
+<pad name="P$2" x="4" y="0" drill="1" shape="octagon"/>
+<text x="-3" y="7" size="1.27" layer="21">&gt;NAME</text>
+<text x="-4" y="2" size="2" layer="21" ratio="10" align="center">+</text>
+<text x="4" y="2" size="2" layer="21" ratio="10" align="center">-</text>
+</package>
+<package name="SOT23-3">
+<smd name="3" x="0" y="1" dx="0.56" dy="0.73" layer="1"/>
+<smd name="2" x="0.95" y="-1" dx="0.56" dy="0.73" layer="1"/>
+<smd name="1" x="-0.95" y="-1" dx="0.56" dy="0.73" layer="1"/>
+<wire x1="-1" y1="0.4" x2="1" y2="0.4" width="0.127" layer="21"/>
+<wire x1="1" y1="0.4" x2="1" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="1" y1="-0.3" x2="-1" y2="-0.3" width="0.127" layer="21"/>
+<wire x1="-1" y1="-0.3" x2="-1" y2="0.4" width="0.127" layer="21"/>
+<text x="-1.8288" y="-2.6162" size="1.27" layer="25" ratio="10" rot="R90">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="LSM6DS3-GY-NB2023">
@@ -443,6 +467,55 @@
 <wire x1="7.62" y1="-10.16" x2="-10.16" y2="-10.16" width="0.254" layer="94"/>
 <wire x1="-10.16" y1="-10.16" x2="-10.16" y2="12.7" width="0.254" layer="94"/>
 <text x="-10.16" y="12.7" size="2.032" layer="95">&gt;NAME</text>
+</symbol>
+<symbol name="BUZZER">
+<wire x1="-7.62" y1="2.54" x2="7.62" y2="2.54" width="0.254" layer="94"/>
+<wire x1="7.62" y1="2.54" x2="7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-2.54" x2="-7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-2.54" x2="-7.62" y2="2.54" width="0.254" layer="94"/>
+<pin name="VIN" x="-12.7" y="0" length="middle"/>
+<pin name="GND" x="12.7" y="0" length="middle" rot="R180"/>
+<text x="-7.62" y="5.08" size="2.54" layer="95">&gt;NAME</text>
+</symbol>
+<symbol name="MOSFET-N">
+<wire x1="0.762" y1="0.762" x2="0.762" y2="0" width="0.254" layer="94"/>
+<wire x1="0.762" y1="0" x2="0.762" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="0.762" y1="3.175" x2="0.762" y2="2.54" width="0.254" layer="94"/>
+<wire x1="0.762" y1="2.54" x2="0.762" y2="1.905" width="0.254" layer="94"/>
+<wire x1="0.762" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="0" x2="2.54" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0.762" y1="-1.905" x2="0.762" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0.762" y1="-2.54" x2="0.762" y2="-3.175" width="0.254" layer="94"/>
+<wire x1="0" y1="2.54" x2="0" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="0.762" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="2.54" x2="3.81" y2="0.508" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="0.508" x2="3.81" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="3.81" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0.762" y1="2.54" x2="3.81" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="4.572" y1="0.762" x2="4.318" y2="0.508" width="0.1524" layer="94"/>
+<wire x1="4.318" y1="0.508" x2="3.81" y2="0.508" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="0.508" x2="3.302" y2="0.508" width="0.1524" layer="94"/>
+<wire x1="3.302" y1="0.508" x2="3.048" y2="0.254" width="0.1524" layer="94"/>
+<circle x="2.54" y="-2.54" radius="0.3592" width="0" layer="94"/>
+<circle x="2.54" y="2.54" radius="0.3592" width="0" layer="94"/>
+<text x="5.08" y="0.635" size="1.27" layer="95">&gt;NAME</text>
+<text x="5.08" y="-1.27" size="1.27" layer="96">&gt;VALUE</text>
+<text x="3.175" y="3.175" size="0.8128" layer="93">D</text>
+<text x="3.175" y="-3.81" size="0.8128" layer="93">S</text>
+<text x="-1.27" y="-1.905" size="0.8128" layer="93">G</text>
+<pin name="G" x="-2.54" y="-2.54" visible="pad" length="short"/>
+<pin name="S" x="2.54" y="-5.08" visible="pad" length="short" rot="R90"/>
+<pin name="D" x="2.54" y="5.08" visible="pad" length="short" rot="R270"/>
+<polygon width="0.1524" layer="94">
+<vertex x="3.81" y="0.508"/>
+<vertex x="3.302" y="-0.254"/>
+<vertex x="4.318" y="-0.254"/>
+</polygon>
+<polygon width="0.1524" layer="94">
+<vertex x="1.016" y="0"/>
+<vertex x="2.032" y="0.762"/>
+<vertex x="2.032" y="-0.762"/>
+</polygon>
 </symbol>
 </symbols>
 <devicesets>
@@ -653,6 +726,48 @@
 <connect gate="G$1" pin="MOSI" pad="P$5"/>
 <connect gate="G$1" pin="SCK" pad="P$4"/>
 <connect gate="G$1" pin="VCC" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BUZZER">
+<gates>
+<gate name="G$1" symbol="BUZZER" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="BUZZER">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="VIN" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="S8R6" package="BUZZER-S8R12">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="VIN" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MOSFET-N">
+<gates>
+<gate name="G$1" symbol="MOSFET-N" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23-3">
+<connects>
+<connect gate="G$1" pin="D" pad="3"/>
+<connect gate="G$1" pin="G" pad="1"/>
+<connect gate="G$1" pin="S" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -9337,6 +9452,10 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="JP2" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X9" device="" package3d_urn="urn:adsk.eagle:package:22483/2"/>
 <part name="U$1" library="NEON-BLADE-2024" deviceset="BME280" device="BME280-PINS-ONLY"/>
 <part name="JP3" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X15" device="" package3d_urn="urn:adsk.eagle:package:22424/2"/>
+<part name="BUZZER" library="NEON-BLADE-2023" deviceset="BUZZER" device="S8R6"/>
+<part name="SI2301" library="NEON-BLADE-2023" deviceset="MOSFET-N" device=""/>
+<part name="R30" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="100R"/>
+<part name="R31" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="10k"/>
 </parts>
 <sheets>
 <sheet>
@@ -9411,6 +9530,21 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <instance part="JP3" gate="A" x="48.26" y="259.08" smashed="yes">
 <attribute name="NAME" x="41.91" y="280.035" size="1.778" layer="95"/>
 <attribute name="VALUE" x="41.91" y="236.22" size="1.778" layer="96"/>
+</instance>
+<instance part="BUZZER" gate="G$1" x="233.68" y="254" smashed="yes" rot="R180">
+<attribute name="NAME" x="241.3" y="248.92" size="2.54" layer="95" rot="R180"/>
+</instance>
+<instance part="SI2301" gate="G$1" x="213.36" y="256.54" smashed="yes" rot="R270">
+<attribute name="NAME" x="213.995" y="251.46" size="1.27" layer="95" rot="R270"/>
+<attribute name="VALUE" x="212.09" y="251.46" size="1.27" layer="96" rot="R270"/>
+</instance>
+<instance part="R30" gate="G$1" x="195.58" y="274.32" smashed="yes">
+<attribute name="NAME" x="191.77" y="275.8186" size="1.778" layer="95"/>
+<attribute name="VALUE" x="191.77" y="271.018" size="1.778" layer="96"/>
+</instance>
+<instance part="R31" gate="G$1" x="203.2" y="264.16" smashed="yes" rot="R270">
+<attribute name="NAME" x="204.6986" y="267.97" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="199.898" y="267.97" size="1.778" layer="96" rot="R270"/>
 </instance>
 </instances>
 <busses>
@@ -9495,6 +9629,15 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <pinref part="JP3" gate="A" pin="6"/>
 <wire x1="45.72" y1="264.16" x2="27.94" y2="264.16" width="0.1524" layer="91"/>
 <label x="27.94" y="264.16" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R31" gate="G$1" pin="2"/>
+<pinref part="SI2301" gate="G$1" pin="S"/>
+<wire x1="203.2" y1="259.08" x2="203.2" y2="254" width="0.1524" layer="91"/>
+<wire x1="203.2" y1="254" x2="208.28" y2="254" width="0.1524" layer="91"/>
+<wire x1="203.2" y1="254" x2="182.88" y2="254" width="0.1524" layer="91"/>
+<junction x="203.2" y="254"/>
+<label x="182.88" y="254" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3V3" class="0">
@@ -9687,6 +9830,11 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <wire x1="91.44" y1="254" x2="76.2" y2="254" width="0.1524" layer="91"/>
 <label x="76.2" y="254" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="BUZZER" gate="G$1" pin="VIN"/>
+<wire x1="246.38" y1="254" x2="254" y2="254" width="0.1524" layer="91"/>
+<label x="251.46" y="254" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="USIL_ON" class="0">
 <segment>
@@ -9848,10 +9996,16 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <label x="220.98" y="215.9" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$11" class="0">
+<net name="BUZZER" class="0">
 <segment>
 <pinref part="JP3" gate="A" pin="13"/>
 <wire x1="45.72" y1="246.38" x2="27.94" y2="246.38" width="0.1524" layer="91"/>
+<label x="27.94" y="246.38" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R30" gate="G$1" pin="1"/>
+<wire x1="190.5" y1="274.32" x2="180.34" y2="274.32" width="0.1524" layer="91"/>
+<label x="172.72" y="274.32" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$12" class="0">
@@ -9876,6 +10030,25 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <pinref part="NRF24L01P" gate="G$1" pin="MOSI"/>
 <wire x1="228.6" y1="218.44" x2="218.44" y2="218.44" width="0.1524" layer="91"/>
 <label x="220.98" y="218.44" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$20" class="0">
+<segment>
+<pinref part="BUZZER" gate="G$1" pin="GND"/>
+<pinref part="SI2301" gate="G$1" pin="D"/>
+<wire x1="218.44" y1="254" x2="220.98" y2="254" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="R30" gate="G$1" pin="2"/>
+<pinref part="SI2301" gate="G$1" pin="G"/>
+<wire x1="200.66" y1="274.32" x2="203.2" y2="274.32" width="0.1524" layer="91"/>
+<wire x1="203.2" y1="274.32" x2="210.82" y2="274.32" width="0.1524" layer="91"/>
+<wire x1="210.82" y1="274.32" x2="210.82" y2="259.08" width="0.1524" layer="91"/>
+<pinref part="R31" gate="G$1" pin="1"/>
+<wire x1="203.2" y1="269.24" x2="203.2" y2="274.32" width="0.1524" layer="91"/>
+<junction x="203.2" y="274.32"/>
 </segment>
 </net>
 </nets>
