@@ -1,0 +1,3 @@
+i2c-crutch.c:18:16:wait_for_gpio_state_timeout	32	static,ignoring_inline_asm
+i2c-crutch.c:35:6:I2C_ClearBusyFlagErratum	40	static,ignoring_inline_asm
+i2c-crutch.c:113:6:reset_i2c_1	16	static

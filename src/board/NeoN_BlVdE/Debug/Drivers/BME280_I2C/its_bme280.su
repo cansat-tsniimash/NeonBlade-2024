@@ -1,0 +1,8 @@
+its_bme280.c:65:23:_dev_by_id	24	static
+its_bme280.c:74:15:_i2c_read	40	static
+its_bme280.c:100:15:_i2c_write	40	static
+its_bme280.c:124:13:_delay_ms	16	static
+its_bme280.c:130:5:its_bme280_init	24	static
+its_bme280.c:155:5:its_bme280_punish	24	static
+its_bme280.c:173:8:bme_mid_meaning	64	static
+its_bme280.c:188:5:its_bme280_read	48	static
