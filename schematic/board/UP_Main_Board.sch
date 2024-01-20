@@ -7746,6 +7746,8 @@ Distributor Buerklin, 11G810</description>
 <part name="U$6" library="NEON-BLADE-2024" deviceset="PBS_SMD_X9" device=""/>
 <part name="U$7" library="NEON-BLADE-2024" deviceset="PBS_SMD_X9" device=""/>
 <part name="U$8" library="NEON-BLADE-2024" deviceset="PBS_SMD_X15" device=""/>
+<part name="R4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2k"/>
+<part name="JP1" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X2" device="" package3d_urn="urn:adsk.eagle:package:22435/2"/>
 </parts>
 <sheets>
 <sheet>
@@ -7819,6 +7821,14 @@ Distributor Buerklin, 11G810</description>
 <instance part="U$8" gate="G$1" x="106.68" y="-25.4" smashed="yes">
 <attribute name="NAME" x="100.33" y="-4.445" size="1.778" layer="95"/>
 <attribute name="VALUE" x="100.33" y="-48.26" size="1.778" layer="96"/>
+</instance>
+<instance part="R4" gate="G$1" x="12.7" y="142.24" smashed="yes">
+<attribute name="NAME" x="8.89" y="143.7386" size="1.778" layer="95"/>
+<attribute name="VALUE" x="8.89" y="138.938" size="1.778" layer="96"/>
+</instance>
+<instance part="JP1" gate="G$1" x="25.4" y="142.24" smashed="yes">
+<attribute name="NAME" x="19.05" y="147.955" size="1.778" layer="95"/>
+<attribute name="VALUE" x="19.05" y="137.16" size="1.778" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -7912,6 +7922,11 @@ Distributor Buerklin, 11G810</description>
 <wire x1="104.14" y1="-17.78" x2="86.36" y2="-17.78" width="0.1524" layer="91"/>
 <label x="86.36" y="-17.78" size="1.778" layer="95"/>
 <pinref part="U$8" gate="G$1" pin="5"/>
+</segment>
+<segment>
+<pinref part="JP1" gate="G$1" pin="1"/>
+<wire x1="22.86" y1="144.78" x2="12.7" y2="144.78" width="0.1524" layer="91"/>
+<label x="12.7" y="144.78" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="5V" class="0">
@@ -8338,16 +8353,36 @@ Distributor Buerklin, 11G810</description>
 <pinref part="U$6" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="N$2" class="0">
+<net name="COMP_DAC" class="0">
 <segment>
 <wire x1="104.14" y1="-38.1" x2="86.36" y2="-38.1" width="0.1524" layer="91"/>
 <pinref part="U$8" gate="G$1" pin="13"/>
+<label x="86.36" y="-38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
 <wire x1="104.14" y1="-43.18" x2="86.36" y2="-43.18" width="0.1524" layer="91"/>
 <pinref part="U$8" gate="G$1" pin="15"/>
+</segment>
+</net>
+<net name="LED" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="PB14"/>
+<wire x1="63.5" y1="142.24" x2="53.34" y2="142.24" width="0.1524" layer="91"/>
+<label x="55.88" y="142.24" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R4" gate="G$1" pin="1"/>
+<wire x1="7.62" y1="142.24" x2="2.54" y2="142.24" width="0.1524" layer="91"/>
+<label x="3.048" y="143.002" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$37" class="0">
+<segment>
+<pinref part="R4" gate="G$1" pin="2"/>
+<wire x1="22.86" y1="142.24" x2="17.78" y2="142.24" width="0.1524" layer="91"/>
+<pinref part="JP1" gate="G$1" pin="2"/>
 </segment>
 </net>
 </nets>
