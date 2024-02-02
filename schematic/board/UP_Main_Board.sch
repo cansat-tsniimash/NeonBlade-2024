@@ -761,32 +761,6 @@
 <smd name="P$2" x="1.25" y="0" dx="0.8" dy="3" layer="1"/>
 <text x="0" y="-2.5" size="1" layer="25" align="center">&gt;NAME</text>
 </package>
-<package name="VIAS-CONNECT">
-<text x="-3" y="1" size="1.27" layer="27">&gt;VALUE</text>
-<smd name="1" x="-0.5" y="0" dx="0.8" dy="0.8" layer="1"/>
-<smd name="2" x="0.5" y="0" dx="0.8" dy="0.8" layer="1"/>
-<wire x1="-1.1" y1="0.6" x2="-0.7" y2="0.6" width="0.127" layer="21"/>
-<wire x1="-0.7" y1="0.6" x2="0.7" y2="0.6" width="0.127" layer="21"/>
-<wire x1="0.7" y1="0.6" x2="1.1" y2="0.6" width="0.127" layer="21"/>
-<wire x1="1.1" y1="0.6" x2="1.1" y2="-0.6" width="0.127" layer="21"/>
-<wire x1="1.1" y1="-0.6" x2="0.7" y2="-0.6" width="0.127" layer="21"/>
-<wire x1="0.7" y1="-0.6" x2="-0.7" y2="-0.6" width="0.127" layer="21"/>
-<wire x1="-0.7" y1="-0.6" x2="-1.1" y2="-0.6" width="0.127" layer="21"/>
-<wire x1="-1.1" y1="-0.6" x2="-1.1" y2="0.6" width="0.127" layer="21"/>
-<wire x1="-0.7" y1="0.6" x2="0.7" y2="0.6" width="0.127" layer="21" curve="-98.797411"/>
-<wire x1="0.7" y1="-0.6" x2="-0.7" y2="-0.6" width="0.127" layer="21" curve="-98.797411"/>
-</package>
-<package name="SOLDERING-PAD-4A">
-<smd name="P$1" x="1.1" y="0" dx="1.4" dy="2" layer="1" rot="R90"/>
-<smd name="P$2" x="-1.1" y="0" dx="1.4" dy="2" layer="1" rot="R270"/>
-<wire x1="-2.3" y1="0.9" x2="2.3" y2="0.9" width="0.1" layer="21"/>
-<wire x1="2.3" y1="0.9" x2="2.3" y2="-0.9" width="0.1" layer="21"/>
-<wire x1="2.3" y1="-0.9" x2="-2.3" y2="-0.9" width="0.1" layer="21"/>
-<wire x1="-2.3" y1="-0.9" x2="-2.3" y2="0.9" width="0.1" layer="21"/>
-<text x="0" y="1.97" size="1" layer="25" align="bottom-center">&gt;VALUE</text>
-<wire x1="-1.27" y1="0.943" x2="1.27" y2="0.943" width="0.127" layer="21" curve="-90"/>
-<wire x1="1.27" y1="-0.943" x2="-1.27" y2="-0.943" width="0.127" layer="21" curve="-90"/>
-</package>
 <package name="MSS12D01">
 <pad name="P$1" x="0" y="0" drill="0.9" shape="square"/>
 <pad name="P$2" x="2.5" y="0" drill="0.9" shape="square"/>
@@ -836,12 +810,6 @@
 <vertex x="-2.032" y="1.905"/>
 </polygon>
 </symbol>
-<symbol name="VIAS-CONNECT">
-<text x="-3.81" y="3.175" size="1.778" layer="95">&gt;NAME</text>
-<pin name="1" x="-2.54" y="0" visible="pad" length="short" direction="pas" function="dot"/>
-<pin name="2" x="2.54" y="0" visible="pad" length="short" direction="pas" function="dot" rot="R180"/>
-<text x="-3.81" y="-4.445" size="1.778" layer="96">&gt;VALUE</text>
-</symbol>
 <symbol name="UNICS-SWITCH">
 <wire x1="-3.81" y1="1.905" x2="-3.81" y2="0" width="0.254" layer="94"/>
 <wire x1="-3.81" y1="0" x2="-1.905" y2="0" width="0.1524" layer="94"/>
@@ -889,31 +857,6 @@
 </gates>
 <devices>
 <device name="" package="PHOTORES_VT93N1_SMD">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="VIAS-CONNECT" uservalue="yes">
-<gates>
-<gate name="G$1" symbol="VIAS-CONNECT" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="VIAS-CONNECT">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="W1.4MM" package="SOLDERING-PAD-4A">
 <connects>
 <connect gate="G$1" pin="1" pad="P$1"/>
 <connect gate="G$1" pin="2" pad="P$2"/>
@@ -7732,9 +7675,7 @@ Distributor Buerklin, 11G810</description>
 <part name="DC-DC_5V" library="NEON-BLADE-2023" deviceset="MP1584-B" device=""/>
 <part name="DC-DC_3V3" library="NEON-BLADE-2023" deviceset="MP1584-B" device=""/>
 <part name="PHOTORES" library="NEON-BLADE-2023" deviceset="PHOTORES_VT93N1" device=""/>
-<part name="R17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="191k/2k"/>
-<part name="3V3" library="NEON-BLADE-2023" deviceset="VIAS-CONNECT" device=""/>
-<part name="5V" library="NEON-BLADE-2023" deviceset="VIAS-CONNECT" device=""/>
+<part name="R17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2k"/>
 <part name="U$10" library="NEON-BLADE-2023" deviceset="MSS12D01" device=""/>
 <part name="R8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2k"/>
 <part name="LED8" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="SML0603" package3d_urn="urn:adsk.eagle:package:15832/1"/>
@@ -7770,14 +7711,6 @@ Distributor Buerklin, 11G810</description>
 <instance part="R17" gate="G$1" x="218.44" y="63.5" smashed="yes" rot="R90">
 <attribute name="NAME" x="216.9414" y="59.69" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="221.742" y="59.69" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="3V3" gate="G$1" x="213.36" y="50.8" smashed="yes">
-<attribute name="NAME" x="212.09" y="53.975" size="1.778" layer="95"/>
-<attribute name="VALUE" x="209.55" y="46.355" size="1.778" layer="96"/>
-</instance>
-<instance part="5V" gate="G$1" x="223.52" y="50.8" smashed="yes">
-<attribute name="NAME" x="222.25" y="53.975" size="1.778" layer="95"/>
-<attribute name="VALUE" x="219.71" y="46.355" size="1.778" layer="96"/>
 </instance>
 <instance part="U$10" gate="G$1" x="172.72" y="15.24" smashed="yes" rot="R270">
 <attribute name="NAME" x="170.815" y="21.59" size="1.778" layer="95"/>
@@ -7904,11 +7837,6 @@ Distributor Buerklin, 11G810</description>
 <pinref part="DC-DC_3V3" gate="G$1" pin="OUT+"/>
 </segment>
 <segment>
-<wire x1="210.82" y1="50.8" x2="203.2" y2="50.8" width="0.1524" layer="91"/>
-<label x="203.2" y="50.8" size="1.778" layer="95"/>
-<pinref part="3V3" gate="G$1" pin="1"/>
-</segment>
-<segment>
 <wire x1="177.8" y1="10.16" x2="187.96" y2="10.16" width="0.1524" layer="91"/>
 <label x="185.42" y="10.16" size="1.778" layer="95"/>
 <pinref part="U$10" gate="G$1" pin="S"/>
@@ -7928,17 +7856,17 @@ Distributor Buerklin, 11G810</description>
 <wire x1="22.86" y1="144.78" x2="12.7" y2="144.78" width="0.1524" layer="91"/>
 <label x="12.7" y="144.78" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="218.44" y1="58.42" x2="218.44" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="R17" gate="G$1" pin="1"/>
+<label x="215.9" y="50.8" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="5V" class="0">
 <segment>
 <wire x1="175.26" y1="129.54" x2="185.42" y2="129.54" width="0.1524" layer="91"/>
 <label x="180.34" y="129.54" size="1.778" layer="95"/>
 <pinref part="DC-DC_5V" gate="G$1" pin="OUT+"/>
-</segment>
-<segment>
-<wire x1="226.06" y1="50.8" x2="236.22" y2="50.8" width="0.1524" layer="91"/>
-<label x="233.68" y="50.8" size="1.778" layer="95"/>
-<pinref part="5V" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="U$5" gate="G$1" pin="UCC"/>
@@ -8021,17 +7949,6 @@ Distributor Buerklin, 11G810</description>
 <label x="205.74" y="71.12" size="1.778" layer="95"/>
 <pinref part="PHOTORES" gate="G$1" pin="2"/>
 <pinref part="R17" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="N$13" class="0">
-<segment>
-<wire x1="218.44" y1="58.42" x2="218.44" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="218.44" y1="50.8" x2="215.9" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="220.98" y1="50.8" x2="218.44" y2="50.8" width="0.1524" layer="91"/>
-<junction x="218.44" y="50.8"/>
-<pinref part="R17" gate="G$1" pin="1"/>
-<pinref part="3V3" gate="G$1" pin="2"/>
-<pinref part="5V" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="STATE" class="0">
