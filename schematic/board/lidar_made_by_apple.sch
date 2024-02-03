@@ -10102,13 +10102,6 @@ APD+</text>
 <wire x1="228.6" y1="-17.78" x2="228.6" y2="-22.86" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="COMP_DAC" class="0">
-<segment>
-<pinref part="U$17" gate="G$1" pin="13"/>
-<wire x1="195.58" y1="43.18" x2="177.8" y2="43.18" width="0.1524" layer="91"/>
-<label x="177.8" y="43.18" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="N$15" class="0">
 <segment>
 <pinref part="U$8" gate="G$1" pin="VCCI/VCCO"/>
