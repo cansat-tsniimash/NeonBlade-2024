@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1.27" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -4890,6 +4890,22 @@ distributor Buerklin, 11G810</description>
 <rectangle x1="7.239" y1="-2.921" x2="8.001" y2="-1.905" layer="21"/>
 <rectangle x1="9.779" y1="-2.921" x2="10.541" y2="-1.905" layer="21"/>
 </package>
+<package name="VIAS-SELECT">
+<text x="-3" y="1" size="1.27" layer="27">&gt;VALUE</text>
+<smd name="1" x="-0.5" y="0" dx="0.8" dy="0.8" layer="1"/>
+<smd name="2" x="0.5" y="0" dx="0.8" dy="0.8" layer="1"/>
+<wire x1="-1.1" y1="0.6" x2="0.3" y2="0.6" width="0.127" layer="21"/>
+<wire x1="0.3" y1="0.6" x2="1.7" y2="0.6" width="0.127" layer="21"/>
+<wire x1="1.7" y1="0.6" x2="2.1" y2="0.6" width="0.127" layer="21"/>
+<wire x1="2.1" y1="0.6" x2="2.1" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="2.1" y1="-0.6" x2="0.7" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="0.7" y1="-0.6" x2="-0.7" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="-0.7" y1="-0.6" x2="-1.1" y2="-0.6" width="0.127" layer="21"/>
+<wire x1="-1.1" y1="-0.6" x2="-1.1" y2="0.6" width="0.127" layer="21"/>
+<wire x1="0.3" y1="0.6" x2="1.7" y2="0.6" width="0.127" layer="21" curve="-98.797411"/>
+<wire x1="0.7" y1="-0.6" x2="-0.7" y2="-0.6" width="0.127" layer="21" curve="-98.797411"/>
+<smd name="3" x="1.5" y="0" dx="0.8" dy="0.8" layer="1"/>
+</package>
 </packages>
 <packages3d>
 <package3d name="SOIC8" urn="urn:adsk.eagle:package:8087957/1" type="box">
@@ -7308,6 +7324,14 @@ Datasheet and info: http://www.ebyte.com/en/product-view-news.aspx?id=436</descr
 <pin name="7" x="-2.54" y="-5.08" visible="pad" length="short" direction="pas" function="dot"/>
 <pin name="8" x="-2.54" y="-7.62" visible="pad" length="short" direction="pas" function="dot"/>
 <pin name="9" x="-2.54" y="-10.16" visible="pad" length="short" direction="pas" function="dot"/>
+</symbol>
+<symbol name="VIAS-SELECT">
+<text x="-6.35" y="-4.445" size="1.778" layer="95">&gt;NAME</text>
+<pin name="LEFT" x="-5.08" y="0" visible="pad" length="short" direction="pas" function="dot"/>
+<pin name="RIGHT" x="5.08" y="0" visible="pad" length="short" direction="pas" function="dot" rot="R180"/>
+<pin name="TOP" x="0" y="5.08" visible="pad" length="short" direction="pas" function="dot" rot="R270"/>
+<wire x1="-1.27" y1="2.54" x2="-2.54" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="2.54" y2="1.27" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -10872,6 +10896,23 @@ Distributor Buerklin, 11G810</description>
 <technology name="">
 <attribute name="POPULARITY" value="13" constant="no"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="VIAS-SELECT">
+<gates>
+<gate name="G$1" symbol="VIAS-SELECT" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="VIAS-SELECT">
+<connects>
+<connect gate="G$1" pin="LEFT" pad="1"/>
+<connect gate="G$1" pin="RIGHT" pad="3"/>
+<connect gate="G$1" pin="TOP" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
