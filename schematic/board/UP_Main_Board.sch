@@ -509,6 +509,30 @@
 <rectangle x1="-21.844" y1="-7.754" x2="-21.336" y2="-7.246" layer="51"/>
 <rectangle x1="-24.384" y1="-7.754" x2="-23.876" y2="-7.246" layer="51"/>
 <rectangle x1="23.876" y1="-7.754" x2="24.384" y2="-7.246" layer="51"/>
+<wire x1="-26.4" y1="10.4" x2="26.4" y2="10.4" width="0.127" layer="21"/>
+<wire x1="26.4" y1="10.4" x2="26.4" y2="-10.4" width="0.127" layer="21"/>
+<wire x1="26.4" y1="-10.4" x2="-26.4" y2="-10.4" width="0.127" layer="21"/>
+<wire x1="-26.4" y1="-10.4" x2="-26.4" y2="10.4" width="0.127" layer="21"/>
+<wire x1="-20.4" y1="3" x2="-26.4" y2="3" width="0.127" layer="21"/>
+<wire x1="-26.4" y1="3" x2="-26.4" y2="-3" width="0.127" layer="21"/>
+<wire x1="-26.4" y1="-3" x2="-20.4" y2="-3" width="0.127" layer="21"/>
+<wire x1="-20.4" y1="-3" x2="-20.4" y2="3" width="0.127" layer="21"/>
+<wire x1="21" y1="5" x2="21" y2="-5" width="0.127" layer="21"/>
+<wire x1="21" y1="-5" x2="23" y2="-5" width="0.127" layer="21"/>
+<wire x1="23" y1="-5" x2="23" y2="5" width="0.127" layer="21"/>
+<wire x1="23" y1="5" x2="21" y2="5" width="0.127" layer="21"/>
+<wire x1="23" y1="1.77" x2="26" y2="1.77" width="0.127" layer="21"/>
+<wire x1="26" y1="1.77" x2="26" y2="0.77" width="0.127" layer="21"/>
+<wire x1="26" y1="0.77" x2="23" y2="0.77" width="0.127" layer="21"/>
+<wire x1="23" y1="-0.77" x2="26" y2="-0.77" width="0.127" layer="21"/>
+<wire x1="26" y1="-0.77" x2="26" y2="-1.77" width="0.127" layer="21"/>
+<wire x1="26" y1="-1.77" x2="23" y2="-1.77" width="0.127" layer="21"/>
+<wire x1="23" y1="4.31" x2="26" y2="4.31" width="0.127" layer="21"/>
+<wire x1="26" y1="4.31" x2="26" y2="3.31" width="0.127" layer="21"/>
+<wire x1="26" y1="3.31" x2="23" y2="3.31" width="0.127" layer="21"/>
+<wire x1="23" y1="-3.31" x2="26" y2="-3.31" width="0.127" layer="21"/>
+<wire x1="26" y1="-3.31" x2="26" y2="-4.31" width="0.127" layer="21"/>
+<wire x1="26" y1="-4.31" x2="23" y2="-4.31" width="0.127" layer="21"/>
 </package>
 <package name="PBS_SMD_X9">
 <smd name="3" x="-5.08" y="1.35" dx="1.02" dy="2.7" layer="1"/>
@@ -8181,12 +8205,10 @@ Distributor Buerklin, 11G810</description>
 <label x="114.3" y="5.08" size="1.778" layer="95"/>
 <pinref part="U$6" gate="G$1" pin="1"/>
 </segment>
-</net>
-<net name="LASER_COMP" class="0">
 <segment>
-<wire x1="132.08" y1="-7.62" x2="114.3" y2="-7.62" width="0.1524" layer="91"/>
-<label x="109.22" y="-7.62" size="1.778" layer="95"/>
-<pinref part="U$6" gate="G$1" pin="6"/>
+<pinref part="U$2" gate="G$1" pin="PA0"/>
+<wire x1="93.98" y1="111.76" x2="104.14" y2="111.76" width="0.1524" layer="91"/>
+<label x="96.52" y="111.76" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="TDC_INT" class="0">
@@ -8194,20 +8216,6 @@ Distributor Buerklin, 11G810</description>
 <wire x1="132.08" y1="-10.16" x2="114.3" y2="-10.16" width="0.1524" layer="91"/>
 <label x="114.3" y="-10.16" size="1.778" layer="95"/>
 <pinref part="U$6" gate="G$1" pin="7"/>
-</segment>
-</net>
-<net name="APD_FB_VOLT" class="0">
-<segment>
-<wire x1="132.08" y1="-12.7" x2="114.3" y2="-12.7" width="0.1524" layer="91"/>
-<label x="109.22" y="-12.7" size="1.778" layer="95"/>
-<pinref part="U$6" gate="G$1" pin="8"/>
-</segment>
-</net>
-<net name="APD_PWM" class="0">
-<segment>
-<wire x1="132.08" y1="-15.24" x2="114.3" y2="-15.24" width="0.1524" layer="91"/>
-<label x="114.3" y="-15.24" size="1.778" layer="95"/>
-<pinref part="U$6" gate="G$1" pin="9"/>
 </segment>
 </net>
 <net name="SDIO_DAT2" class="0">
@@ -8268,19 +8276,6 @@ Distributor Buerklin, 11G810</description>
 <wire x1="132.08" y1="2.54" x2="114.3" y2="2.54" width="0.1524" layer="91"/>
 <label x="114.3" y="2.54" size="1.778" layer="95"/>
 <pinref part="U$6" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="COMP_DAC" class="0">
-<segment>
-<wire x1="104.14" y1="-38.1" x2="86.36" y2="-38.1" width="0.1524" layer="91"/>
-<pinref part="U$8" gate="G$1" pin="13"/>
-<label x="86.36" y="-38.1" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$3" class="0">
-<segment>
-<wire x1="104.14" y1="-43.18" x2="86.36" y2="-43.18" width="0.1524" layer="91"/>
-<pinref part="U$8" gate="G$1" pin="15"/>
 </segment>
 </net>
 <net name="LED" class="0">
