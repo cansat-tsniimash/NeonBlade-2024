@@ -203,7 +203,7 @@ void SysTick_Handler(void)
   */
 void USART1_IRQHandler(void)
 {
-	 /* USER CODE BEGIN USART1_IRQn 0 */
+  /* USER CODE BEGIN USART1_IRQn 0 */
 		//__disable_irq();
 		//#pragma GCC diagnostic push;
 		//#pragma GCC diagnostic ignored "-Wunused-variable"
@@ -217,11 +217,11 @@ void USART1_IRQHandler(void)
 
 
 	    return;
-	  /* USER CODE END USART1_IRQn 0 */
-	  HAL_UART_IRQHandler(&huart1);
-	  /* USER CODE BEGIN USART1_IRQn 1 */
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
 
-	  /* USER CODE END USART1_IRQn 1 */
+  /* USER CODE END USART1_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

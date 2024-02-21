@@ -32,7 +32,7 @@ Drivers/BME280_I2C/its_bme280.o: ../Drivers/BME280_I2C/its_bme280.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Drivers/BME280_I2C/../../Application/freakheader.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/I2C_HZ/i2c-crutch.h \
+ ../Drivers/BME280_I2C/../I2C_crutch/i2c-crutch.h \
  ../Drivers/BME280_I2C/bme280.h ../Drivers/BME280_I2C/bme280_defs.h
 
 ../Drivers/BME280_I2C/its_bme280.h:
@@ -103,7 +103,7 @@ Drivers/BME280_I2C/its_bme280.o: ../Drivers/BME280_I2C/its_bme280.c \
 
 ../Drivers/BME280_I2C/../../Application/freakheader.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/I2C_HZ/i2c-crutch.h:
+../Drivers/BME280_I2C/../I2C_crutch/i2c-crutch.h:
 
 ../Drivers/BME280_I2C/bme280.h:
 

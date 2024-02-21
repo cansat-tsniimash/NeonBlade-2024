@@ -6,7 +6,7 @@
 
 #include <stm32f4xx_hal.h>
 
-#include "I2C_HZ/i2c-crutch.h"
+#include "../I2C_crutch/i2c-crutch.h"
 
 #include <stdio.h>
 #include <string.h>

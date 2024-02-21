@@ -1,0 +1,4 @@
+ad5593_board_stm32f4.c:20:5:ad5593_brd_ctor	16	static
+ad5593_board_stm32f4.c:28:6:ad5593_brd_dtor	16	static
+ad5593_board_stm32f4.c:34:5:ad5593_brd_write	32	static
+ad5593_board_stm32f4.c:51:5:ad5593_brd_read	48	static

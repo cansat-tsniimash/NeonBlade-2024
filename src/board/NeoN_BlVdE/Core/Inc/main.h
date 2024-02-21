@@ -59,8 +59,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LSM_CS_Pin GPIO_PIN_13
 #define LSM_CS_GPIO_Port GPIOC
-#define LIS_CS_Pin GPIO_PIN_14
-#define LIS_CS_GPIO_Port GPIOC
+#define USILITEL_Pin GPIO_PIN_0
+#define USILITEL_GPIO_Port GPIOA
+#define LIS_CS_Pin GPIO_PIN_4
+#define LIS_CS_GPIO_Port GPIOA
 #define NRF_CE_Pin GPIO_PIN_1
 #define NRF_CE_GPIO_Port GPIOB
 #define NRF_CS_Pin GPIO_PIN_2

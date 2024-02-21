@@ -8,4 +8,4 @@ main.c:315:13:MX_SPI5_Init	8	static
 main.c:353:13:MX_USART1_UART_Init	8	static
 main.c:386:13:MX_USART2_UART_Init	8	static
 main.c:419:13:MX_GPIO_Init	40	static
-main.c:458:6:Error_Handler	4	static,ignoring_inline_asm
+main.c:468:6:Error_Handler	4	static,ignoring_inline_asm

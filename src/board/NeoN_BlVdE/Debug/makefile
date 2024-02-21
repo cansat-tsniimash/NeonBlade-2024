@@ -9,21 +9,21 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include stm32f4/nRF24L01_PL/src/subdir.mk
--include stm32f4/Photorezistor/src/subdir.mk
--include stm32f4/LSM6DS3/src/subdir.mk
--include stm32f4/LIS3MDL/src/subdir.mk
--include stm32f4/I2C_HZ/subdir.mk
--include stm32f4/Dosimeter/src/subdir.mk
--include stm32f4/DWT_Delay/src/subdir.mk
--include stm32f4/ATGM336H/src/subdir.mk
--include stm32f4/ATGM336H/minmea/subdir.mk
--include stm32f4/1Wire_DS18B20/src/subdir.mk
+-include stm32f4/stm32f4/nRF24L01_PL/src/subdir.mk
+-include stm32f4/stm32f4/Shift_Register/src/subdir.mk
+-include stm32f4/stm32f4/Photorezistor/src/subdir.mk
+-include stm32f4/stm32f4/LSM6DS3/src/subdir.mk
+-include stm32f4/stm32f4/LIS3MDL/src/subdir.mk
+-include stm32f4/stm32f4/DWT_Delay/src/subdir.mk
+-include stm32f4/stm32f4/ATGM336H/src/subdir.mk
+-include stm32f4/stm32f4/ATGM336H/minmea/subdir.mk
+-include stm32f4/stm32f4/AD5593/subdir.mk
 -include Middlewares/Third_Party/FatFs/src/option/subdir.mk
 -include Middlewares/Third_Party/FatFs/src/subdir.mk
 -include FATFS/Target/subdir.mk
 -include FATFS/App/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
+-include Drivers/I2C_crutch/subdir.mk
 -include Drivers/BME280_I2C/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -76,8 +76,8 @@ all: main-build
 main-build: NeoN_BlVdE.elf secondary-outputs
 
 # Tool invocations
-NeoN_BlVdE.elf: $(OBJS) $(USER_OBJS) C:\NeonBlade(Git)\NeoN_BlVdE\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "NeoN_BlVdE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\NeonBlade(Git)\NeoN_BlVdE\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NeoN_BlVdE.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+NeoN_BlVdE.elf: $(OBJS) $(USER_OBJS) C:\huinya\NeoN_BlVdE\NeonBlade-2024\src\board\NeoN_BlVdE\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "NeoN_BlVdE.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\huinya\NeoN_BlVdE\NeonBlade-2024\src\board\NeoN_BlVdE\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="NeoN_BlVdE.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

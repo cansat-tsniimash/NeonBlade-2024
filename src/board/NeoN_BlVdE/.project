@@ -33,7 +33,7 @@
 		<link>
 			<name>stm32f4</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/src/lib-tsniimash/stm32f4</locationURI>
+			<location>C:/huinya/NeoN_BlVdE/lib-tsniimash-master</location>
 		</link>
 	</linkedResources>
 </projectDescription>

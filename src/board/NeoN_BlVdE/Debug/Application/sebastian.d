@@ -31,28 +31,24 @@ Application/sebastian.o: ../Application/sebastian.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/Shift_Register/shift_reg.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/BME280/DriverForBME280.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/BME280/bme280.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/BME280/bme280_defs.h \
- c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LSM6DS3/DLSM.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LSM6DS3/lsm6ds3_reg.h \
- c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LIS3MDL/DLIS3.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LIS3MDL/lis3mdl_reg.h \
- c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/ATGM336H/nmea_gps.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/ATGM336H/minmea/minmea.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/1Wire_DS18B20/one_wire.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/Dosimeter/dosimeter.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_upper_api.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_lower_api.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h \
- c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_defs.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h \
- C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_defs.h
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/Shift_Register/shift_reg.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LSM6DS3/DLSM.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LSM6DS3/lsm6ds3_reg.h \
+ c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/DLIS3.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/lis3mdl_reg.h \
+ c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/ATGM336H/nmea_gps.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/ATGM336H/minmea/minmea.h \
+ ../Core/Inc/../../Drivers/BME280_I2C/bme280.h \
+ ../Core/Inc/../../Drivers/BME280_I2C/bme280_defs.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_upper_api.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h \
+ c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_defs.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_defs.h
 
 ../Application/sebastian.h:
 
@@ -120,46 +116,38 @@ Application/sebastian.o: ../Application/sebastian.c \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/Shift_Register/shift_reg.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/Shift_Register/shift_reg.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/BME280/DriverForBME280.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LSM6DS3/DLSM.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/BME280/bme280.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LSM6DS3/lsm6ds3_reg.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/BME280/bme280_defs.h:
+c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h:
 
-c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/DLIS3.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LSM6DS3/DLSM.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/lis3mdl_reg.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LSM6DS3/lsm6ds3_reg.h:
+c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h:
 
-c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/ATGM336H/nmea_gps.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LIS3MDL/DLIS3.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/ATGM336H/minmea/minmea.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/LIS3MDL/lis3mdl_reg.h:
+../Core/Inc/../../Drivers/BME280_I2C/bme280.h:
 
-c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h:
+../Core/Inc/../../Drivers/BME280_I2C/bme280_defs.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/ATGM336H/nmea_gps.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_upper_api.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/ATGM336H/minmea/minmea.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/1Wire_DS18B20/one_wire.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/Dosimeter/dosimeter.h:
+c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_upper_api.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_defs.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_lower_api.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h:
 
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h:
-
-c:\neonblade(git)\src\lib-tsniimash\stm32f4\shift_register\shift_reg.h:
-
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_defs.h:
-
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h:
-
-C:/NeonBlade(Git)/src/lib-tsniimash/stm32f4/nRF24L01_PL/nrf24_defs.h:
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_defs.h:
