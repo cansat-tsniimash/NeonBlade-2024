@@ -48,20 +48,26 @@ if __name__ == '__main__':
             print('got data %s' % data)
 
             if data[0] == 255:
-                print("словил 1 пакет МА")
-                pack = struct.unpack("<BHL2di3f2BH", data)
+                print("словил 11 пакет МА")
+                pack = struct.unpack("<BHL3dB", data)
                 print("Pack Num:", pack[1])
                 print("Time", pack[2])
                 print("Pressure", pack[3])
                 print("Temperature", pack[4])
                 print("Heught bme", pack[5])
-                print("latitude", pack[6])
-                print("Longitude", pack[7])
-                print("Heught gps", pack[8])
-                print("Fix", pack[9])
-                print("State", pack[10])
+                print("State", pack[6])
                 
 
+
+            if data[0] = 25:
+                print("словил 11 пакет МА")
+                pack = struct.unpack("<BHL3fB", data)
+                print("Pack Num:", pack[1])
+                print("Time", pack[2])
+                print("latitude", pack[3])
+                print("Longitude", pack[4])
+                print("Heught gps", pack[5])
+                print("Fix", pack[6])
 
 
             if data[0] == 10:
@@ -69,10 +75,17 @@ if __name__ == '__main__':
                 pack = struct.unpack("<BHL9h2H", data)
                 print("Pack Num:", pack[1])
                 print("Time", pack[2])
-                print("Axel", pack[3])
-                print("Giro", pack[4])
-                print("Lidar", pack[5])
-                print("Magnet", pack[6])
+                print("Axel X", pack[3])
+                print("Axel Y", pack[4])
+                print("Axel Z", pack[5])
+                print("Giro X", pack[6])
+                print("Giro Y", pack[7])
+                print("Giro Z", pack[8])
+                print("Magnet X", pack[9])
+                print("Magnet Y", pack[10])
+                print("Magnet Z", pack[11])
+
+                print("Lidar", pack[12])
                 
 
 
