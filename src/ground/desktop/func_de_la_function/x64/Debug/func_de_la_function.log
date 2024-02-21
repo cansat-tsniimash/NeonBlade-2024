@@ -1,0 +1,7 @@
+﻿  main.c
+C:\prog_on_cpp\func_de_la_function\func_de_la_function\main.c(33,11): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\prog_on_cpp\func_de_la_function\func_de_la_function\main.c(143,12): warning C4133: 'function': incompatible types - from 'packet_ma_type_11_t *' to 'unsigned char *'
+C:\prog_on_cpp\func_de_la_function\func_de_la_function\main.c(156,12): warning C4133: 'function': incompatible types - from 'packet_ma_type_12_t *' to 'unsigned char *'
+C:\prog_on_cpp\func_de_la_function\func_de_la_function\main.c(168,12): warning C4133: 'function': incompatible types - from 'packet_ma_type_2_t *' to 'unsigned char *'
+C:\prog_on_cpp\func_de_la_function\func_de_la_function\main.c(182): warning C4715: 'pars_2': not all control paths return a value
+  func_de_la_function.vcxproj -> C:\prog_on_cpp\func_de_la_function\x64\Debug\func_de_la_function.exe
