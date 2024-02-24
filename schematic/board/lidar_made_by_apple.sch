@@ -9204,7 +9204,7 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="C21" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10pF"/>
 <part name="C22" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10pF"/>
 <part name="L9" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
-<part name="C18" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="22F"/>
+<part name="C18" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="22uF"/>
 <part name="C20" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="22uF"/>
 <part name="U$9" library="NEON-BLADE-2024" deviceset="C005R" device=""/>
 <part name="U$14" library="NEON-BLADE-2024" deviceset="HC49S" device=""/>
@@ -9217,8 +9217,8 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
 <part name="L3" library="NEON-BLADE-2024" deviceset="L_10MKH" device=""/>
 <part name="L2" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
-<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="10uF"/>
-<part name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="10uF"/>
+<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
+<part name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
 <part name="VR1" library="NEON-BLADE-2024" deviceset="3362P-1-502LF" device=""/>
 <part name="U$13" library="NEON-BLADE-2024" deviceset="BSS131" device=""/>
 <part name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47k"/>
@@ -9259,7 +9259,7 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="R26" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1k"/>
 <part name="U$4" library="NEON-BLADE-2024" deviceset="ADCMP600" device=""/>
 <part name="L10" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
-<part name="C19" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="10uF"/>
+<part name="C19" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
 <part name="U$12" library="NEON-BLADE-2024" deviceset="REF3033" device=""/>
 <part name="VR2" library="NEON-BLADE-2024" deviceset="3362P-1-502LF" device=""/>
 <part name="U$5" library="NEON-BLADE-2024" deviceset="MAX40658-8-TDFN-3X3MM" device=""/>
@@ -9706,11 +9706,6 @@ APD+</text>
 <pinref part="U$10" gate="G$1" pin="INT"/>
 <wire x1="142.24" y1="147.32" x2="132.08" y2="147.32" width="0.1524" layer="91"/>
 <label x="129.54" y="147.32" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="434.34" y1="119.38" x2="416.56" y2="119.38" width="0.1524" layer="91"/>
-<label x="416.56" y="119.38" size="1.778" layer="95"/>
-<pinref part="U$15" gate="G$1" pin="7"/>
 </segment>
 </net>
 <net name="APD_COMP_OUT" class="0">
