@@ -11002,8 +11002,8 @@ Source: www.kingbright.com</description>
 <part name="R9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="3k3"/>
 <part name="R10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="3k3"/>
 <part name="AMPLIFIRE" library="NEON-BLADE-2023" deviceset="XQ-02A" device=""/>
-<part name="J1" library="MCX-J-P-H-ST-TH1" deviceset="MCX-J-P-H-ST-TH1" device=""/>
-<part name="J2" library="U.FL-R-SMT-1_10_" deviceset="U.FL-R-SMT-1_10_" device=""/>
+<part name="RADIO" library="MCX-J-P-H-ST-TH1" deviceset="MCX-J-P-H-ST-TH1" device=""/>
+<part name="ANT" library="U.FL-R-SMT-1_10_" deviceset="U.FL-R-SMT-1_10_" device=""/>
 <part name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
 <part name="C10" library="NEON-BLADE-2023" deviceset="ECAP" device="ECAP220" value="220uF"/>
 <part name="NRF24L01P" library="NEON-BLADE-2023" deviceset="NRF24L01_ML01SP4" device=""/>
@@ -11017,10 +11017,10 @@ Source: www.kingbright.com</description>
 <part name="U$4" library="NEON-BLADE-2024" deviceset="PBS_SMD_X15" device=""/>
 <part name="LED1" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_0603" package3d_urn="urn:adsk.eagle:package:15822/2"/>
 <part name="U$5" library="NEON-BLADE-2024" deviceset="VIAS-SELECT" device=""/>
-<part name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="100R"/>
+<part name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2k"/>
 <part name="LED2" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_0603" package3d_urn="urn:adsk.eagle:package:15822/2"/>
 <part name="U$9" library="NEON-BLADE-2024" deviceset="VIAS-SELECT" device=""/>
-<part name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="100R"/>
+<part name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2k"/>
 <part name="U$8" library="NEON-BLADE-2024" deviceset="PBS_SMD_X15" device=""/>
 <part name="U$3" library="NEON-BLADE-2024" deviceset="PBS_SMD_X9" device=""/>
 <part name="U$2" library="NEON-BLADE-2024" deviceset="PBS_SMD_X9" device=""/>
@@ -11067,11 +11067,11 @@ Source: www.kingbright.com</description>
 <instance part="AMPLIFIRE" gate="G$1" x="238.76" y="170.18" smashed="yes">
 <attribute name="NAME" x="223.52" y="198.12" size="1.27" layer="95"/>
 </instance>
-<instance part="J1" gate="G$1" x="248.92" y="162.56" smashed="yes">
+<instance part="RADIO" gate="G$1" x="248.92" y="162.56" smashed="yes">
 <attribute name="NAME" x="265.43" y="170.18" size="1.778" layer="95" align="center-left"/>
 <attribute name="VALUE" x="265.43" y="167.64" size="1.778" layer="96" align="center-left"/>
 </instance>
-<instance part="J2" gate="G$1" x="203.2" y="154.94" smashed="yes">
+<instance part="ANT" gate="G$1" x="203.2" y="154.94" smashed="yes">
 <attribute name="NAME" x="219.71" y="165.1" size="1.778" layer="95" align="center-left"/>
 <attribute name="VALUE" x="219.71" y="162.56" size="1.778" layer="96" align="center-left"/>
 </instance>
@@ -11189,30 +11189,30 @@ Source: www.kingbright.com</description>
 <pinref part="C10" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="2"/>
+<pinref part="RADIO" gate="G$1" pin="2"/>
 <wire x1="248.92" y1="160.02" x2="238.76" y2="160.02" width="0.1524" layer="91"/>
 <label x="241.3" y="160.02" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="3"/>
+<pinref part="RADIO" gate="G$1" pin="3"/>
 <wire x1="248.92" y1="157.48" x2="238.76" y2="157.48" width="0.1524" layer="91"/>
 <label x="241.3" y="157.48" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="4"/>
+<pinref part="RADIO" gate="G$1" pin="4"/>
 <wire x1="269.24" y1="162.56" x2="276.86" y2="162.56" width="0.1524" layer="91"/>
 <label x="269.24" y="162.56" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="5"/>
+<pinref part="RADIO" gate="G$1" pin="5"/>
 <wire x1="269.24" y1="160.02" x2="276.86" y2="160.02" width="0.1524" layer="91"/>
 <label x="269.24" y="160.02" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J2" gate="G$1" pin="2"/>
+<pinref part="ANT" gate="G$1" pin="2"/>
 <wire x1="223.52" y1="154.94" x2="226.06" y2="154.94" width="0.1524" layer="91"/>
 <label x="223.52" y="154.94" size="1.778" layer="95"/>
-<pinref part="J2" gate="G$1" pin="1"/>
+<pinref part="ANT" gate="G$1" pin="1"/>
 <wire x1="226.06" y1="154.94" x2="228.6" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="203.2" y1="154.94" x2="200.66" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="198.12" y1="154.94" x2="200.66" y2="154.94" width="0.1524" layer="91"/>
@@ -11304,11 +11304,6 @@ Source: www.kingbright.com</description>
 <pinref part="NRF24L01P" gate="G$1" pin="VCC"/>
 <wire x1="228.6" y1="228.6" x2="218.44" y2="228.6" width="0.1524" layer="91"/>
 <label x="220.98" y="228.6" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U$1" gate="G$1" pin="VIN"/>
-<wire x1="35.56" y1="109.22" x2="22.86" y2="109.22" width="0.1524" layer="91"/>
-<label x="22.86" y="109.22" size="1.778" layer="95"/>
 </segment>
 <segment>
 <wire x1="76.2" y1="266.7" x2="50.8" y2="266.7" width="0.1524" layer="91"/>
@@ -11479,6 +11474,11 @@ Source: www.kingbright.com</description>
 <wire x1="302.26" y1="233.68" x2="302.26" y2="241.3" width="0.1524" layer="91"/>
 <label x="302.26" y="238.76" size="1.778" layer="95" rot="R90"/>
 </segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="VIN"/>
+<wire x1="35.56" y1="109.22" x2="22.86" y2="109.22" width="0.1524" layer="91"/>
+<label x="22.86" y="109.22" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="USIL_ON" class="0">
 <segment>
@@ -11492,7 +11492,7 @@ Source: www.kingbright.com</description>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="J2" gate="G$1" pin="3"/>
+<pinref part="ANT" gate="G$1" pin="3"/>
 <pinref part="AMPLIFIRE" gate="G$1" pin="RF-IN"/>
 <wire x1="213.36" y1="165.1" x2="213.36" y2="182.88" width="0.1524" layer="91"/>
 <wire x1="213.36" y1="182.88" x2="220.98" y2="182.88" width="0.1524" layer="91"/>
@@ -11500,19 +11500,12 @@ Source: www.kingbright.com</description>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="J1" gate="G$1" pin="1"/>
+<pinref part="RADIO" gate="G$1" pin="1"/>
 <wire x1="248.92" y1="162.56" x2="248.92" y2="175.26" width="0.1524" layer="91"/>
 <wire x1="248.92" y1="175.26" x2="259.08" y2="175.26" width="0.1524" layer="91"/>
 <pinref part="AMPLIFIRE" gate="G$1" pin="ANT"/>
 <wire x1="259.08" y1="175.26" x2="259.08" y2="182.88" width="0.1524" layer="91"/>
 <wire x1="259.08" y1="182.88" x2="251.46" y2="182.88" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="NRF_IRQ" class="0">
-<segment>
-<pinref part="NRF24L01P" gate="G$1" pin="IRQ"/>
-<wire x1="228.6" y1="213.36" x2="218.44" y2="213.36" width="0.1524" layer="91"/>
-<label x="218.44" y="213.36" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="CE_NRF" class="0">
