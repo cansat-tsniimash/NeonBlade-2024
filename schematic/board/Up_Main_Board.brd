@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.4.2">
+<eagle version="9.6.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="0.1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="mm" altunit="mm"/>
@@ -257,9 +257,9 @@ BlackPill</text>
 <text x="53.9" y="74.1" size="0.8" layer="26" ratio="15" rot="MR180" align="bottom-center">5V</text>
 <text x="48.7" y="74.1" size="0.8" layer="26" ratio="15" rot="MR180" align="bottom-center">TX</text>
 <text x="60.3" y="19.5" size="0.8" layer="21" ratio="15">IRF7905</text>
-<text x="43.2" y="24.1" size="0.8" layer="21" ratio="15" rot="R90">SS12D11</text>
 <text x="81.4" y="59.6" size="0.8" layer="21" ratio="15" rot="R285">MSS12D01</text>
 <text x="75.1" y="36.9" size="0.8" layer="26" ratio="15" rot="MR300">[NC]</text>
+<circle x="27.5" y="59.5" radius="2.5" width="0.0001" layer="20"/>
 </plain>
 <libraries>
 <library name="NEON-BLADE-2024">
@@ -701,7 +701,6 @@ BlackPill</text>
 <hole x="-15.5" y="10.2" drill="3"/>
 <hole x="15.5" y="-10.2" drill="3"/>
 <hole x="15.5" y="10.2" drill="3"/>
-<hole x="14.7" y="-3" drill="4"/>
 <pad name="P$1" x="-16" y="-3.84" drill="1.016" shape="square" rot="R90"/>
 <pad name="P$2" x="-16" y="-1.27" drill="1.016" shape="octagon" rot="R90"/>
 <pad name="P$3" x="-16" y="1.27" drill="1.016" shape="octagon" rot="R90"/>
@@ -2361,11 +2360,6 @@ design rules under a new name.</description>
 <vertex x="90.4" y="10"/>
 <vertex x="8" y="10"/>
 </polygon>
-<wire x1="14.976475" y1="58.092590625" x2="14.976475" y2="57.023525" width="0.2" layer="1"/>
-<wire x1="14.976475" y1="57.023525" x2="15" y2="57" width="0.2" layer="1"/>
-<via x="15" y="57" extent="1-16" drill="0.35"/>
-<wire x1="15" y1="57" x2="20.05" y2="51.95" width="0.2" layer="16"/>
-<wire x1="20.05" y1="51.95" x2="21.23" y2="52.95" width="0.2" layer="16"/>
 <wire x1="70.47" y1="52.95" x2="70.97" y2="53.45" width="0.5" layer="16"/>
 <wire x1="70.97" y1="53.45" x2="77.2848125" y2="59.7648125" width="0.5" layer="16"/>
 <wire x1="66.23" y1="71.45" x2="68.77" y2="71.45" width="0.5" layer="16"/>
@@ -2446,6 +2440,17 @@ design rules under a new name.</description>
 <wire x1="46.16" y1="73" x2="46.16" y2="71" width="0.5" layer="1"/>
 <wire x1="46.16" y1="73" x2="63.08" y2="73" width="0.5" layer="1"/>
 <wire x1="63.08" y1="73" x2="64.63" y2="71.45" width="0.5" layer="1"/>
+<wire x1="21.23" y1="71.45" x2="21.4" y2="71.28" width="0.2" layer="1"/>
+<wire x1="17.1116" y1="59.192590625" x2="21.4" y2="63.480990625" width="0.5" layer="1"/>
+<wire x1="21.4" y1="71.28" x2="21.4" y2="63.480990625" width="0.5" layer="1"/>
+<via x="14.660209375" y="56.973634375" extent="1-16" drill="0.35"/>
+<wire x1="14.660209375" y1="56.973634375" x2="14.660209375" y2="55.939790625" width="0.5" layer="16"/>
+<wire x1="17.65" y1="52.95" x2="21.23" y2="52.95" width="0.5" layer="16"/>
+<wire x1="14.660209375" y1="55.939790625" x2="17.65" y2="52.95" width="0.5" layer="16"/>
+<wire x1="17.1116" y1="59.192590625" x2="16.076475" y2="59.192590625" width="0.5" layer="1"/>
+<wire x1="14.976475" y1="58.092590625" x2="16.076475" y2="59.192590625" width="0.5" layer="1"/>
+<wire x1="14.976475" y1="58.092590625" x2="14.976475" y2="57.2899" width="0.5" layer="1"/>
+<wire x1="14.976475" y1="57.2899" x2="14.660209375" y2="56.973634375" width="0.5" layer="1"/>
 </signal>
 <signal name="3V3">
 <contactref element="U$2" pad="18"/>
@@ -2651,10 +2656,10 @@ design rules under a new name.</description>
 <wire x1="44.8" y1="37.4522" x2="49.1782" y2="37.4522" width="0.2" layer="16"/>
 <wire x1="49.1782" y1="37.4522" x2="49.5" y2="37.774" width="0.2" layer="16"/>
 <wire x1="68.99870625" y1="36.4" x2="69.399234375" y2="36.800528125" width="0.2" layer="1"/>
-<wire x1="55.5030125" y1="36.4" x2="56.0812125" y2="36.9782" width="0.2" layer="1"/>
+<wire x1="55.6030125" y1="36.4" x2="56.1812125" y2="36.9782" width="0.2" layer="1"/>
 <wire x1="58.325025" y1="36.9782" x2="58.903225" y2="36.4" width="0.2" layer="1"/>
-<wire x1="53.9" y1="36.4" x2="55.5030125" y2="36.4" width="0.2" layer="1"/>
-<wire x1="56.0812125" y1="36.9782" x2="58.325025" y2="36.9782" width="0.2" layer="1"/>
+<wire x1="53.9" y1="36.4" x2="55.6030125" y2="36.4" width="0.2" layer="1"/>
+<wire x1="56.1812125" y1="36.9782" x2="58.325025" y2="36.9782" width="0.2" layer="1"/>
 <wire x1="58.903225" y1="36.4" x2="68.99870625" y2="36.4" width="0.2" layer="1"/>
 </signal>
 <signal name="5MOSI">
@@ -3296,8 +3301,6 @@ design rules under a new name.</description>
 <approved hash="19,16,a1b5a17a0d6a0da5"/>
 <approved hash="19,16,21cd21bf5daf5ddd"/>
 <approved hash="19,16,7f057e8530953115"/>
-<approved hash="4,1,c5d68ec03f490869"/>
-<approved hash="4,1,0225a7e3528592fb"/>
 </errors>
 </board>
 </drawing>

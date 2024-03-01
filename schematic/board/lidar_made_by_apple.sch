@@ -8,20 +8,20 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
-<layer number="20" name="Dimension" color="24" fill="1" visible="no" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
+<layer number="20" name="Dimension" color="24" fill="1" visible="yes" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -30,8 +30,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -39,19 +39,19 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
-<layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
-<layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
-<layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="57" name="tCAD" color="7" fill="1" visible="yes" active="no"/>
+<layer number="59" name="tCarbon" color="7" fill="1" visible="yes" active="no"/>
+<layer number="60" name="bCarbon" color="7" fill="1" visible="yes" active="no"/>
 <layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
@@ -9204,8 +9204,8 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="C21" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10pF"/>
 <part name="C22" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10pF"/>
 <part name="L9" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
-<part name="C18" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="22uF"/>
-<part name="C20" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="22uF"/>
+<part name="C18" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="22uF"/>
+<part name="C20" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="22uF"/>
 <part name="U$9" library="NEON-BLADE-2024" deviceset="C005R" device=""/>
 <part name="U$14" library="NEON-BLADE-2024" deviceset="HC49S" device=""/>
 <part name="R4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="560k"/>
@@ -9215,20 +9215,20 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="D2" library="NEON-BLADE-2024" deviceset="BAS52-02" device=""/>
 <part name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47k"/>
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
-<part name="L3" library="NEON-BLADE-2024" deviceset="L_10MKH" device=""/>
+<part name="L3" library="NEON-BLADE-2024" deviceset="L_10MKH" device="" value="L_10MKH"/>
 <part name="L2" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
 <part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
 <part name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
 <part name="VR1" library="NEON-BLADE-2024" deviceset="3362P-1-502LF" device=""/>
 <part name="U$13" library="NEON-BLADE-2024" deviceset="BSS131" device=""/>
 <part name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47k"/>
-<part name="R2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47"/>
+<part name="R2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="100R"/>
 <part name="D1" library="NEON-BLADE-2024" deviceset="BAS521" device=""/>
 <part name="R8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2M"/>
 <part name="R9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="20k"/>
 <part name="R10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
-<part name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF"/>
-<part name="C11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF"/>
+<part name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF 250v"/>
+<part name="C11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF 250v"/>
 <part name="C8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100pf"/>
 <part name="C6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="1uF"/>
 <part name="L5" library="NEON-BLADE-2024" deviceset="CM322522-470KL" device="" value="47uH"/>
@@ -9239,7 +9239,7 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="U$1" library="NEON-BLADE-2024" deviceset="UCC27511DBVR" device=""/>
 <part name="R16" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1k"/>
 <part name="R18" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="270"/>
-<part name="C17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="20nF"/>
+<part name="C17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="20nF low esr"/>
 <part name="U$2" library="NEON-BLADE-2024" deviceset="BSZ165N04NS-G" device=""/>
 <part name="U$3" library="NEON-BLADE-2024" deviceset="BAS52-02" device=""/>
 <part name="R19" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="0.1"/>
@@ -9249,7 +9249,7 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="U$6" library="NEON-BLADE-2024" deviceset="SPL_PL-90" device=""/>
 <part name="W1" library="NEON-BLADE-2024" deviceset="VIAS-CONNECT" device=""/>
 <part name="L8" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
-<part name="C16" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1210" package3d_urn="urn:adsk.eagle:package:23619/2" value="10uF"/>
+<part name="C16" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
 <part name="W5" library="NEON-BLADE-2024" deviceset="VIAS-CONNECT" device=""/>
 <part name="C24" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
 <part name="R23" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
@@ -9285,6 +9285,8 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="L6" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
 <part name="L7" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
 <part name="L1" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
+<part name="U$18" library="NEON-BLADE-2024" deviceset="VIAS-CONNECT" device=""/>
+<part name="U$19" library="NEON-BLADE-2024" deviceset="VIAS-CONNECT" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9617,6 +9619,14 @@ APD+</text>
 <instance part="L1" gate="G$1" x="391.16" y="30.48" smashed="yes">
 <attribute name="NAME" x="389.89" y="25.4" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="394.97" y="25.4" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="U$18" gate="G$1" x="68.58" y="-33.02" smashed="yes">
+<attribute name="NAME" x="64.77" y="-29.845" size="1.778" layer="95"/>
+<attribute name="VALUE" x="64.77" y="-37.465" size="1.778" layer="96"/>
+</instance>
+<instance part="U$19" gate="G$1" x="53.34" y="-33.02" smashed="yes">
+<attribute name="NAME" x="49.53" y="-29.845" size="1.778" layer="95"/>
+<attribute name="VALUE" x="49.53" y="-37.465" size="1.778" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -10015,14 +10025,10 @@ APD+</text>
 <pinref part="C9" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<wire x1="96.52" y1="53.34" x2="96.52" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="96.52" y1="55.88" x2="114.3" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="114.3" y1="55.88" x2="114.3" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="R18" gate="G$1" pin="2"/>
-<wire x1="114.3" y1="55.88" x2="114.3" y2="50.8" width="0.1524" layer="91"/>
-<junction x="114.3" y="55.88"/>
-<label x="109.22" y="58.42" size="1.778" layer="95"/>
-<pinref part="L8" gate="G$1" pin="1"/>
+<pinref part="U$19" gate="G$1" pin="1"/>
+<wire x1="50.8" y1="-33.02" x2="48.26" y2="-33.02" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="-33.02" x2="48.26" y2="-35.56" width="0.1524" layer="91"/>
+<label x="40.64" y="-38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$21" class="0">
@@ -10107,9 +10113,10 @@ APD+</text>
 <label x="477.52" y="208.28" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="R1" gate="G$1" pin="2"/>
-<wire x1="378.46" y1="-30.48" x2="373.38" y2="-30.48" width="0.1524" layer="91"/>
-<label x="370.84" y="-30.48" size="1.778" layer="95"/>
+<pinref part="U$18" gate="G$1" pin="1"/>
+<wire x1="66.04" y1="-33.02" x2="63.5" y2="-33.02" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-33.02" x2="63.5" y2="-35.56" width="0.1524" layer="91"/>
+<label x="60.96" y="-40.64" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$29" class="0">
@@ -10671,6 +10678,37 @@ APD+</text>
 <wire x1="553.72" y1="53.34" x2="553.72" y2="60.96" width="0.1524" layer="91"/>
 <junction x="553.72" y="53.34"/>
 <pinref part="L7" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="VLASER_" class="0">
+<segment>
+<pinref part="U$19" gate="G$1" pin="2"/>
+<wire x1="55.88" y1="-33.02" x2="58.42" y2="-33.02" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="-33.02" x2="58.42" y2="-35.56" width="0.1524" layer="91"/>
+<label x="53.34" y="-38.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="96.52" y1="53.34" x2="96.52" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="55.88" x2="114.3" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="55.88" x2="114.3" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="R18" gate="G$1" pin="2"/>
+<wire x1="114.3" y1="55.88" x2="114.3" y2="50.8" width="0.1524" layer="91"/>
+<junction x="114.3" y="55.88"/>
+<label x="109.22" y="58.42" size="1.778" layer="95"/>
+<pinref part="L8" gate="G$1" pin="1"/>
+</segment>
+</net>
+<net name="APD_V_" class="0">
+<segment>
+<pinref part="U$18" gate="G$1" pin="2"/>
+<wire x1="71.12" y1="-33.02" x2="73.66" y2="-33.02" width="0.1524" layer="91"/>
+<wire x1="73.66" y1="-33.02" x2="73.66" y2="-35.56" width="0.1524" layer="91"/>
+<label x="71.12" y="-40.64" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R1" gate="G$1" pin="2"/>
+<wire x1="378.46" y1="-30.48" x2="373.38" y2="-30.48" width="0.1524" layer="91"/>
+<label x="370.84" y="-30.48" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.4.2">
+<eagle version="9.6.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
@@ -597,7 +597,6 @@
 <hole x="-15.5" y="10.2" drill="3"/>
 <hole x="15.5" y="-10.2" drill="3"/>
 <hole x="15.5" y="10.2" drill="3"/>
-<hole x="14.7" y="-3" drill="4"/>
 <pad name="P$1" x="-16" y="-3.84" drill="1.016" shape="square" rot="R90"/>
 <pad name="P$2" x="-16" y="-1.27" drill="1.016" shape="octagon" rot="R90"/>
 <pad name="P$3" x="-16" y="1.27" drill="1.016" shape="octagon" rot="R90"/>
