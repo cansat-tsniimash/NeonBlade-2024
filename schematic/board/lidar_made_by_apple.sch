@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.6.2">
+<eagle version="9.4.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="24" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="24" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -30,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -39,19 +53,19 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
-<layer number="57" name="tCAD" color="7" fill="1" visible="yes" active="no"/>
-<layer number="59" name="tCarbon" color="7" fill="1" visible="yes" active="no"/>
-<layer number="60" name="bCarbon" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
+<layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
+<layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
@@ -9198,7 +9212,7 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 </classes>
 <parts>
 <part name="U$10" library="NEON-BLADE-2024" deviceset="TDC-GP21" device=""/>
-<part name="C29" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nf"/>
+<part name="C29" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
 <part name="R31" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
 <part name="R24" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="10M"/>
 <part name="C21" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10pF"/>
@@ -9215,7 +9229,7 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="D2" library="NEON-BLADE-2024" deviceset="BAS52-02" device=""/>
 <part name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47k"/>
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
-<part name="L3" library="NEON-BLADE-2024" deviceset="L_10MKH" device="" value="L_10MKH"/>
+<part name="L3" library="NEON-BLADE-2024" deviceset="L_10MKH" device="" value="10uH"/>
 <part name="L2" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
 <part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
 <part name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
@@ -9227,9 +9241,9 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="R8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2M"/>
 <part name="R9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="20k"/>
 <part name="R10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
-<part name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF 250v"/>
-<part name="C11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF 250v"/>
-<part name="C8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100pf"/>
+<part name="C10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10nF 250v"/>
+<part name="C11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10nF 250V"/>
+<part name="C8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100pF"/>
 <part name="C6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="1uF"/>
 <part name="L5" library="NEON-BLADE-2024" deviceset="CM322522-470KL" device="" value="47uH"/>
 <part name="L4" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
@@ -9239,11 +9253,11 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="U$1" library="NEON-BLADE-2024" deviceset="UCC27511DBVR" device=""/>
 <part name="R16" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1k"/>
 <part name="R18" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="270"/>
-<part name="C17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="20nF low esr"/>
+<part name="C17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="22nF low ESR"/>
 <part name="U$2" library="NEON-BLADE-2024" deviceset="BSZ165N04NS-G" device=""/>
 <part name="U$3" library="NEON-BLADE-2024" deviceset="BAS52-02" device=""/>
-<part name="R19" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="0.1"/>
-<part name="R20" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47"/>
+<part name="R19" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R2512" package3d_urn="urn:adsk.eagle:package:23545/2" value="R100"/>
+<part name="R20" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47R"/>
 <part name="J2" library="U.FL-R-SMT-1_10_" deviceset="U.FL-R-SMT-1_10_" device=""/>
 <part name="W3" library="NEON-BLADE-2024" deviceset="VIAS-CONNECT" device=""/>
 <part name="U$6" library="NEON-BLADE-2024" deviceset="SPL_PL-90" device=""/>
@@ -9255,12 +9269,12 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="R23" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
 <part name="R22" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="100k"/>
 <part name="C23" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
-<part name="R27" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="0"/>
+<part name="R27" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="0R"/>
 <part name="R26" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1k"/>
 <part name="U$4" library="NEON-BLADE-2024" deviceset="ADCMP600" device=""/>
 <part name="L10" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
 <part name="C19" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="10uF"/>
-<part name="U$12" library="NEON-BLADE-2024" deviceset="REF3033" device=""/>
+<part name="REF3033" library="NEON-BLADE-2024" deviceset="REF3033" device=""/>
 <part name="VR2" library="NEON-BLADE-2024" deviceset="3362P-1-502LF" device=""/>
 <part name="U$5" library="NEON-BLADE-2024" deviceset="MAX40658-8-TDFN-3X3MM" device=""/>
 <part name="C4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
@@ -9269,17 +9283,17 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <part name="C12" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF"/>
 <part name="C13" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF"/>
 <part name="R11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="NC"/>
-<part name="R7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47"/>
+<part name="R7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="47R"/>
 <part name="D6" library="NEON-BLADE-2024" deviceset="BAV99" device=""/>
-<part name="C33" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF 250V"/>
+<part name="C33" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10nF 250V"/>
 <part name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1k"/>
 <part name="U$8" library="NEON-BLADE-2024" deviceset="ADCMP600" device=""/>
 <part name="R17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1k"/>
-<part name="R15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="150"/>
+<part name="R15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="150R"/>
 <part name="R13" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4.7k"/>
 <part name="R14" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4k7"/>
 <part name="C14" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="1uF"/>
-<part name="C15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nf"/>
+<part name="C15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
 <part name="J1" library="U.FL-R-SMT-1_10_" deviceset="U.FL-R-SMT-1_10_" device=""/>
 <part name="U$7" library="NEON-BLADE-2024" deviceset="MTAPD-07-013" device=""/>
 <part name="L6" library="NEON-BLADE-2024" deviceset="L_BEAD" device=""/>
@@ -9291,7 +9305,7 @@ Source: &lt;a href="https://www.hirose.com/product/document?clcode=CL0331-0472-2
 <sheets>
 <sheet>
 <plain>
-<text x="363.22" y="116.84" size="7.62" layer="95">TO MCU+-</text>
+<text x="363.22" y="144.78" size="7.62" layer="95">TO MCU+-</text>
 <text x="78.74" y="66.04" size="12.7" layer="97">LASER +</text>
 <text x="223.52" y="-48.26" size="12.7" layer="97">LASER_COMP +</text>
 <text x="426.72" y="30.48" size="7.62" layer="97">TIA+
@@ -9400,24 +9414,24 @@ APD+</text>
 <attribute name="NAME" x="416.7886" y="205.8416" size="1.778" layer="95"/>
 <attribute name="VALUE" x="416.5346" y="198.7042" size="1.778" layer="96"/>
 </instance>
-<instance part="R8" gate="G$1" x="441.96" y="193.04" smashed="yes" rot="R90">
-<attribute name="NAME" x="440.4614" y="189.23" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="445.262" y="189.23" size="1.778" layer="96" rot="R90"/>
+<instance part="R8" gate="G$1" x="439.42" y="193.04" smashed="yes" rot="R90">
+<attribute name="NAME" x="437.9214" y="189.23" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="442.722" y="189.23" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="R9" gate="G$1" x="441.96" y="177.8" smashed="yes" rot="R90">
-<attribute name="NAME" x="440.4614" y="173.99" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="445.262" y="173.99" size="1.778" layer="96" rot="R90"/>
+<instance part="R9" gate="G$1" x="439.42" y="177.8" smashed="yes" rot="R90">
+<attribute name="NAME" x="437.9214" y="173.99" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="442.722" y="173.99" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="R10" gate="G$1" x="464.82" y="203.2" smashed="yes" rot="R180">
-<attribute name="NAME" x="468.63" y="201.7014" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="468.63" y="206.502" size="1.778" layer="96" rot="R180"/>
+<instance part="R10" gate="G$1" x="462.28" y="203.2" smashed="yes" rot="R180">
+<attribute name="NAME" x="466.09" y="201.7014" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="466.09" y="206.502" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="C10" gate="G$1" x="452.12" y="185.42" smashed="yes" rot="R180">
 <attribute name="NAME" x="450.596" y="185.039" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="450.596" y="190.119" size="1.778" layer="96" rot="R180"/>
+<attribute name="VALUE" x="453.644" y="183.261" size="1.778" layer="96"/>
 </instance>
 <instance part="C11" gate="G$1" x="474.98" y="185.42" smashed="yes" rot="R180">
-<attribute name="NAME" x="473.456" y="185.039" size="1.778" layer="95" rot="R180"/>
+<attribute name="NAME" x="476.504" y="188.341" size="1.778" layer="95"/>
 <attribute name="VALUE" x="473.456" y="190.119" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="C8" gate="G$1" x="431.8" y="177.8" smashed="yes" rot="R180">
@@ -9444,9 +9458,9 @@ APD+</text>
 <attribute name="NAME" x="430.53" y="107.315" size="1.778" layer="95"/>
 <attribute name="VALUE" x="430.53" y="78.74" size="1.778" layer="96"/>
 </instance>
-<instance part="U$17" gate="G$1" x="302.26" y="96.52" smashed="yes">
-<attribute name="NAME" x="295.91" y="117.475" size="1.778" layer="95"/>
-<attribute name="VALUE" x="295.91" y="73.66" size="1.778" layer="96"/>
+<instance part="U$17" gate="G$1" x="391.16" y="116.84" smashed="yes">
+<attribute name="NAME" x="384.81" y="137.795" size="1.778" layer="95"/>
+<attribute name="VALUE" x="384.81" y="93.98" size="1.778" layer="96"/>
 </instance>
 <instance part="U$1" gate="G$1" x="81.28" y="25.4" smashed="yes"/>
 <instance part="R16" gate="G$1" x="58.42" y="20.32" smashed="yes" rot="R90">
@@ -9535,7 +9549,7 @@ APD+</text>
 <attribute name="NAME" x="323.596" y="-2.921" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="323.596" y="2.159" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="U$12" gate="G$1" x="309.88" y="43.18" smashed="yes"/>
+<instance part="REF3033" gate="G$1" x="309.88" y="43.18" smashed="yes"/>
 <instance part="VR2" gate="G$1" x="312.42" y="-2.54" smashed="yes" rot="R270">
 <attribute name="NAME" x="314.9665" y="7.6418" size="1.78255" layer="95" rot="R270"/>
 <attribute name="VALUE" x="304.7955" y="-10.182259375" size="1.7848" layer="96"/>
@@ -9711,13 +9725,6 @@ APD+</text>
 <label x="71.12" y="-25.4" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="TDC_INT" class="0">
-<segment>
-<pinref part="U$10" gate="G$1" pin="INT"/>
-<wire x1="142.24" y1="147.32" x2="132.08" y2="147.32" width="0.1524" layer="91"/>
-<label x="129.54" y="147.32" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="APD_COMP_OUT" class="0">
 <segment>
 <pinref part="U$10" gate="G$1" pin="STOP2"/>
@@ -9781,8 +9788,8 @@ APD+</text>
 </net>
 <net name="3V3" class="0">
 <segment>
-<wire x1="299.72" y1="104.14" x2="281.94" y2="104.14" width="0.1524" layer="91"/>
-<label x="281.94" y="104.14" size="1.778" layer="95"/>
+<wire x1="388.62" y1="124.46" x2="370.84" y2="124.46" width="0.1524" layer="91"/>
+<label x="370.84" y="124.46" size="1.778" layer="95"/>
 <pinref part="U$17" gate="G$1" pin="5"/>
 </segment>
 <segment>
@@ -9942,24 +9949,30 @@ APD+</text>
 <label x="378.46" y="193.04" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$13" gate="G$1" pin="S"/>
-<wire x1="414.02" y1="182.88" x2="414.02" y2="170.18" width="0.1524" layer="91"/>
-<pinref part="R3" gate="G$1" pin="1"/>
-<wire x1="403.86" y1="172.72" x2="403.86" y2="170.18" width="0.1524" layer="91"/>
-<wire x1="403.86" y1="170.18" x2="414.02" y2="170.18" width="0.1524" layer="91"/>
-<wire x1="414.02" y1="170.18" x2="414.02" y2="165.1" width="0.1524" layer="91"/>
-<junction x="414.02" y="170.18"/>
-<label x="416.56" y="162.56" size="1.778" layer="95" rot="R180"/>
-</segment>
-<segment>
-<pinref part="C10" gate="G$1" pin="1"/>
-<wire x1="452.12" y1="182.88" x2="452.12" y2="170.18" width="0.1524" layer="91"/>
-<label x="454.66" y="170.18" size="1.778" layer="95" rot="R180"/>
-</segment>
-<segment>
 <pinref part="C11" gate="G$1" pin="1"/>
-<wire x1="474.98" y1="182.88" x2="474.98" y2="170.18" width="0.1524" layer="91"/>
-<label x="477.52" y="170.18" size="1.778" layer="95" rot="R180"/>
+<wire x1="474.98" y1="182.88" x2="474.98" y2="162.56" width="0.1524" layer="91"/>
+<label x="477.52" y="162.56" size="1.778" layer="95"/>
+<pinref part="C10" gate="G$1" pin="1"/>
+<wire x1="452.12" y1="182.88" x2="452.12" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="474.98" y1="162.56" x2="452.12" y2="162.56" width="0.1524" layer="91"/>
+<pinref part="U$13" gate="G$1" pin="S"/>
+<wire x1="414.02" y1="182.88" x2="414.02" y2="162.56" width="0.1524" layer="91"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+<wire x1="403.86" y1="172.72" x2="403.86" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="403.86" y1="162.56" x2="414.02" y2="162.56" width="0.1524" layer="91"/>
+<junction x="414.02" y="162.56"/>
+<wire x1="452.12" y1="162.56" x2="439.42" y2="162.56" width="0.1524" layer="91"/>
+<junction x="452.12" y="162.56"/>
+<pinref part="C8" gate="G$1" pin="1"/>
+<wire x1="439.42" y1="162.56" x2="431.8" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="431.8" y1="162.56" x2="414.02" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="431.8" y1="175.26" x2="431.8" y2="162.56" width="0.1524" layer="91"/>
+<junction x="431.8" y="162.56"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="439.42" y1="172.72" x2="439.42" y2="162.56" width="0.1524" layer="91"/>
+<junction x="439.42" y="162.56"/>
+<wire x1="474.98" y1="162.56" x2="485.14" y2="162.56" width="0.1524" layer="91"/>
+<junction x="474.98" y="162.56"/>
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="IN-"/>
@@ -10005,8 +10018,8 @@ APD+</text>
 <label x="56.134" y="10.16" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="299.72" y1="101.6" x2="281.94" y2="101.6" width="0.1524" layer="91"/>
-<label x="281.94" y="101.6" size="1.778" layer="95"/>
+<wire x1="388.62" y1="121.92" x2="370.84" y2="121.92" width="0.1524" layer="91"/>
+<label x="370.84" y="121.92" size="1.778" layer="95"/>
 <pinref part="U$17" gate="G$1" pin="6"/>
 </segment>
 </net>
@@ -10083,8 +10096,8 @@ APD+</text>
 <label x="368.3" y="203.2" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="299.72" y1="81.28" x2="281.94" y2="81.28" width="0.1524" layer="91"/>
-<label x="281.94" y="81.28" size="1.778" layer="95"/>
+<wire x1="388.62" y1="101.6" x2="370.84" y2="101.6" width="0.1524" layer="91"/>
+<label x="370.84" y="101.6" size="1.778" layer="95"/>
 <pinref part="U$17" gate="G$1" pin="14"/>
 </segment>
 </net>
@@ -10105,12 +10118,12 @@ APD+</text>
 <net name="APD_V" class="0">
 <segment>
 <pinref part="R10" gate="G$1" pin="1"/>
-<wire x1="469.9" y1="203.2" x2="474.98" y2="203.2" width="0.1524" layer="91"/>
-<wire x1="474.98" y1="205.74" x2="474.98" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="467.36" y1="203.2" x2="474.98" y2="203.2" width="0.1524" layer="91"/>
 <wire x1="474.98" y1="203.2" x2="474.98" y2="190.5" width="0.1524" layer="91"/>
 <junction x="474.98" y="203.2"/>
 <pinref part="C11" gate="G$1" pin="2"/>
-<label x="477.52" y="208.28" size="1.778" layer="95" rot="R180"/>
+<label x="477.52" y="203.2" size="1.778" layer="95"/>
+<wire x1="474.98" y1="203.2" x2="485.14" y2="203.2" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U$18" gate="G$1" pin="1"/>
@@ -10156,13 +10169,13 @@ APD+</text>
 <net name="N$32" class="0">
 <segment>
 <pinref part="D1" gate="G$1" pin="1"/>
-<wire x1="421.64" y1="203.2" x2="441.96" y2="203.2" width="0.1524" layer="91"/>
-<wire x1="441.96" y1="203.2" x2="441.96" y2="198.12" width="0.1524" layer="91"/>
+<wire x1="421.64" y1="203.2" x2="439.42" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="439.42" y1="203.2" x2="439.42" y2="198.12" width="0.1524" layer="91"/>
 <pinref part="R8" gate="G$1" pin="2"/>
 <pinref part="R10" gate="G$1" pin="2"/>
-<wire x1="441.96" y1="203.2" x2="452.12" y2="203.2" width="0.1524" layer="91"/>
-<junction x="441.96" y="203.2"/>
-<wire x1="452.12" y1="203.2" x2="459.74" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="439.42" y1="203.2" x2="452.12" y2="203.2" width="0.1524" layer="91"/>
+<junction x="439.42" y="203.2"/>
+<wire x1="452.12" y1="203.2" x2="457.2" y2="203.2" width="0.1524" layer="91"/>
 <wire x1="452.12" y1="203.2" x2="452.12" y2="190.5" width="0.1524" layer="91"/>
 <junction x="452.12" y="203.2"/>
 <pinref part="C10" gate="G$1" pin="2"/>
@@ -10172,29 +10185,20 @@ APD+</text>
 <segment>
 <pinref part="R8" gate="G$1" pin="1"/>
 <pinref part="R9" gate="G$1" pin="2"/>
-<wire x1="441.96" y1="187.96" x2="441.96" y2="185.42" width="0.1524" layer="91"/>
-<wire x1="441.96" y1="185.42" x2="441.96" y2="182.88" width="0.1524" layer="91"/>
-<wire x1="441.96" y1="185.42" x2="431.8" y2="185.42" width="0.1524" layer="91"/>
+<wire x1="439.42" y1="187.96" x2="439.42" y2="185.42" width="0.1524" layer="91"/>
+<wire x1="439.42" y1="185.42" x2="439.42" y2="182.88" width="0.1524" layer="91"/>
+<wire x1="439.42" y1="185.42" x2="431.8" y2="185.42" width="0.1524" layer="91"/>
 <wire x1="431.8" y1="185.42" x2="431.8" y2="182.88" width="0.1524" layer="91"/>
-<junction x="441.96" y="185.42"/>
+<junction x="439.42" y="185.42"/>
 <wire x1="431.8" y1="185.42" x2="424.18" y2="185.42" width="0.1524" layer="91"/>
 <junction x="431.8" y="185.42"/>
 <pinref part="C8" gate="G$1" pin="2"/>
-<label x="424.18" y="177.8" size="1.778" layer="95" rot="R90"/>
+<label x="439.42" y="187.96" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
 <wire x1="434.34" y1="116.84" x2="416.56" y2="116.84" width="0.1524" layer="91"/>
 <label x="411.48" y="116.84" size="1.778" layer="95"/>
 <pinref part="U$15" gate="G$1" pin="8"/>
-</segment>
-</net>
-<net name="N$34" class="0">
-<segment>
-<pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="441.96" y1="172.72" x2="441.96" y2="170.18" width="0.1524" layer="91"/>
-<wire x1="441.96" y1="170.18" x2="431.8" y2="170.18" width="0.1524" layer="91"/>
-<pinref part="C8" gate="G$1" pin="1"/>
-<wire x1="431.8" y1="170.18" x2="431.8" y2="175.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$36" class="0">
@@ -10215,7 +10219,7 @@ APD+</text>
 <pinref part="U$16" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="U$12" gate="G$1" pin="IN"/>
+<pinref part="REF3033" gate="G$1" pin="IN"/>
 <wire x1="297.18" y1="43.18" x2="292.1" y2="43.18" width="0.1524" layer="91"/>
 <label x="289.56" y="43.18" size="1.778" layer="95"/>
 </segment>
@@ -10374,7 +10378,7 @@ APD+</text>
 <label x="246.38" y="-33.02" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$12" gate="G$1" pin="GND"/>
+<pinref part="REF3033" gate="G$1" pin="GND"/>
 <wire x1="309.88" y1="53.34" x2="309.88" y2="48.26" width="0.1524" layer="91"/>
 <label x="307.34" y="53.34" size="1.778" layer="95"/>
 </segment>
@@ -10495,7 +10499,7 @@ APD+</text>
 </net>
 <net name="3V3_REF" class="0">
 <segment>
-<pinref part="U$12" gate="G$1" pin="OUT"/>
+<pinref part="REF3033" gate="G$1" pin="OUT"/>
 <wire x1="325.12" y1="43.18" x2="322.58" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="L10" gate="G$1" pin="1"/>
 <wire x1="325.12" y1="38.1" x2="325.12" y2="43.18" width="0.1524" layer="91"/>
@@ -10714,6 +10718,14 @@ APD+</text>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="104,1,309.88,53.34,U$12,GND,AGND,,,"/>
+<approved hash="113,1,132.08,-18.3921,W3,,,,,"/>
+<approved hash="113,1,68.58,-18.3921,W1,,,,,"/>
+<approved hash="113,1,53.34,-18.3921,W5,,,,,"/>
+<approved hash="113,1,68.58,-31.0921,U$18,,,,,"/>
+<approved hash="113,1,53.34,-31.0921,U$19,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 <compatibility>
