@@ -1216,9 +1216,6 @@ font: 12pt &quot;Lucida Sans&quot;;</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QGraphicsView" name="graphicsView_6"/>
-       </item>
       </layout>
      </item>
      <item row="2" column="0">
