@@ -1,4 +1,4 @@
-INST_IDX      19
+INST_IDX      23
 2   CONNECTOR-PBS-10                    CONNECTOR-PBS                      
 2   CONNECTOR-PBS-11                    CONNECTOR-PBS                      
 2   CONNECTOR-PBS-12                    CONNECTOR-PBS                      
@@ -18,4 +18,8 @@ INST_IDX      19
 2   CONNECTOR-PBS-7                     CONNECTOR-PBS                      
 2   CONNECTOR-PBS-8                     CONNECTOR-PBS                      
 2   CONNECTOR-PBS-9                     CONNECTOR-PBS                      
-INST_IDX      19
+2   CONNECTOR_B3B-EH-A                  CONNECTOR_B2B-EH-A                 
+2   CONNECTOR_B4B-EH-A                  CONNECTOR_B2B-EH-A                 
+2   CONNECTOR_B6B-EH-A                  CONNECTOR_B2B-EH-A                 
+2   CONNECTOR_B8B-EH-A                  CONNECTOR_B2B-EH-A                 
+INST_IDX      23
