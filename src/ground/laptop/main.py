@@ -18,7 +18,7 @@ from itertools import chain
 
 
 
-MESH_PATH = os.path.abspath('test3dmesh.stl')
+MESH_PATH = os.path.abspath('Sat_Simple2.stl')
 
 
 
@@ -65,7 +65,7 @@ def add_data_to_plot(curve, x, y):
 class PlaneWidget(gl.GLViewWidget):
     def __init__(self, mesh_path, *args, **kwargs):
         super(PlaneWidget, self).__init__(*args, **kwargs)
-        self.setCameraPosition(distance=15)
+        self.setCameraPosition(distance=13)
         self.setBackgroundColor([100, 100, 100, 0])
         g = gl.GLGridItem()
         self.addItem(g)
@@ -75,7 +75,7 @@ class PlaneWidget(gl.GLViewWidget):
         self.addItem(isc_coord)
 
         self.plane_axis = gl.GLAxisItem()
-        self.plane_axis.setSize(x=300, y=300, z=300)
+        self.plane_axis.setSize(x=500, y=500, z=500)
         self.addItem(self.plane_axis)
 
         verts = self._get_mesh_points(mesh_path)
