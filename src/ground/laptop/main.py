@@ -15,7 +15,8 @@ import pyquaternion
 from math import *
 from stl import mesh
 from itertools import chain
-
+pg.setConfigOption('background', '#646464')
+pg.setConfigOption('foreground', '#ffffff')
 
 
 MESH_PATH = os.path.abspath('Sat_Simple2.stl')
@@ -48,7 +49,7 @@ class DataManager(QtCore.QObject):
             self.X.emit(random.uniform(7, 10))
             self.Y.emit(random.uniform(7, 10))
             self.Z.emit(random.uniform(7, 10))
-            time.sleep(0.05)
+            time.sleep(0.2)
 
     def finish(self):
         self.mutex.lock()
@@ -58,7 +59,11 @@ class DataManager(QtCore.QObject):
 
 
 def add_data_to_plot(curve, x, y):
-    curve.setData(np.append(curve.getData()[0], x), np.append(curve.getData()[1], y))
+    data = curve.getData()
+    if len(curve.getData()[0]) + 1 > 100:
+        curve.setData(np.append(curve.getData()[0][2:], x), np.append(curve.getData()[1][2:], y))
+    else:
+        curve.setData(np.append(curve.getData()[0], x), np.append(curve.getData()[1], y))
 
 
 
@@ -80,7 +85,7 @@ class PlaneWidget(gl.GLViewWidget):
 
         verts = self._get_mesh_points(mesh_path)
         faces = np.array([(i, i + 1, i + 2,) for i in range(0, len(verts), 3)])
-        colors = np.array([(0.0, 1.0, 0.0, 1.0,) for i in range(0, len(verts), 3)])
+        colors = np.array([(1.0, 1.0, 0.0, 1.0,) for i in range(0, len(verts), 3)])
         self.mesh = gl.GLMeshItem(vertexes=verts, faces=faces, faceColors=colors, smooth=False, shader='shaded')
 
         # self.mesh.rotate(180, 0, 0, 1)
@@ -90,6 +95,7 @@ class PlaneWidget(gl.GLViewWidget):
 
     def on_new_records(self, records):
         self._update_mesh(records)
+        time.sleep(0.05)
 
     def _get_mesh_points(self, mesh_path):
         your_mesh = mesh.Mesh.from_file(mesh_path)
@@ -118,7 +124,6 @@ class PlaneWidget(gl.GLViewWidget):
         self._transform_object(self.mesh)
 
         self._transform_object(self.plane_axis, move=False)
-
 
 
 
