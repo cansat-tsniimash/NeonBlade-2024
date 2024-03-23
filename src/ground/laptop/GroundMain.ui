@@ -1121,21 +1121,6 @@ color: rgb(255, 240, 120);</string>
    </item>
    <item row="0" column="1" rowspan="5">
     <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,0,0">
-     <item row="2" column="1">
-      <layout class="QVBoxLayout" name="verticalLayout_17">
-       <item>
-        <widget class="QLabel" name="label_76">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;Lucida Sans&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Лидар</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
      <item row="1" column="2">
       <layout class="QVBoxLayout" name="verticalLayout_13">
        <item>
@@ -1261,6 +1246,26 @@ font: 12pt &quot;Lucida Sans&quot;;</string>
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="2" column="1">
+      <widget class="QWidget" name="" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <item>
+         <widget class="QLabel" name="label_76">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;Lucida Sans&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Лидар</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
     </layout>
    </item>

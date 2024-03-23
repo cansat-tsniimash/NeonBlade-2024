@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
+
 pg.setConfigOption('background', '#646464')
 pg.setConfigOption('foreground', '#ffffff')
 
@@ -30,12 +31,6 @@ MESH_PATH = os.path.abspath('Sat_Simple2.stl')
 
 
 
-def makeData():
-    x = np.random.rand(1000) * 20.0 - 10.0
-    y = np.random.rand(len(x)) * 20.0 - 10.0
-
-    z = np.sin(x * 0.3) * np.cos(y * 0.75)
-    return x, y, z
 
 
 class DataManager(QtCore.QObject):
@@ -169,6 +164,8 @@ class App(QWidget):
         x, y, z = TopData.makeData()
         Top = QWidget(self)
 
+        Top.setStyleSheet('background-color:#646464;')
+
     
         # Создание экземпляра объекта Figure из matplotlib
         self.figure = Figure()
@@ -186,11 +183,14 @@ class App(QWidget):
         self.axes.set_facecolor('#646464')
 
         self.my_cmap = plt.get_cmap("rainbow")
-
-        self.axes.plot_trisurf(x, y, z, cmap = self.my_cmap, linewidth=0.5, edgecolors='k')
-
+        self.axes.plot_trisurf(x, y, z, cmap = self.my_cmap, linewidth=0.2, edgecolors='k')
         self.axes.set_xlim(-10, 10)
         self.axes.set_ylim(-10, 10)
+        self.axes.set_axis_off()
+        self.axes.xaxis.pane.fill = False # Left pane
+        self.axes.yaxis.pane.fill = False # Right pane
+
+        
 
 
         
