@@ -189,6 +189,7 @@ class App(QWidget):
         self.axes.set_axis_off()
         self.axes.xaxis.pane.fill = False # Left pane
         self.axes.yaxis.pane.fill = False # Right pane
+        self.figure.subplots_adjust(left=0.0, bottom=0.0, top=1.0, hspace=0.7)
 
         
 

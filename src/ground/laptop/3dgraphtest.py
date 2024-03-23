@@ -24,5 +24,6 @@ if __name__ == '__main__':
     axes.plot_trisurf(x, y, z, cmap = my_cmap, linewidth=0.5, edgecolors='k')
     axes.set_xlim(-10, 10)
     axes.set_ylim(-10, 10)
+    fig.subplots_adjust(left=0.07, bottom=0.04, top=0.97, hspace=0.13)
 
     plt.show()

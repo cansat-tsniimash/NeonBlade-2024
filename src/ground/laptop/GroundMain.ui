@@ -1248,7 +1248,7 @@ font: 12pt &quot;Lucida Sans&quot;;</string>
       </layout>
      </item>
      <item row="2" column="1">
-      <widget class="QWidget" name="" native="true">
+      <widget class="QWidget" name="verticalLayout_21" native="true">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(100, 100, 100);</string>
        </property>
