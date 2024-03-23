@@ -1,9 +1,12 @@
 #!/usr/bin/python3
 from PyQt5 import QtWidgets, QtCore, QtGui
+import sys
 from sys import argv, exit, stdout
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget
 from source.main_window import MainWindow
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import random
 import os
 import math
@@ -15,6 +18,10 @@ import pyquaternion
 from math import *
 from stl import mesh
 from itertools import chain
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+
 pg.setConfigOption('background', '#646464')
 pg.setConfigOption('foreground', '#ffffff')
 
@@ -23,6 +30,12 @@ MESH_PATH = os.path.abspath('Sat_Simple2.stl')
 
 
 
+def makeData():
+    x = np.random.rand(1000) * 20.0 - 10.0
+    y = np.random.rand(len(x)) * 20.0 - 10.0
+
+    z = np.sin(x * 0.3) * np.cos(y * 0.75)
+    return x, y, z
 
 
 class DataManager(QtCore.QObject):
@@ -30,9 +43,6 @@ class DataManager(QtCore.QObject):
     mutex = QtCore.QMutex()
     #autoclose = QtCore.pyqtSignal(str)
     #finished = QtCore.pyqtSignal
-    X = QtCore.pyqtSignal(float)
-    Y = QtCore.pyqtSignal(float)
-    Z = QtCore.pyqtSignal(float)
 
     def run(self):
         self.mutex.lock()
@@ -46,15 +56,27 @@ class DataManager(QtCore.QObject):
             self.mutex.unlock()
             h = math.sin(time.time())
             self.new_data.emit([random.uniform(7, 10), time.time()])
-            self.X.emit(random.uniform(7, 10))
-            self.Y.emit(random.uniform(7, 10))
-            self.Z.emit(random.uniform(7, 10))
             time.sleep(0.2)
 
     def finish(self):
         self.mutex.lock()
         self.close_flag = 1
         self.mutex.unlock()
+
+
+
+class TopData():
+    def makeData():
+        x = np.random.rand(1000) * 20.0 - 10.0
+        y = np.random.rand(len(x)) * 20.0 - 10.0
+
+        z = np.sin(x * 0.3) * np.cos(y * 0.75)
+        return x, y, z
+
+
+
+
+        
 
 
 
@@ -95,7 +117,6 @@ class PlaneWidget(gl.GLViewWidget):
 
     def on_new_records(self, records):
         self._update_mesh(records)
-        time.sleep(0.05)
 
     def _get_mesh_points(self, mesh_path):
         your_mesh = mesh.Mesh.from_file(mesh_path)
@@ -143,6 +164,36 @@ class App(QWidget):
         self.Orient = PlaneWidget(MESH_PATH)
         self.ui.verticalLayout_8.addWidget(self.Orient)
 
+
+
+        x, y, z = TopData.makeData()
+        Top = QWidget(self)
+
+    
+        # Создание экземпляра объекта Figure из matplotlib
+        self.figure = Figure()
+    
+        # Создание экземпляра объекта FigureCanvas, который будет использоваться для отображения графика
+        self.canvas = FigureCanvas(self.figure)
+    
+        # Добавление графика на макет
+        self.ui.verticalLayout_17.addWidget(self.canvas)
+    
+        # Создание экземпляра объекта осей для графика
+        self.axes = self.figure.add_subplot(projection='3d')
+    
+        # Вставка здесь кода для построения графика с помощью методов matplotlib
+        self.axes.set_facecolor('#646464')
+
+        self.my_cmap = plt.get_cmap("rainbow")
+
+        self.axes.plot_trisurf(x, y, z, cmap = self.my_cmap, linewidth=0.5, edgecolors='k')
+
+        self.axes.set_xlim(-10, 10)
+        self.axes.set_ylim(-10, 10)
+
+
+        
 
         #График высоты
         self.Hight_graph = pg.GraphicsLayoutWidget()
@@ -346,6 +397,19 @@ class App(QWidget):
         self.Temp_plot.setAxisItems({'bottom': axis_x, 'left': axis_y})
 
         
+
+
+
+    def makeData():
+        x = np.random.rand(1000) * 20.0 - 10.0
+        y = np.random.rand(len(x)) * 20.0 - 10.0
+
+        z = np.sin(x * 0.3) * np.cos(y * 0.75)
+        return x, y, z
+
+
+
+
         
     #Обновление графиков    
     def new_data_reaction(self, data):
@@ -404,6 +468,8 @@ class App(QWidget):
 
         
 if __name__ == "__main__":
+
+
 
     QtCore.QCoreApplication.setOrganizationName("CNIImash")
     QtCore.QCoreApplication.setApplicationName("Neon_Blade")

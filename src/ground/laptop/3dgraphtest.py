@@ -1,51 +1,29 @@
-from pyqtgraph.Qt import QtGui#, QtCore
-import numpy as np
-import pyqtgraph as pg
-import pyqtgraph.opengl as gl
 import matplotlib.pyplot as plt
 
+import numpy as np
 
-cmap = plt.get_cmap('jet')
 
-app = QtGui.QGuiApplication([])
-win = pg.GraphicsView()
-layoutgb = QtGui.QGridLayout()
-win.setLayout(layoutgb)
+def makeData():
+    x = np.random.rand(1000) * 20.0 - 10.0
+    y = np.random.rand(len(x)) * 20.0 - 10.0
 
-N = 11
-M = 11
+    z = np.sin(x * 0.3) * np.cos(y * 0.75)
+    return x, y, z
 
-x = np.linspace(0, 10, N)
-y = np.linspace(0, 10, M)
 
-for i in range(5):
+if __name__ == '__main__':
+    x, y, z = makeData()
 
-    glvw = gl.GLViewWidget()
+    fig = plt.figure()
+    axes = fig.add_subplot(projection='3d')
+    axes.set_facecolor('#646464')
 
-    z = np.random.random((N, M))
 
-    minZ = np.min(z)
-    maxZ = np.max(z)
-    colors = cmap((z - minZ)/(maxZ - minZ))
-    
-    surf = gl.GLSurfacePlotItem(x = x, 
-                                y = y, 
-                                z = z, 
-                                colors = colors, 
-                                drawEdges = True)
+    my_cmap = plt.get_cmap("rainbow")
 
-    glvw.addItem(surf)
+    axes.plot_trisurf(x, y, z, cmap = my_cmap, linewidth=0.5, edgecolors='k')
 
-    layoutgb.addWidget(glvw, 0, i)
+    axes.set_xlim(-10, 10)
+    axes.set_ylim(-10, 10)
 
-p1 = pg.PlotWidget()
-p1.plot([1, 2, 3, 4, 5], [1, 0, 2, 3, 1], pen ='r', name ='red')
-layoutgb.addWidget(p1, 1, 0, 1, -1)
-
-p2 = pg.PlotWidget()
-p2.plot([1, 2, 3, 4, 5], [2, 1, 4, 1, 1], pen ='g', name ='green')
-layoutgb.addWidget(p2, 2, 0, 1, -1)
-
-glvw.sizeHint = lambda: pg.QtCore.QSize(100, 500)
-
-QtGui.QApplication.instance().exec_()
+    plt.show()
