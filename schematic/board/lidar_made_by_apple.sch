@@ -345,6 +345,7 @@
 <smd name="P$7" x="1.9" y="0.33" dx="0.8" dy="0.34" layer="1"/>
 <smd name="P$6" x="1.9" y="-0.33" dx="0.8" dy="0.34" layer="1"/>
 <smd name="P$5" x="1.9" y="-0.98" dx="0.8" dy="0.34" layer="1"/>
+<smd name="P$9" x="0.655" y="0" dx="1.69" dy="2.29" layer="1"/>
 </package>
 <package name="VIAS-CONNECT">
 <text x="-3" y="1" size="1.27" layer="27">&gt;VALUE</text>
@@ -404,6 +405,7 @@
 <smd name="P$6" x="0.375" y="1.4" dx="0.25" dy="0.6" layer="1"/>
 <smd name="P$5" x="1.125" y="1.4" dx="0.25" dy="0.6" layer="1"/>
 <circle x="-1.25" y="-0.75" radius="0.01" width="0.1" layer="21"/>
+<smd name="P$9" x="0" y="0" dx="1.65" dy="2.38" layer="1" rot="R90"/>
 </package>
 <package name="BAV99">
 <wire x1="-1.5" y1="0.715" x2="-1.5" y2="-0.715" width="0.127" layer="21"/>
@@ -1130,7 +1132,7 @@
 <connect gate="G$1" pin="3S" pad="P$3"/>
 <connect gate="G$1" pin="4G" pad="P$4"/>
 <connect gate="G$1" pin="5D" pad="P$5"/>
-<connect gate="G$1" pin="6D" pad="P$6"/>
+<connect gate="G$1" pin="6D" pad="P$6 P$9"/>
 <connect gate="G$1" pin="7D" pad="P$7"/>
 <connect gate="G$1" pin="8D" pad="P$8"/>
 </connects>
@@ -1225,7 +1227,7 @@
 <device name="" package="MAX40658-8-TDFN-3X3MM">
 <connects>
 <connect gate="G$1" pin="CCAP" pad="P$3"/>
-<connect gate="G$1" pin="GND" pad="P$5"/>
+<connect gate="G$1" pin="GND" pad="P$5 P$8 P$9"/>
 <connect gate="G$1" pin="IN" pad="P$2"/>
 <connect gate="G$1" pin="OFFSET" pad="P$4"/>
 <connect gate="G$1" pin="OUT+" pad="P$6"/>
