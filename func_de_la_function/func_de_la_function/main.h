@@ -75,9 +75,12 @@ typedef struct
     {
         uint16_t num;
         uint32_t time;
+        uint32_t time_pr;
 
         float acc_mg[3];
         float gyro_mdps[3];
         float LIS3MDL_magnetometer[3];
         double lidar;
+        float q[4];
+
     }new_packet_ma_type_2_t;//SPEED

@@ -330,21 +330,21 @@ typedef enum tdc21_wreg3_tim0_mb2_t
 #define TDC21_WREG5_CONF_FIRE(x)			(x << 29)
 typedef enum tdc21_wreg5_conf_t
 {
-	TDC21_WREG5_FIRE_BOTH,
-	TDC21_WREG5_FIRE_UP,
+	TDC21_WREG5_FIRE_BOTH = 1,
+	TDC21_WREG5_FIRE_UP = 2,
 	TDC21_WREG5_FIRE_DOWN
 }tdc21_wreg5_conf_t;
 //Включение дополнительного шума для канала START
 #define TDC21_WREG5_STARTNOISE(x)			(x << 29)
 //Включение шума фазы
-#define TDC21_WREG5_DIS_PASESHIFT(x)		(x << 29)
+#define TDC21_WREG5_DIS_PASESHIFT(x)		(x << 28)
 typedef enum tdc21_wreg5_paseghift_t
 {
 	TDC21_WREG5_ENABLED_PASESHIFT,
 	TDC21_WREG5_DISABLED_PASESHIFT
 }tdc21_wreg5_paseghift;
 //Число повторений последовательности импульсов для "квазиобзвона"
-#define TDC21_WREG5_REPEAT_FIRE(x)			(x << 29)
+#define TDC21_WREG5_REPEAT_FIRE(x)			(x << 24)
 typedef enum tdc21_wreg5_repeat_fire_t
 {
 	TDC21_WREG5_REPEAT_FIRE_NOT_REPEAT,
@@ -472,7 +472,7 @@ typedef enum tdc21_wreg6_temp_portdir_t
 }tdc21_wreg6_temp_portdir;
 //[6:4]Число импульсов, генерируемых генератором запускающих импульсов (0 = отключен)
 #define TDC21_WREG6_ANZ_FIRE(x)			(x << 8)
-#define TDC21_WREG6_ANZ_FIRE_LEN		ob1111111
+#define TDC21_WREG6_ANZ_FIRE_LEN		0b1111111
 //Свободные биты
 #define TDC21_WREG6_ID6(x)				(x << 0)
 

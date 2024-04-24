@@ -1,0 +1,14 @@
+﻿  ConsoleApplication2.cpp
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(30,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(31,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(32,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(33,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(34,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(35,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(52,25): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(52,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(53,19): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(53,38): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(54,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(54,44): warning C4305: 'initializing': truncation from 'double' to 'float'
+  ConsoleApplication2.vcxproj -> C:\huinya\NeoN_BlVdE\NeonBlade-2024\python_files\vector\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe

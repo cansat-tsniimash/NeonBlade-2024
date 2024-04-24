@@ -59,8 +59,14 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LSM_CS_Pin GPIO_PIN_13
 #define LSM_CS_GPIO_Port GPIOC
-#define USILITEL_Pin GPIO_PIN_0
-#define USILITEL_GPIO_Port GPIOA
+#define MOTOR_Pin GPIO_PIN_14
+#define MOTOR_GPIO_Port GPIOC
+#define STATE_Pin GPIO_PIN_15
+#define STATE_GPIO_Port GPIOC
+#define TDC_INT_Pin GPIO_PIN_0
+#define TDC_INT_GPIO_Port GPIOH
+#define TDC_SHIM_Pin GPIO_PIN_2
+#define TDC_SHIM_GPIO_Port GPIOA
 #define LIS_CS_Pin GPIO_PIN_4
 #define LIS_CS_GPIO_Port GPIOA
 #define NRF_CE_Pin GPIO_PIN_1
@@ -69,6 +75,10 @@ void Error_Handler(void);
 #define NRF_CS_GPIO_Port GPIOB
 #define CS_TDC_Pin GPIO_PIN_10
 #define CS_TDC_GPIO_Port GPIOB
+#define PEREGIGATEL_Pin GPIO_PIN_12
+#define PEREGIGATEL_GPIO_Port GPIOB
+#define LED_Pin GPIO_PIN_14
+#define LED_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

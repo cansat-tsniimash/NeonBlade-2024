@@ -3,6 +3,7 @@ import argparse
 import time
 import struct
 import datetime
+import socket
 
 from RF24 import RF24_PA_LOW, RF24_PA_HIGH, RF24_PA_MAX
 from RF24 import RF24_1MBPS, RF24_250KBPS, RF24_2MBPS
@@ -14,6 +15,13 @@ from RF24 import RF24_CRC_16
 
 radio2=RF24_CLASS(24, 1)
 
+bufferSize = 32
+
+
+serverAddressPort   = ("192.168.0.188", 6040)
+# Create a UDP socket at client side
+UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+
 
 if __name__ == '__main__':
     static_payload_size = None
@@ -21,7 +29,7 @@ if __name__ == '__main__':
     radio2.begin()
     radio2.openReadingPipe(1, b'\xac\xac\xac\xac\xac')
     radio2.setAddressWidth(5)
-    radio2.channel = 100
+    radio2.channel = 101
     radio2.setDataRate(RF24_250KBPS)
     radio2.setCRCLength(RF24_CRC_8)
     radio2.setAutoAck(True)
@@ -38,7 +46,7 @@ if __name__ == '__main__':
     while True:
         has_payload, pipe_number = radio2.available_pipe()
         #print(f'has_payload-{has_payload}, pipe_number={pipe_number}')
-
+        UDPClientSocket.sendto(str.encode("Hello World!"), serverAddressPort)
         if has_payload:
             payload_size = static_payload_size
             if payload_size is None:
@@ -47,6 +55,8 @@ if __name__ == '__main__':
             data = radio2.read(payload_size)
             print('got data %s' % data)
 
+            # Send to server using created UDP socket
+            UDPClientSocket.sendto(data, serverAddressPort)
             if data[0] == 255:
                 print("словил 11 пакет МА")
                 pack = struct.unpack("<BHL3dB", data)
@@ -56,10 +66,8 @@ if __name__ == '__main__':
                 print("Temperature", pack[4])
                 print("Heught bme", pack[5])
                 print("State", pack[6])
-                
 
-
-            if data[0] = 25:
+            if data[0] == 25:
                 print("словил 11 пакет МА")
                 pack = struct.unpack("<BHL3fB", data)
                 print("Pack Num:", pack[1])
@@ -87,5 +95,3 @@ if __name__ == '__main__':
 
                 print("Lidar", pack[12])
                 
-
-

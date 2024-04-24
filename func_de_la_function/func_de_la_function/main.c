@@ -138,9 +138,9 @@ float lis3mdl_from_fs16_to_gauss(int16_t lsb)
 	return ((float)lsb / 1711.0f);
 }
 
-int pars_p11(packet_ma_type_11_t* packet_ma_type_11_in, packet_ma_type_11_t*packet_new)
+int pars_p11(packet_ma_type_11_t* packet_ma_type_11_in, new_packet_ma_type_11_t*packet_new)
 {
-	if (Crc16((uint8_t*)&packet_ma_type_11_in, sizeof(packet_ma_type_11_in) - 2) != packet_ma_type_11_in->sum) return 1;
+	//if (Crc16((uint8_t*)&packet_ma_type_11_in, sizeof(packet_ma_type_11_in) - 2) != packet_ma_type_11_in->sum) return 1;
 	(*packet_new).BME280_pressure = (*packet_ma_type_11_in).BME280_pressure;
 	(*packet_new).BME280_temperature = (*packet_ma_type_11_in).BME280_temperature;
 	(*packet_new).state = (*packet_ma_type_11_in).state;
@@ -153,7 +153,7 @@ int pars_p11(packet_ma_type_11_t* packet_ma_type_11_in, packet_ma_type_11_t*pack
 
 int pars_p12(packet_ma_type_12_t* packet_ma_type_12_in, new_packet_ma_type_12_t*packet_new)
 {
-	if (Crc16((uint8_t*)&packet_ma_type_12_in, sizeof(packet_ma_type_12_in) - 2) != packet_ma_type_12_in->sum) return 1;
+	//if (Crc16((uint8_t*)&packet_ma_type_12_in, sizeof(packet_ma_type_12_in) - 2) != packet_ma_type_12_in->sum) return 1;
 	(*packet_new).altitude = (*packet_ma_type_12_in).altitude;
 	(*packet_new).latitude = (*packet_ma_type_12_in).latitude;
 	(*packet_new).longitude = (*packet_ma_type_12_in).longitude;
@@ -165,19 +165,26 @@ int pars_p12(packet_ma_type_12_t* packet_ma_type_12_in, new_packet_ma_type_12_t*
 
 int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_pack)
 {
-	if (Crc16((uint8_t*)&packet_ma_type_2_in, sizeof(packet_ma_type_2_in) - 2) != packet_ma_type_2_in->sum) return 1;
-	(*new_pack).acc_mg[0] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[0] /1000) + kalib_acc_0;
-	(*new_pack).acc_mg[1] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[1] / 1000) + kalib_acc_1;
-	(*new_pack).acc_mg[2] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[2] / 1000) + kalib_acc_2;
-	(*new_pack).gyro_mdps[0] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[0] / 1000) + kalib_gyro_0;
-	(*new_pack).gyro_mdps[1] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[1] / 1000) + kalib_gyro_1;
-	(*new_pack).gyro_mdps[2] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[2] / 1000) + kalib_gyro_2;
+	//if (Crc16((uint8_t*)&packet_ma_type_2_in, sizeof(packet_ma_type_2_in) - 2) != packet_ma_type_2_in->sum) return 1;
+	float quat[4];
+	(*new_pack).acc_mg[0] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[0] )/1000 + kalib_acc_0;
+	(*new_pack).acc_mg[1] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[1] )/ 1000 + kalib_acc_1;
+	(*new_pack).acc_mg[2] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[2] )/ 1000 + kalib_acc_2;
+	(*new_pack).gyro_mdps[0] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[0] )/ 1000 + kalib_gyro_0;
+	(*new_pack).gyro_mdps[1] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[1] )/ 1000 + kalib_gyro_1;
+	(*new_pack).gyro_mdps[2] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[2] )/ 1000 + kalib_gyro_2;
 	(*new_pack).LIS3MDL_magnetometer[0] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[0]) + kalib_magn_0;
 	(*new_pack).LIS3MDL_magnetometer[1] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[1]) + kalib_magn_1;
 	(*new_pack).LIS3MDL_magnetometer[2] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[2]) + kalib_magn_2;
 	(*new_pack).lidar = (*packet_ma_type_2_in).lidar * 299792458 * 45 * pow(10, -12);//ответ в метрах. 45* = 90(пикосек)/2(путь туда-обратно)
 	(*new_pack).num = (*packet_ma_type_2_in).num;
+	(*new_pack).time_pr = (*new_pack).time;
 	(*new_pack).time = (*packet_ma_type_2_in).time;
+	MadgwickAHRSupdateIMU(quat, (*new_pack).gyro_mdps[0], (*new_pack).gyro_mdps[1], (*new_pack).gyro_mdps[2], (*new_pack).acc_mg[0], (*new_pack).acc_mg[1], (*new_pack).acc_mg[2], (*new_pack).time - (*new_pack).time_pr, 0.3);
+	(*new_pack).q[0] = quat[0];
+	(*new_pack).q[1] = quat[1];
+	(*new_pack).q[2] = quat[2];
+	(*new_pack).q[3] = quat[3];
 
 }
 

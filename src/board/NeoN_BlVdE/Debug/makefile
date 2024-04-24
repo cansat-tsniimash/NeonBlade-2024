@@ -18,6 +18,8 @@ RM := rm -rf
 -include stm32f4/stm32f4/ATGM336H/src/subdir.mk
 -include stm32f4/stm32f4/ATGM336H/minmea/subdir.mk
 -include stm32f4/stm32f4/AD5593/subdir.mk
+-include TDC-GP21/TDC21_UPPER_API/subdir.mk
+-include TDC-GP21/TDC21_LOVVER_API/subdir.mk
 -include Middlewares/Third_Party/FatFs/src/option/subdir.mk
 -include Middlewares/Third_Party/FatFs/src/subdir.mk
 -include FATFS/Target/subdir.mk

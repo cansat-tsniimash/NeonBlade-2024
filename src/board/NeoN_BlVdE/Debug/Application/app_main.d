@@ -19,6 +19,9 @@ Application/app_main.o: ../Application/app_main.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
@@ -37,6 +40,7 @@ Application/app_main.o: ../Application/app_main.c \
  ../Middlewares/Third_Party/FatFs/src/diskio.h \
  ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/sd_diskio.h \
  C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/lis3mdl_reg.h \
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/Photorezistor/photorezistor.h \
  ../Application/sebastian.h \
  ../Application/../Drivers/BME280_I2C/its_bme280.h \
  ../Application/../Drivers/BME280_I2C/../../Application/freakheader.h \
@@ -53,7 +57,12 @@ Application/app_main.o: ../Application/app_main.c \
  c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h \
  C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api.h \
  C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h \
- C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_defs.h
+ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_defs.h \
+ ../Application/../TDC-GP21/TDC21_LOVVER_API/TDC21_lovver_api.h \
+ ../Application/../TDC-GP21/TDC21_UPPER_API/TDC21_upper_api.h \
+ ../Application/../TDC-GP21/TDC21_UPPER_API/../TDC21_LOVVER_API/TDC21_lovver_api.h \
+ ../Application/../TDC-GP21/TDC21_UPPER_API/../TDC-GP21_defs.h \
+ ../Application/../TDC-GP21/TDC-GP21_defs.h
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 
@@ -94,6 +103,12 @@ Application/app_main.o: ../Application/app_main.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h:
 
@@ -139,6 +154,8 @@ Application/app_main.o: ../Application/app_main.c \
 
 C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/lis3mdl_reg.h:
 
+C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/Photorezistor/photorezistor.h:
+
 ../Application/sebastian.h:
 
 ../Application/../Drivers/BME280_I2C/its_bme280.h:
@@ -172,3 +189,13 @@ C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api.h:
 C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_lower_api_stm32.h:
 
 C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/nRF24L01_PL/nrf24_defs.h:
+
+../Application/../TDC-GP21/TDC21_LOVVER_API/TDC21_lovver_api.h:
+
+../Application/../TDC-GP21/TDC21_UPPER_API/TDC21_upper_api.h:
+
+../Application/../TDC-GP21/TDC21_UPPER_API/../TDC21_LOVVER_API/TDC21_lovver_api.h:
+
+../Application/../TDC-GP21/TDC21_UPPER_API/../TDC-GP21_defs.h:
+
+../Application/../TDC-GP21/TDC-GP21_defs.h:

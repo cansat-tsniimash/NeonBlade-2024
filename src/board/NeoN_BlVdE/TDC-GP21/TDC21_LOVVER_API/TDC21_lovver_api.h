@@ -1,5 +1,8 @@
-#include <stm32f4xx_hal.h>
 
+#ifndef TDC_GP21_TDC_GP21_LOVVER_API_H_
+#define TDC_GP21_TDC_GP21_LOVVER_API_H_
+#include <stm32f4xx_hal.h>
+#include <stdbool.h>
 typedef struct tdcgp21_lovver_api_config_t
 {
 	// Дескриптор SPI
@@ -22,4 +25,7 @@ void tdc21_spi_init(tdcgp21_lovver_api_config_t* nrf24, SPI_HandleTypeDef *hspi,
 void tdc21_start_tof(tdcgp21_lovver_api_config_t* api_config);
 void tdc21_full_reset(tdcgp21_lovver_api_config_t* api_config);
 void tdc21_init(tdcgp21_lovver_api_config_t* api_config);
+HAL_StatusTypeDef tdcgp21_write_register(void * intf_ptr, uint8_t reg_addr, const uint8_t * reg_data, size_t data_size);
+void tdc21_read_register(void * intf_ptr, uint8_t reg_addr, uint8_t * reg_data, size_t data_size);
 
+#endif /* TDC_GP21_TDC_GP21_LOVVER_API_H_ */

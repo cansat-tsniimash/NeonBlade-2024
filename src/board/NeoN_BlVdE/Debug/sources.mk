@@ -30,6 +30,8 @@ FATFS/App \
 FATFS/Target \
 Middlewares/Third_Party/FatFs/src \
 Middlewares/Third_Party/FatFs/src/option \
+TDC-GP21/TDC21_LOVVER_API \
+TDC-GP21/TDC21_UPPER_API \
 stm32f4/stm32f4/AD5593 \
 stm32f4/stm32f4/ATGM336H/minmea \
 stm32f4/stm32f4/ATGM336H/src \
