@@ -23,6 +23,12 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 
+import ctypes
+
+import socket
+import struct
+
+
 pg.setConfigOption('background', '#646464')
 pg.setConfigOption('foreground', '#ffffff')
 
@@ -30,33 +36,205 @@ pg.setConfigOption('foreground', '#ffffff')
 MESH_PATH = os.path.abspath('Sat_Simple2.stl')
 
 
+class packet_ma_type_11_t(ctypes.Structure):
+    _fields_ = [('flag', ctypes.c_uint8),
+                ('num', ctypes.c_uint16),
+                ('time', ctypes.c_uint32),
+                ('BME280_pressure', ctypes.c_double),
+                ('BME280_temperature', ctypes.c_float),
+                ('height_bme', ctypes.c_double),
+                ('state', ctypes.c_uint8), 
+                ('sum', ctypes.c_uint16)]
 
+class packet_ma_type_12_t(ctypes.Structure):
+    _fields_ = [('flag', ctypes.c_uint8),
+                ('num', ctypes.c_uint16),
+                ('time', ctypes.c_uint32),
+                ('latitude', ctypes.c_float),
+                ('longitude', ctypes.c_float),
+                ('altitude', ctypes.c_float),
+                ('fix', ctypes.c_uint8), 
+                ('sum', ctypes.c_uint16)]
+
+class packet_ma_type_2_t(ctypes.Structure):
+    _fields_ = [('flag', ctypes.c_uint8),
+                ('num', ctypes.c_uint16),
+                ('time', ctypes.c_uint32),
+                ('acc_mg', ctypes.c_int16 * 3),
+                ('gyro_mdps', ctypes.c_int16 * 3),
+                ('LIS3MDL_magnetometer', ctypes.c_int16 * 3),
+                ('lidar', ctypes.c_uint16), 
+                ('sum', ctypes.c_uint16)]
+##################################NEW
+class new_packet_ma_type_11_t(ctypes.Structure):
+    _fields_ = [('num', ctypes.c_uint16),
+                ('time', ctypes.c_uint32),
+                ('BME280_pressure', ctypes.c_double),
+                ('BME280_temperature', ctypes.c_float),
+                ('height_bme', ctypes.c_double),
+                ('state', ctypes.c_uint8)]
+                
+
+class new_packet_ma_type_12_t(ctypes.Structure):
+    _fields_ = [('num', ctypes.c_uint16),
+                ('time', ctypes.c_uint32),
+                ('latitude', ctypes.c_float),
+                ('longitude', ctypes.c_float),
+                ('altitude', ctypes.c_float),
+                ('fix', ctypes.c_uint8)]
+                
+
+class new_packet_ma_type_2_t(ctypes.Structure):
+    _fields_ = [('num', ctypes.c_uint16),
+                ('time', ctypes.c_uint32),
+                ('acc_mg', ctypes.c_float * 3),
+                ('gyro_mdps', ctypes.c_float * 3),
+                ('LIS3MDL_magnetometer', ctypes.c_float * 3),
+                ('lidar', ctypes.c_double),
+                ('q', ctypes.c_float * 4)]
+
+
+
+def makeData():
+    x = np.random.rand(1000) * 20.0 - 10.0
+    y = np.random.rand(len(x)) * 20.0 - 10.0
+
+    z = np.sin(x * 0.3) * np.cos(y * 0.75)
+    return x, y, z
 
 
 class DataManager(QtCore.QObject):
-    new_data = QtCore.pyqtSignal(list)
+    new_data = QtCore.pyqtSignal(new_packet_ma_type_11_t, new_packet_ma_type_12_t, new_packet_ma_type_2_t)
     mutex = QtCore.QMutex()
     #autoclose = QtCore.pyqtSignal(str)
     #finished = QtCore.pyqtSignal
+
+    def __init__(self, ServerIP="192.168.43.153", ServerPort=6041):
+        super(DataManager, self).__init__()
+        self.ServerIP = ServerIP
+        self.ServerPort = ServerPort
+
+    def start(self):
+        self.bufferSize = 32
+        self.UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        self.UDPClientSocket.setblocking(False)
+        self.UDPClientSocket.settimeout(1)
+        self.UDPClientSocket.sendto(str.encode("Give me data plz"), (self.ServerIP, self.ServerPort))
+          
+        self.lib1 = ctypes.CDLL("func_de_la_function/func_de_la_function/libtest.dll")
+
+        self.lib1.MadgwickAHRSupdateIMU.argtypes = (ctypes.POINTER(ctypes.c_float), ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float,)
+        self.lib1.MadgwickAHRSupdateIMU.restype = ctypes.c_void_p
+
+        self.lib1.lsm6ds3_from_fs16g_to_mg.argtypes = [ctypes.c_int16]
+        self.lib1.lsm6ds3_from_fs16g_to_mg.restype = ctypes.c_float
+
+        self.lib1.lsm6ds3_from_fs2000dps_to_mdps.argtypes = [ctypes.c_int16]
+        self.lib1.lsm6ds3_from_fs2000dps_to_mdps.restype = ctypes.c_float
+
+        self.lib1.lis3mdl_from_fs16_to_gauss.argtypes = [ctypes.c_int16]
+        self.lib1.lis3mdl_from_fs16_to_gauss.restype = ctypes.c_float
+
+        self.lib1.pars_p11.argtypes = [ctypes.POINTER(packet_ma_type_11_t), ctypes.POINTER(new_packet_ma_type_11_t)]
+        self.lib1.pars_p12.argtypes = [ctypes.POINTER(packet_ma_type_12_t), ctypes.POINTER(new_packet_ma_type_12_t)]
+        self.lib1.pars_2.argtypes = [ctypes.POINTER(packet_ma_type_2_t), ctypes.POINTER(new_packet_ma_type_2_t)]
+        print("UDP server up and listening")
 
     def run(self):
         self.mutex.lock()
         self.close_flag = 0
         self.mutex.unlock()
+        self.start()
         while True:
             self.mutex.lock()
             if self.close_flag == 1:
                 self.mutex.unlock()
                 break
             self.mutex.unlock()
-            h = math.sin(time.time())
-            self.new_data.emit([random.uniform(7, 10), time.time()])
+            
+            # Bind to address and ip
+            try:
+                data = self.UDPClientSocket.recvfrom(32)
+                print(222)
+            except TimeoutError:
+                print("No data")
+                continue
+            print(data[0])
+            if data[0][0] == 0xff:
+                print(1111111111111111111111111111111111111111111111111111111111111111)
+                pack = struct.unpack("<BHLdfdBHBB", data[0])
+                #print(data[0])
+                packet_ma_type_11 = packet_ma_type_11_t(pack[0], pack[1], pack[2], pack[3], pack[4], pack[5], pack[6], pack[7])
+                new_packet_ma_type_11 = new_packet_ma_type_11_t()
+                self.lib1.pars_p11(ctypes.pointer(packet_ma_type_11), ctypes.pointer(new_packet_ma_type_11))
+                print("num:", new_packet_ma_type_11.num)
+                print(new_packet_ma_type_11)
+                print("time:", new_packet_ma_type_11.time)
+                print("bme_press:", new_packet_ma_type_11.BME280_pressure)
+                print("bme_temperature:", new_packet_ma_type_11.BME280_temperature)
+                print("bme_height:", new_packet_ma_type_11.height_bme)
+                #print("state:", new_ma_packet_11.state)
+
+            if data[0][0] == 0xfa:
+                print(11111111111111111111111111112222222222222222222222222222222222)
+                pack = struct.unpack("<BHL3fBH10B", data[0])
+                packet_ma_type_12 = packet_ma_type_12_t(pack[0], pack[1], pack[2], pack[3], pack[4], pack[5], pack[6], pack[7])
+                new_packet_ma_type_12 = new_packet_ma_type_12_t()
+                self.lib1.pars_p12(ctypes.pointer(packet_ma_type_12), ctypes.pointer(new_packet_ma_type_12))
+                print("num:", new_packet_ma_type_12.num)
+                print("time:", new_packet_ma_type_12.time)
+                print("latitude:", new_packet_ma_type_12.latitude)
+                print("longitude:", new_packet_ma_type_12.longitude)
+                print("altitude:", new_packet_ma_type_12.altitude)
+                print("fix:", new_packet_ma_type_12.fix)
+
+
+            if data[0][0] == 0xaa:
+                print(2222222222222222222222222222222222222222222222222222222222222222222)
+                pack = struct.unpack("<BHL9h2H3B", data[0])
+                packet_ma_type_2 = packet_ma_type_2_t()
+                packet_ma_type_2.flag = pack[0]
+                packet_ma_type_2.num = pack[1]
+                packet_ma_type_2.time = pack[2]
+                packet_ma_type_2.acc_mg[0] = pack[3]
+                packet_ma_type_2.acc_mg[1] = pack[4]
+                packet_ma_type_2.acc_mg[2] = pack[5]
+                packet_ma_type_2.gyro_mdps[0] = pack[6]
+                packet_ma_type_2.gyro_mdps[1] = pack[7]
+                packet_ma_type_2.gyro_mdps[2] = pack[8]
+                packet_ma_type_2.LIS3MDL_magnetometer[0] = pack[9]
+                packet_ma_type_2.LIS3MDL_magnetometer[1] = pack[10]
+                packet_ma_type_2.LIS3MDL_magnetometer[2] = pack[11]
+                packet_ma_type_2.lidar = pack[12]
+                packet_ma_type_2.sum = pack[13]
+                new_packet_ma_type_2 = new_packet_ma_type_2_t()
+                self.lib1.pars_2(ctypes.pointer(packet_ma_type_2), ctypes.pointer(new_packet_ma_type_2))
+                print("num:", new_packet_ma_type_2.num)
+                print("time:", new_packet_ma_type_2.time)
+                print("acc1:", new_packet_ma_type_2.acc_mg[0])
+                print("acc2:", new_packet_ma_type_2.acc_mg[1])
+                print("acc3:", new_packet_ma_type_2.acc_mg[2])
+                print("gyro_mdps1:", new_packet_ma_type_2.gyro_mdps[0])
+                print("gyro_mdps2:", new_packet_ma_type_2.gyro_mdps[1])
+                print("gyro_mdps3:", new_packet_ma_type_2.gyro_mdps[2])
+                print("LIS3MDL_magnetometer1:", new_packet_ma_type_2.LIS3MDL_magnetometer[0])
+                print("LIS3MDL_magnetometer2:", new_packet_ma_type_2.LIS3MDL_magnetometer[1])
+                print("LIS3MDL_magnetometer3:", new_packet_ma_type_2.LIS3MDL_magnetometer[2])
+                print("lidar:", new_packet_ma_type_2.lidar)
+                print("q0", new_packet_ma_type_2.q[0])
+                print("q1", new_packet_ma_type_2.q[1])
+                print("q2", new_packet_ma_type_2.q[2])
+                print("q3", new_packet_ma_type_2.q[3])
+
+
+            self.new_data.emit(new_packet_ma_type_11, new_packet_ma_type_12, new_packet_ma_type_2)
             time.sleep(0.2)
 
     def finish(self):
         self.mutex.lock()
         self.close_flag = 1
         self.mutex.unlock()
+        self.UDPClientSocket.close()
 
 
 
@@ -146,6 +324,9 @@ class PlaneWidget(gl.GLViewWidget):
             
 class App(QWidget):
     def __init__(self):
+
+
+
         super(App, self).__init__()
         Form, Baze = uic.loadUiType('GroundMain.ui')
         self.ui = Form()
@@ -205,8 +386,8 @@ class App(QWidget):
         self.Hight_GPS_curve  = self.Hight_plot.plot(np.array([[0, 0]]))
         self.new_curve = True
         
-        print(self.Hight_BME_curve.getData())
-        print(self.Hight_GPS_curve.getData())
+        #print(self.Hight_BME_curve.getData())
+        #print(self.Hight_GPS_curve.getData())
 
         self.Hight_BME_curve.setData(np.append(self.Hight_BME_curve.getData()[0], 3), np.append(self.Hight_BME_curve.getData()[1], 5))
         self.Hight_BME_curve.setPen(color='b')
@@ -235,9 +416,9 @@ class App(QWidget):
         self.Boost_Z_curve = self.plot1.plot(np.array([[0, 0]]))
         self.new_curve = True
 
-        print(self.Boost_X_curve.getData())
-        print(self.Boost_Y_curve.getData())
-        print(self.Boost_Z_curve.getData())
+        #print(self.Boost_X_curve.getData())
+        #print(self.Boost_Y_curve.getData())
+        #print(self.Boost_Z_curve.getData())
 
         self.Boost_X_curve.setData(np.append(self.Boost_X_curve.getData()[0], 3), np.append(self.Boost_X_curve.getData()[1], 5))
         self.Boost_X_curve.setPen(color='r')
@@ -267,7 +448,7 @@ class App(QWidget):
         self.GPS_curve  = self.GPS_plot.plot(np.array([[0, 0]]))
         self.new_curve = True
 
-        print(self.GPS_curve.getData())
+        #print(self.GPS_curve.getData())
 
         self.GPS_curve.setData(np.append(self.GPS_curve.getData()[0], 3), np.append(self.GPS_curve.getData()[1], 5))
         self.GPS_curve.setPen(color='#fff078')
@@ -293,9 +474,9 @@ class App(QWidget):
         self.C_speed_Z_curve  = self.C_speed_plot.plot(np.array([[0, 0]]))
         self.new_curve = True
 
-        print(self.C_speed_X_curve.getData())
-        print(self.C_speed_Y_curve.getData())
-        print(self.C_speed_Z_curve.getData())
+        #print(self.C_speed_X_curve.getData())
+        #print(self.C_speed_Y_curve.getData())
+        #print(self.C_speed_Z_curve.getData())
 
         self.C_speed_X_curve.setData(np.append(self.C_speed_X_curve.getData()[0], 3), np.append(self.C_speed_X_curve.getData()[1], 5))
         self.C_speed_X_curve.setPen(color='r')
@@ -325,7 +506,7 @@ class App(QWidget):
         self.Press_curve  = self.Press_plot.plot(np.array([[0, 0]]))
         self.new_curve = True
 
-        print(self.Press_curve.getData())
+        #print(self.Press_curve.getData())
 
         self.Press_curve.setData(np.append(self.Press_curve.getData()[0], 3), np.append(self.Press_curve.getData()[1], 5))
         self.Press_curve.setPen(color='#fff078')
@@ -351,9 +532,9 @@ class App(QWidget):
         self.Magnet_Z_curve  = self.Magnet_plot.plot(np.array([[0, 0]]))
         self.new_curve = True
 
-        print(self.Magnet_X_curve.getData())
-        print(self.Magnet_Y_curve.getData())
-        print(self.Magnet_Z_curve.getData())
+        #print(self.Magnet_X_curve.getData())
+        #print(self.Magnet_Y_curve.getData())
+        #print(self.Magnet_Z_curve.getData())
 
         self.Magnet_X_curve.setData(np.append(self.Magnet_X_curve.getData()[0], 3), np.append(self.Magnet_X_curve.getData()[1], 5))
         self.Magnet_X_curve.setPen(color='r')
@@ -383,7 +564,7 @@ class App(QWidget):
         self.Temp_curve  = self.Temp_plot.plot(np.array([[0, 0]]))
         self.new_curve = True
 
-        print(self.Temp_curve.getData())
+        #print(self.Temp_curve.getData())
 
         self.Temp_curve.setData(np.append(self.Temp_curve.getData()[0], 3), np.append(self.Temp_curve.getData()[1], 5))
         self.Temp_curve.setPen(color='#fff078')
@@ -413,12 +594,21 @@ class App(QWidget):
 
         
     #Обновление графиков    
-    def new_data_reaction(self, data):
-        print(data)
-        self.ui.label_61.setText("{:.2f}".format(data[0]))
+    def new_data_reaction(self, p1, p12, p2):
+        print(p1)
+        print(p12)
+        print(p2)
+        return
+        #self.ui.label_61.setText("{:.2f}".format(data[0]))
         self.ui.label_54.setText("{:.2f}".format(time.time()))
+        self.a = []
+        self.b = []
+        for i in range(20):
+            self.a.append(time.time())
+            self.b.append(random.uniform(1000, 2000))
+            
         if (not self.new_curve):
-            add_data_to_plot(self.Hight_BME_curve, time.time(), random.uniform(1000, 2000))
+            add_data_to_plot(self.Hight_BME_curve, self.a, self.b)
             add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
             add_data_to_plot(self.Boost_X_curve, time.time(), random.uniform(7, 10))
             self.ui.label_6.setText("{:.2f}".format(data[0]))
@@ -467,8 +657,9 @@ class App(QWidget):
 
 
 
-        
+
 if __name__ == "__main__":
+
 
 
 

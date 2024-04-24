@@ -3,6 +3,7 @@ import argparse
 import time
 import struct
 import datetime
+import socket
 
 from RF24 import RF24_PA_LOW, RF24_PA_HIGH, RF24_PA_MAX
 from RF24 import RF24_1MBPS, RF24_250KBPS, RF24_2MBPS
@@ -12,7 +13,22 @@ from RF24 import RF24_CRC_DISABLED
 from RF24 import RF24_CRC_8
 from RF24 import RF24_CRC_16
 
+UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+UDPServerSocket.setblocking(False)
+UDPServerSocket.settimeout(0)
+UDPServerSocket.bind(("0.0.0.0", 20002))
+addresses = []
+
+
 radio2=RF24_CLASS(24, 1)
+
+
+def generate_logfile_name():
+    now = datetime.datetime.utcnow().replace(microsecond=0)
+    isostring = now.isoformat()  # string 2021-04-27T23:17:31
+    isostring = isostring.replace("-", "")  # string 20210427T23:17:31
+    isostring = isostring.replace(":", "")  # string 20210427T231731, òî ÷òî íàäî
+    return "./log/neonblade_Mandarinas" + isostring + ".bin"
 
 
 if __name__ == '__main__':
@@ -59,7 +75,7 @@ if __name__ == '__main__':
                 
 
 
-            if data[0] = 25:
+            if data[0] == 25:
                 print("словил 11 пакет МА")
                 pack = struct.unpack("<BHL3fB", data)
                 print("Pack Num:", pack[1])
