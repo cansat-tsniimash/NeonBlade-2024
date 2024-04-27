@@ -207,6 +207,7 @@ int app_main()
 
 	int16_t temp_lis;
 	int16_t mag[3] = {0};
+
 	stmdev_ctx_t ctx = {0};
     struct lis_spi_intf lis_spi;
 	lis_spi.GPIO_Port = GPIOA;
@@ -369,6 +370,12 @@ int app_main()
     uint32_t start_time_to;
 
     uint32_t time_parashute = 0;
+
+    float LSM_TEMP = 0;
+    float accc[3] = {0};
+    float gyrooo[3] = {0};
+    float magfloat[3] = {0};
+    float temp_lis_float;
  	while(true)
 	{
  		packet_ma_type_11.flag = 0xFF;
@@ -419,8 +426,9 @@ int app_main()
 
 		if (LSM_FLAG)
 		{
+			lsmread(&lsmctx, &LSM_TEMP, &accc, &gyrooo);
 			lsm6ds3_temperature_raw_get(&lsmctx, &temperature_celsius_gyro);//ЗАПРОС СЫРЫХ ДАННЫХ
-			lsm6ds3_acceleration_raw_get(&lsmctx, acc_g);
+ 			lsm6ds3_acceleration_raw_get(&lsmctx, acc_g);
 			lsm6ds3_angular_rate_raw_get(&lsmctx, gyro_dps);
 			packet_ma_type_2.acc_mg[0] = acc_g[0];
 			packet_ma_type_2.acc_mg[1] = acc_g[1];
@@ -435,7 +443,7 @@ int app_main()
 
 		if (LIS_FLAG)
 		{
-			//lisread(&ctx, &temp_lis, &mag);
+			lisread(&ctx, &temp_lis_float, &magfloat);
 			lis3mdl_magnetic_raw_get(&ctx, mag);
 			//lis3mdl_temperature_raw_get(&ctx, &temp_lis);//ЗАПРОС СЫРЫХ ДАННЫХ
 			packet_ma_type_2.LIS3MDL_magnetometer[0] = mag[0];
