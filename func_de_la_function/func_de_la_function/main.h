@@ -75,7 +75,6 @@ typedef struct
     {
         uint16_t num;
         uint32_t time;
-        uint32_t time_pr;
 
         float acc_mg[3];
         float gyro_mdps[3];

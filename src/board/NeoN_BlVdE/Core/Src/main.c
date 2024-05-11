@@ -448,11 +448,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, LSM_CS_Pin|MOTOR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, TDC_SHIM_Pin|LIS_CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, TDC_SHIM_Pin|DPA_TDC_Pin|LIS_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, NRF_CE_Pin|NRF_CS_Pin|CS_TDC_Pin|PEREGIGATEL_Pin
-                          |LED_Pin, GPIO_PIN_RESET);
+                          |LED_Pin|BUZZER_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : LSM_CS_Pin MOTOR_Pin */
   GPIO_InitStruct.Pin = LSM_CS_Pin|MOTOR_Pin;
@@ -473,17 +473,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(TDC_INT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : TDC_SHIM_Pin LIS_CS_Pin */
-  GPIO_InitStruct.Pin = TDC_SHIM_Pin|LIS_CS_Pin;
+  /*Configure GPIO pins : TDC_SHIM_Pin DPA_TDC_Pin LIS_CS_Pin */
+  GPIO_InitStruct.Pin = TDC_SHIM_Pin|DPA_TDC_Pin|LIS_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : NRF_CE_Pin NRF_CS_Pin CS_TDC_Pin PEREGIGATEL_Pin
-                           LED_Pin */
+                           LED_Pin BUZZER_Pin */
   GPIO_InitStruct.Pin = NRF_CE_Pin|NRF_CS_Pin|CS_TDC_Pin|PEREGIGATEL_Pin
-                          |LED_Pin;
+                          |LED_Pin|BUZZER_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

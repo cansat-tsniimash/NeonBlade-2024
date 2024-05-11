@@ -67,6 +67,8 @@ void Error_Handler(void);
 #define TDC_INT_GPIO_Port GPIOH
 #define TDC_SHIM_Pin GPIO_PIN_2
 #define TDC_SHIM_GPIO_Port GPIOA
+#define DPA_TDC_Pin GPIO_PIN_3
+#define DPA_TDC_GPIO_Port GPIOA
 #define LIS_CS_Pin GPIO_PIN_4
 #define LIS_CS_GPIO_Port GPIOA
 #define NRF_CE_Pin GPIO_PIN_1
@@ -79,6 +81,8 @@ void Error_Handler(void);
 #define PEREGIGATEL_GPIO_Port GPIOB
 #define LED_Pin GPIO_PIN_14
 #define LED_GPIO_Port GPIOB
+#define BUZZER_Pin GPIO_PIN_8
+#define BUZZER_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

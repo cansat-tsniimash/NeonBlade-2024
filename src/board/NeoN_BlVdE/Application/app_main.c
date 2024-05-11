@@ -33,12 +33,13 @@
 #define GPS_FLAG 0
 #define SD_FLAG 1
 #define NRF_FLAG 1
-#define TDC_FLAG 1
+#define TDC_FLAG 0
 #define UNKNXW 0
 #define KOF 0.8
 #define TIME_STONE 5000
-#define TIME_LIDAR 300//ВРЕМЯ ВКЛ ЛИДАРА ПОСЛЕ ОТКР ПАРАШЮТА
-#define TIME_PARASHUTE 2000
+#define TIME_LIDAR 500//ВРЕМЯ ВКЛ ЛИДАРА ПОСЛЕ ОТКР ПАРАШЮТА
+#define TIME_PARASHUTE 300
+
 
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi5;
@@ -48,6 +49,17 @@ extern UART_HandleTypeDef huart2;
 extern I2C_HandleTypeDef hi2c1;
 extern ADC_HandleTypeDef hadc1;
 
+#define BUZZER_PORT GPIOB
+#define BUZZER_PIN GPIO_PIN_8
+
+#define PARASHUTE_PORT GPIOC
+#define PARASHUTE_PIN GPIO_PIN_14
+
+#define PEREGIGATEL_PORT GPIOB
+#define PEREGIGATEL_PIN GPIO_PIN_12
+
+#define LED_PORT GPIOB
+#define LED_PIN GPIO_PIN_14
 #pragma pack(push,1)
 
 typedef struct
@@ -376,8 +388,21 @@ int app_main()
     float gyrooo[3] = {0};
     float magfloat[3] = {0};
     float temp_lis_float;
+
+    bool impulse = false;
  	while(true)
 	{
+ 		HAL_Delay(150);
+ 		if(impulse == false)
+ 		{
+ 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 1);
+ 			impulse = true;
+ 		}
+ 		else
+ 		{
+ 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 0);
+ 			impulse = false;
+ 		}
  		packet_ma_type_11.flag = 0xFF;
  		packet_ma_type_12.flag = 0xFA;
  		packet_ma_type_2.flag = 0xAA;
@@ -390,7 +415,7 @@ int app_main()
     	num1++;
     	num2++;
     	lux = photorezistor_get_lux(photorezist);
- 		time_on_board = HAL_GetTick();
+    		time_on_board = HAL_GetTick();
 		retin = lis3mdl_read_reg(&ctx, 0x0F , (uint8_t *) &abobus, 6);
 
 		if(TDC_FLAG)
@@ -404,7 +429,7 @@ int app_main()
  			tdc21_read_register(&tdcgp21_api_config, TDC21_REG1, (uint8_t*)&reg1wr, 1);
  			HAL_Delay(5);*/
  			tdc21_start_tof(&tdcgp21_api_config);
- 			HAL_Delay(5);
+ 			//HAL_Delay(5);
 		}
 
 		if(SD_FLAG)
@@ -481,28 +506,28 @@ int app_main()
 	    //nrf24_mode_tx(&nrf24_api_config);
 
 
+
         if(NRF_FLAG)
         {
-        	nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+        	//nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
 			nrf24_fifo_flush_tx(&nrf24_api_config);
 			errrrrrrrrr = nrf24_irq_clear(&nrf24_api_config, IRQ_flags);
-			nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
-			nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-			nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
-
+			//nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
+			//nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+			//nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
 
 			size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_11, 32, false);// sizeof(packet_ma_type_1)
-			HAL_Delay(50);
+			//HAL_Delay(50);
 			size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_12, 32, false);
-			HAL_Delay(50);
+			//HAL_Delay(50);
 			size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_2, 32, false);
-			HAL_Delay(50);
-			nrf24_read_register(&nrf24_api_config, NRF24_REGADDR_STATUS, &data_nrf_tx_ds, sizeof(data_nrf_tx_ds));
+			//HAL_Delay(50);
+			//nrf24_read_register(&nrf24_api_config, NRF24_REGADDR_STATUS, &data_nrf_tx_ds, sizeof(data_nrf_tx_ds));
 
 			nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-			printf("                   ");
+			//printf("                   ");
 			//nrf24_mode_tx(&nrf24_api_config);
-			HAL_Delay(100);
+			//HAL_Delay(100);
 			//nrf24_mode_standby(&nrf24_api_config);
 
 
@@ -547,6 +572,8 @@ int app_main()
         switch(fckng_state)
         {
         case STATE_ON_GND:
+
+			HAL_GPIO_WritePin(LED_PORT, LED_PIN, 1);
         	if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == true)
         	{
         		if(HAL_GetTick() >= start_time_io + 50)
@@ -586,7 +613,7 @@ int app_main()
         break;
 
         case STATE_FALL_IS_NOT_A_STONE:
-        	//функция для открфтия лепестков
+			HAL_GPIO_WritePin(PEREGIGATEL_PORT, PEREGIGATEL_PIN, 1);//функция для открфтия лепестков
         	if(packet_ma_type_11.height_bme <= 350)
         	{
         		fckng_state = STATE_FALL_ON_PARACHUTE;
@@ -596,7 +623,7 @@ int app_main()
             break;
 
         case STATE_FALL_ON_PARACHUTE:
-        	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, 1);//откр парашюь
+        	HAL_GPIO_WritePin(PARASHUTE_PORT, PARASHUTE_PIN, 1);//откр парашюь
         	time_parashute = HAL_GetTick();
         	if(HAL_GetTick() - start_time_io >= TIME_LIDAR)
         	{
@@ -619,3 +646,4 @@ int app_main()
 	}
 }
 
+//b14

@@ -163,7 +163,7 @@ int pars_p12(packet_ma_type_12_t* packet_ma_type_12_in, new_packet_ma_type_12_t*
 	return 0;
 }
 
-int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_pack)
+int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_pack, int time_pr)
 {
 	//if (Crc16((uint8_t*)&packet_ma_type_2_in, sizeof(packet_ma_type_2_in) - 2) != packet_ma_type_2_in->sum) return 1;
 	float quat[4];
@@ -178,9 +178,8 @@ int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_p
 	(*new_pack).LIS3MDL_magnetometer[2] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[2]) + kalib_magn_2;
 	(*new_pack).lidar = (*packet_ma_type_2_in).lidar * 299792458 * 45 * pow(10, -12);//ответ в метрах. 45* = 90(пикосек)/2(путь туда-обратно)
 	(*new_pack).num = (*packet_ma_type_2_in).num;
-	(*new_pack).time_pr = (*new_pack).time;
 	(*new_pack).time = (*packet_ma_type_2_in).time;
-	MadgwickAHRSupdateIMU(quat, (*new_pack).gyro_mdps[0], (*new_pack).gyro_mdps[1], (*new_pack).gyro_mdps[2], (*new_pack).acc_mg[0], (*new_pack).acc_mg[1], (*new_pack).acc_mg[2], (*new_pack).time - (*new_pack).time_pr, 0.3);
+	MadgwickAHRSupdateIMU(quat, (*new_pack).gyro_mdps[0], (*new_pack).gyro_mdps[1], (*new_pack).gyro_mdps[2], (*new_pack).acc_mg[0], (*new_pack).acc_mg[1], (*new_pack).acc_mg[2], (*new_pack).time - time_pr, 0.3);
 	(*new_pack).q[0] = quat[0];
 	(*new_pack).q[1] = quat[1];
 	(*new_pack).q[2] = quat[2];
