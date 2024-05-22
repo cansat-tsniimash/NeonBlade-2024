@@ -29,11 +29,49 @@ import socket
 import struct
 
 
+
+
+
+
+
+
+
+#f_quat = open('quat.txt', 'w+')
+#f_quat.write('hi')
+#f_quat.write('hi')
+
+#txt = f_quat.read()
+#print(txt)
+#print(1)
+
+
+file_acc = open('file_acc.txt', 'w+')
+file_mag = open('file_mag.txt', 'w+')
+file_p1 = open('file_p1.txt', 'w+')
+file_p12 = open('file_p12.txt', 'w+')
+file_p2 = open('file_p2.txt', 'w+')
+
+
+
+
+
 pg.setConfigOption('background', '#646464')
 pg.setConfigOption('foreground', '#ffffff')
 
 
 MESH_PATH = os.path.abspath('Sat_Simple2.stl')
+
+print("Укажите с какой частотой обновлять графики в секундах:")
+N = float(input())
+Count1 = 0
+Count12 = 0
+Count2 = 0
+
+t = time.time()
+timer = time.time() - t
+
+time_pr = 0
+time_p2 = 0
 
 
 class packet_ma_type_11_t(ctypes.Structure):
@@ -68,7 +106,7 @@ class packet_ma_type_2_t(ctypes.Structure):
 ##################################NEW
 class new_packet_ma_type_11_t(ctypes.Structure):
     _fields_ = [('num', ctypes.c_uint16),
-                ('time', ctypes.c_uint32),
+                ('time', ctypes.c_float),
                 ('BME280_pressure', ctypes.c_double),
                 ('BME280_temperature', ctypes.c_float),
                 ('height_bme', ctypes.c_double),
@@ -77,7 +115,7 @@ class new_packet_ma_type_11_t(ctypes.Structure):
 
 class new_packet_ma_type_12_t(ctypes.Structure):
     _fields_ = [('num', ctypes.c_uint16),
-                ('time', ctypes.c_uint32),
+                ('time', ctypes.c_float),
                 ('latitude', ctypes.c_float),
                 ('longitude', ctypes.c_float),
                 ('altitude', ctypes.c_float),
@@ -86,7 +124,7 @@ class new_packet_ma_type_12_t(ctypes.Structure):
 
 class new_packet_ma_type_2_t(ctypes.Structure):
     _fields_ = [('num', ctypes.c_uint16),
-                ('time', ctypes.c_uint32),
+                ('time', ctypes.c_float),
                 ('acc_mg', ctypes.c_float * 3),
                 ('gyro_mdps', ctypes.c_float * 3),
                 ('LIS3MDL_magnetometer', ctypes.c_float * 3),
@@ -104,9 +142,9 @@ def makeData():
 
 
 class DataManager(QtCore.QObject):
-    new_data_p1 = QtCore.pyqtSignal(new_packet_ma_type_11_t)
-    new_data_p12 = QtCore.pyqtSignal(new_packet_ma_type_12_t)
-    new_data_p2 = QtCore.pyqtSignal(new_packet_ma_type_2_t)
+    new_data_p1 = QtCore.pyqtSignal(list)
+    new_data_p12 = QtCore.pyqtSignal(list)
+    new_data_p2 = QtCore.pyqtSignal(list)
     mutex = QtCore.QMutex()
     #autoclose = QtCore.pyqtSignal(str)
     #finished = QtCore.pyqtSignal
@@ -128,21 +166,32 @@ class DataManager(QtCore.QObject):
         self.lib1.MadgwickAHRSupdateIMU.argtypes = (ctypes.POINTER(ctypes.c_float), ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float,)
         self.lib1.MadgwickAHRSupdateIMU.restype = ctypes.c_void_p
 
-        self.lib1.lsm6ds3_from_fs16g_to_mg.argtypes = [ctypes.c_int16]
-        self.lib1.lsm6ds3_from_fs16g_to_mg.restype = ctypes.c_float
+        self.lib1.lsm6ds3_from_fs16g_to_mpss.argtypes = [ctypes.c_int16]
+        self.lib1.lsm6ds3_from_fs16g_to_mpss.restype = ctypes.c_float
 
-        self.lib1.lsm6ds3_from_fs2000dps_to_mdps.argtypes = [ctypes.c_int16]
-        self.lib1.lsm6ds3_from_fs2000dps_to_mdps.restype = ctypes.c_float
+        self.lib1.lsm6ds3_from_fs2000dps_to_degps.argtypes = [ctypes.c_int16]
+        self.lib1.lsm6ds3_from_fs2000dps_to_degps.restype = ctypes.c_float
 
         self.lib1.lis3mdl_from_fs16_to_gauss.argtypes = [ctypes.c_int16]
         self.lib1.lis3mdl_from_fs16_to_gauss.restype = ctypes.c_float
 
         self.lib1.pars_p11.argtypes = [ctypes.POINTER(packet_ma_type_11_t), ctypes.POINTER(new_packet_ma_type_11_t)]
         self.lib1.pars_p12.argtypes = [ctypes.POINTER(packet_ma_type_12_t), ctypes.POINTER(new_packet_ma_type_12_t)]
-        self.lib1.pars_2.argtypes = [ctypes.POINTER(packet_ma_type_2_t), ctypes.POINTER(new_packet_ma_type_2_t)]
+        self.lib1.pars_2.argtypes = [ctypes.POINTER(packet_ma_type_2_t), ctypes.POINTER(new_packet_ma_type_2_t), ctypes.c_float]
         print("UDP server up and listening")
 
     def run(self):
+        #global f_quat
+
+        global file_acc
+        global file_mag
+        global time_pr
+        global time_p2
+        global N
+        #global Count1
+        #global Count12
+        #global Count2
+
         new_packet_ma_type_11 = new_packet_ma_type_11_t()
         new_packet_ma_type_12 = new_packet_ma_type_12_t()
         new_packet_ma_type_2 = new_packet_ma_type_2_t()
@@ -154,8 +203,12 @@ class DataManager(QtCore.QObject):
         p2_portion = []
         p3_portion = []
         emit_deadline = time.time() + 0.1
-
+        p1_lst = []
+        p12_lst = []
+        p2_lst = []
+        start_time = time.time()
         while True:
+
             self.mutex.lock()
             if self.close_flag == 1:
                 self.mutex.unlock()
@@ -170,6 +223,7 @@ class DataManager(QtCore.QObject):
                 print("No data")
                 continue
             #print(data[0])
+
             if data[0][0] == 0xff:
                 #print(1111111111111111111111111111111111111111111111111111111111111111)
                 pack = struct.unpack("<BHLdfdBHBB", data[0])
@@ -182,7 +236,7 @@ class DataManager(QtCore.QObject):
                 #print("time:", new_packet_ma_type_11.time)
                 #print("bme_press:", new_packet_ma_type_11.BME280_pressure)
                 #print("bme_temperature:", new_packet_ma_type_11.BME280_temperature)
-                print("bme_height:", new_packet_ma_type_11.height_bme)
+                #print("bme_height:", new_packet_ma_type_11.height_bme)
                 #print("state:", new_ma_packet_11.state)
                 #print("num:", packet_ma_type_11.num)
                 #print(packet_ma_type_11)
@@ -190,7 +244,10 @@ class DataManager(QtCore.QObject):
                 #print("bme_press:", packet_ma_type_11.BME280_pressure)
                 #print("bme_temperature:", packet_ma_type_11.BME280_temperature)
                 #print("bme_height:", packet_ma_type_11.height_bme)
-                self.new_data_p1.emit(new_packet_ma_type_11)
+
+                #Count1 += 1
+                p1_lst.append(new_packet_ma_type_11)
+                #self.new_data_p1.emit(new_packet_ma_type_11)
 
 
 
@@ -213,7 +270,11 @@ class DataManager(QtCore.QObject):
                 #print("longitude:", packet_ma_type_12.longitude)
                 #print("altitude:", packet_ma_type_12.altitude)
                 #print("fix:", packet_ma_type_12.fix)
-                self.new_data_p12.emit(new_packet_ma_type_12)
+
+                #Count12 += 1
+                p12_lst.append(new_packet_ma_type_12)
+                #self.new_data_p12.emit(new_packet_ma_type_12)
+                
 
 
             if data[0][0] == 0xaa:
@@ -221,26 +282,31 @@ class DataManager(QtCore.QObject):
                 pack = struct.unpack("<BHL9h2H3B", data[0])
                 #print(data[0])
                 packet_ma_type_2 = packet_ma_type_2_t()
+
+                
                 packet_ma_type_2.flag = pack[0]
                 packet_ma_type_2.num = pack[1]
                 packet_ma_type_2.time = pack[2]
                 packet_ma_type_2.acc_mg[0] = pack[3]
                 packet_ma_type_2.acc_mg[1] = pack[4]
                 packet_ma_type_2.acc_mg[2] = pack[5]
+                #print(packet_ma_type_2.acc_mg[0])
+                #print(packet_ma_type_2.acc_mg[1])
+                #print(packet_ma_type_2.acc_mg[2])
                 packet_ma_type_2.gyro_mdps[0] = pack[6]
                 packet_ma_type_2.gyro_mdps[1] = pack[7]
                 packet_ma_type_2.gyro_mdps[2] = pack[8]
-                g1 = packet_ma_type_2.gyro_mdps[0]*70.0/1000.0
-                packet_ma_type_2.gyro_mdps[0] = int(g1/70.0*1000.0)
-                g2 = packet_ma_type_2.gyro_mdps[1]*70.0/1000.0 + 3.5
-                packet_ma_type_2.gyro_mdps[1] = int(g2/70.0*1000.0)
-                g3 = packet_ma_type_2.gyro_mdps[2]*70.0/1000.0 + 1.7
-                packet_ma_type_2.gyro_mdps[2] = int(g3/70.0*1000.0)
+                #g1 = packet_ma_type_2.gyro_mdps[0]*70.0/1000.0
+                #packet_ma_type_2.gyro_mdps[0] = int(g1/70.0*1000.0)
+                #g2 = packet_ma_type_2.gyro_mdps[1]*70.0/1000.0 + 3.5
+                #packet_ma_type_2.gyro_mdps[1] = int(g2/70.0*1000.0)
+                #g3 = packet_ma_type_2.gyro_mdps[2]*70.0/1000.0 + 1.7
+                #packet_ma_type_2.gyro_mdps[2] = int(g3/70.0*1000.0)
 
 
-
-
-
+                time_pr = time_p2
+                time_p2 = new_packet_ma_type_2.time
+                #print("время прош пакета", time_p2)
 
 
                 packet_ma_type_2.LIS3MDL_magnetometer[0] = pack[9]
@@ -249,7 +315,11 @@ class DataManager(QtCore.QObject):
                 packet_ma_type_2.lidar = pack[12]
                 packet_ma_type_2.sum = pack[13]
                 new_packet_ma_type_2 = new_packet_ma_type_2_t()
-                self.lib1.pars_2(ctypes.pointer(packet_ma_type_2), ctypes.pointer(new_packet_ma_type_2))
+
+                #print(time_pr)
+
+
+                self.lib1.pars_2(ctypes.pointer(packet_ma_type_2), ctypes.pointer(new_packet_ma_type_2), time_pr)
                 #print("num:", new_packet_ma_type_2.num)
                 #print("time:", new_packet_ma_type_2.time)
                 #print("acc1:", new_packet_ma_type_2.acc_mg[0])
@@ -262,27 +332,55 @@ class DataManager(QtCore.QObject):
                 #print("LIS3MDL_magnetometer2:", new_packet_ma_type_2.LIS3MDL_magnetometer[1])
                 #print("LIS3MDL_magnetometer3:", new_packet_ma_type_2.LIS3MDL_magnetometer[2])
                 #print("lidar:", new_packet_ma_type_2.lidar)
-                print("q0", new_packet_ma_type_2.q[0])
-                print("q1", new_packet_ma_type_2.q[1])
-                print("q2", new_packet_ma_type_2.q[2])
-                print("q3", new_packet_ma_type_2.q[3])
+                #print("q0", new_packet_ma_type_2.q[0])
+                #print("q1", new_packet_ma_type_2.q[1])
+                #print("q2", new_packet_ma_type_2.q[2])
+                #print("q3", new_packet_ma_type_2.q[3])
+
+
+                file_acc.write(str(new_packet_ma_type_2.acc_mg[0]))
+                file_acc.write('\t')
+                file_acc.write(str(new_packet_ma_type_2.acc_mg[1]))
+                file_acc.write('\t')
+                file_acc.write(str(new_packet_ma_type_2.acc_mg[2]))
+                file_acc.write('\n')
+                file_acc.flush()
+                file_mag.write(str(new_packet_ma_type_2.LIS3MDL_magnetometer[0]))
+                file_mag.write('\t')
+                file_mag.write(str(new_packet_ma_type_2.LIS3MDL_magnetometer[1]))
+                file_mag.write('\t')
+                file_mag.write(str(new_packet_ma_type_2.LIS3MDL_magnetometer[2]))
+                file_mag.write('\n')
+                file_mag.flush()
+
+                #f_quat.write(str(new_packet_ma_type_2.q[0]))
+                #f_quat.write(str(new_packet_ma_type_2.q[1]))
+                #f_quat.write(str(new_packet_ma_type_2.q[2]))
+                #f_quat.write(str(new_packet_ma_type_2.q[3]))
+                #f_quat.write('hi')
+                #f_quat.write('/n')
+                #print("here")
+
+
+
                 #print("num:", packet_ma_type_2.num)
                 #print("time:", packet_ma_type_2.time)
-                accc1 = packet_ma_type_2.acc_mg[0] * 488.0/1000.0/1000.0 * 9.8
-                accc2 = packet_ma_type_2.acc_mg[1] * 488.0/1000.0/1000.0 * 9.8
-                accc3 = packet_ma_type_2.acc_mg[2] * 488.0/1000.0/1000.0 * 9.8
-                new_packet_ma_type_2.gyro_mdps[0] = packet_ma_type_2.gyro_mdps[0] *70.0/1000.0
-                new_packet_ma_type_2.gyro_mdps[1] = packet_ma_type_2.gyro_mdps[1] *70.0/1000.0
-                new_packet_ma_type_2.gyro_mdps[2] = packet_ma_type_2.gyro_mdps[2] *70.0/1000.0
+                #accc1 = packet_ma_type_2.acc_mg[0] * 488.0/1000.0/1000.0 * 9.8
+                #accc2 = packet_ma_type_2.acc_mg[1] * 488.0/1000.0/1000.0 * 9.8
+                #accc3 = packet_ma_type_2.acc_mg[2] * 488.0/1000.0/1000.0 * 9.8
+                #print(accc3)
+                #new_packet_ma_type_2.gyro_mdps[0] = packet_ma_type_2.gyro_mdps[0] *70.0/1000.0
+                #new_packet_ma_type_2.gyro_mdps[1] = packet_ma_type_2.gyro_mdps[1] *70.0/1000.0
+                #new_packet_ma_type_2.gyro_mdps[2] = packet_ma_type_2.gyro_mdps[2] *70.0/1000.0
 
-                new_packet_ma_type_2.LIS3MDL_magnetometer[0] = packet_ma_type_2.LIS3MDL_magnetometer[0] / 1711.0
-                new_packet_ma_type_2.LIS3MDL_magnetometer[1] = packet_ma_type_2.LIS3MDL_magnetometer[1] / 1711.0
-                new_packet_ma_type_2.LIS3MDL_magnetometer[2] = packet_ma_type_2.LIS3MDL_magnetometer[2] / 1711.0
+                #new_packet_ma_type_2.LIS3MDL_magnetometer[0] = packet_ma_type_2.LIS3MDL_magnetometer[0] / 1711.0
+                #new_packet_ma_type_2.LIS3MDL_magnetometer[1] = packet_ma_type_2.LIS3MDL_magnetometer[1] / 1711.0
+                #new_packet_ma_type_2.LIS3MDL_magnetometer[2] = packet_ma_type_2.LIS3MDL_magnetometer[2] / 1711.0
 
 
-                new_packet_ma_type_2.acc_mg[0] = accc1
-                new_packet_ma_type_2.acc_mg[1] = accc2
-                new_packet_ma_type_2.acc_mg[2] = accc3
+                #new_packet_ma_type_2.acc_mg[0] = accc1
+                #new_packet_ma_type_2.acc_mg[1] = accc2
+                #new_packet_ma_type_2.acc_mg[2] = accc3
 
                 #print("acc1:", accc1)
                 #print("acc1:", packet_ma_type_2.acc_mg[0])
@@ -295,7 +393,25 @@ class DataManager(QtCore.QObject):
                 #print("LIS3MDL_magnetometer2:", packet_ma_type_2.LIS3MDL_magnetometer[1])
                 #print("LIS3MDL_magnetometer3:", packet_ma_type_2.LIS3MDL_magnetometer[2])
                 #print("lidar:", packet_ma_type_2.lidar)
-                self.new_data_p2.emit(new_packet_ma_type_2)
+
+                #Count2 += 1
+                p2_lst.append(new_packet_ma_type_2)
+                #self.new_data_p2.emit(new_packet_ma_type_2)
+
+
+
+
+            
+            if time.time() - start_time > N:
+                self.new_data_p1.emit(p1_lst)
+                self.new_data_p12.emit(p12_lst)
+                self.new_data_p2.emit(p2_lst)
+                start_time = time.time()
+                p1_lst = []
+                p12_lst = []
+                p2_lst = []
+                
+
 
             
 
@@ -318,7 +434,6 @@ class TopData():
 
 
 
-        
 
 
 
@@ -344,7 +459,7 @@ class PlaneWidget(gl.GLViewWidget):
         self.addItem(isc_coord)
 
         self.plane_axis = gl.GLAxisItem()
-        self.plane_axis.setSize(x=500, y=500, z=500)
+        self.plane_axis.setSize(x=300, y=300, z=300)
         self.addItem(self.plane_axis)
 
         verts = self._get_mesh_points(mesh_path)
@@ -353,7 +468,7 @@ class PlaneWidget(gl.GLViewWidget):
         colors = np.array([(1.0, 1.0, 0.0, 1.0,) for i in range(0, len(verts), 3)])
         self.mesh = gl.GLMeshItem(vertexes=verts, faces=faces, faceColors=colors, smooth=False, shader='shaded')
 
-        #self.mesh.rotate(20, 1, 0, 0)
+        #self.mesh.rotate(180, 0, 0, 1)
 
         self.addItem(self.mesh)
         # self._update_mesh([0, 0, 1])
@@ -391,13 +506,48 @@ class PlaneWidget(gl.GLViewWidget):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a = time.time()
+arr_p1 = np.array([])
+arr_p12 = np.array([])
+arr_p2 = np.array([])
+
+
+
+
+
+
+
+
+
+
+
+
+
             
 class App(QWidget):
+    global Count1
+    global Count12
+    global Count2
     def __init__(self):
 
 
 
         super(App, self).__init__()
+        global a
         Form, Baze = uic.loadUiType('GroundMain.ui')
         self.ui = Form()
         self.ui.setupUi(self)
@@ -668,100 +818,221 @@ class App(QWidget):
         return x, y, z
 
 
-    #Обновление графиков -   
+
+
+
+
+
+
+
+
+
+
+
+    #Обновление графиков p1   
+    #def new_data_reaction_p1(self, p1):
+    #    global a
+    #    global arr_p1
+    #    global arr_p12
+    #    global arr_2
+    #
+    #    p1_time = p1.time / 1000.0   
+    #    self.ui.label_54.setText(str(p1_time))
+    #    self.ui.label_57.setText("{:.2f}".format(p1.BME280_pressure / 1000.0))
+    #    self.ui.label_59.setText("{:.2f}".format(p1.BME280_temperature))
+    #    self.ui.label_61.setText("{:.2f}".format(p1.height_bme))
+    #    global Count1
+    #    if time.time() - a < N: 
+    #        arr_p1 = np.array([p1_time, p1.height_bme], [time.time(), random.uniform(1000, 2000)], [random.uniform(0, 1001), random.uniform(0, 1001)], [p1_time, p1.BME280_pressure], [p1_time, p1.BME280_temperature])
+    #        print(arr_p1)  
+    #        
+    #    else:
+    #        if (not self.new_curve_p1):
+    #            add_data_to_plot(self.Hight_BME_curve, arr_p1[0], arr_p1[1])
+    #            add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
+    #            add_data_to_plot(self.GPS_curve, random.uniform(0, 1001), random.uniform(0, 1001))
+    #            add_data_to_plot(self.Press_curve, arr_p1[6], arr_p1[7])
+    #            add_data_to_plot(self.Temp_curve, arr_p1[8], arr_p1[9])
+    #        else:
+    #            self.Hight_BME_curve.setData(np.array([[arr_p1[0], arr_p1[1]]]))
+    #            self.Hight_GPS_curve.setData(np.array([[time.time(), random.uniform(1000, 2000)]]))
+    #            self.GPS_curve.setData(np.array([[random.uniform(0, 1001), random.uniform(0, 1001)]]))
+    #            self.Press_curve.setData(np.array([[arr_p1[6], arr_p1[7]]]))
+    #            self.Temp_curve.setData(np.array([[arr_p1[8], arr_p1[9]]]))
+    #            self.new_curve_p1 = False
+    #        a = time.time()
+            
+
+
+
+
+
+
+
+    #Обновление графиков p1   
     def new_data_reaction_p1(self, p1):
-        p1_time = p1.time / 1000.0   
-        self.ui.label_54.setText(str(p1_time))
-        self.ui.label_57.setText("{:.2f}".format(p1.BME280_pressure / 1000.0))
-        self.ui.label_59.setText("{:.2f}".format(p1.BME280_temperature))
-        self.ui.label_61.setText("{:.2f}".format(p1.height_bme))
+        #for p1 in p1_list: p1_list[-1]:
+
+        p1_time = p1[-1].time  
+        self.ui.label_54.setText(str("{:.2f}".format(p1_time)))
+        self.ui.label_57.setText("{:.2f}".format(p1[-1].BME280_pressure / 1000.0))
+        self.ui.label_59.setText("{:.2f}".format(p1[-1].BME280_temperature))
+        self.ui.label_61.setText("{:.2f}".format(p1[-1].height_bme))
+        global Count1
+        p1_time = p1[-1].time
+        #Hight_BME_arr = np.array([[]]) 
+        Press_arr = [np.array([]), np.array([])] 
+        for i in range(len(p1)):
+            #Hight_BME_arr = np.append(Hight_BME_arr, [p1[i].time, p1[i].height_bme])
+            Press_arr     = [np.append(Press_arr[0], p1[i].time) , np.append(Press_arr[1], p1[i].BME280_pressure)]
+        print(Press_arr[0])
+        print(Press_arr[1])
 
         if (not self.new_curve_p1):
-            add_data_to_plot(self.Hight_BME_curve, p1_time, p1.height_bme)
-            add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
-            add_data_to_plot(self.GPS_curve, random.uniform(0, 1001), random.uniform(0, 1001))
-            add_data_to_plot(self.Press_curve, p1_time, p1.BME280_pressure)
-            add_data_to_plot(self.Temp_curve, p1_time, p1.BME280_temperature)
+            pass#add_data_to_plot(self.Hight_BME_curve, p1_time, p1.height_bme)
+            #add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
+            #add_data_to_plot(self.GPS_curve, random.uniform(0, 1001), random.uniform(0, 1001))
+            add_data_to_plot(self.Press_curve, Press_arr[0], Press_arr[1])
+            #add_data_to_plot(self.Temp_curve, p1_time, p1.BME280_temperature)
         else:
-            self.Hight_BME_curve.setData(np.array([[p1_time, p1.height_bme]]))
-            self.Hight_GPS_curve.setData(np.array([[time.time(), random.uniform(1000, 2000)]]))
-            self.GPS_curve.setData(np.array([[random.uniform(0, 1001), random.uniform(0, 1001)]]))
-            self.Press_curve.setData(np.array([[p1_time, p1.BME280_pressure]]))
-            self.Temp_curve.setData(np.array([[p1_time, p1.BME280_temperature]]))
+            #self.Hight_BME_curve.setData(Hight_BME_arr)
+            #self.Hight_GPS_curve.setData(np.array([[time.time(), random.uniform(1000, 2000)]]))
+            #self.GPS_curve.setData(np.array([[random.uniform(0, 1001), random.uniform(0, 1001)]]))
+            self.Press_curve.setData(np.transpose(np.array(Press_arr)))
+            #self.Temp_curve.setData(np.array([[p1_time, p1.BME280_temperature]]))
             self.new_curve_p1 = False
+        Press_arr = [np.array([]), np.array([])] 
 
-    #Обновление графиков    
+
+
+
+
+
+
+    #Обновление графиков p12   
     def new_data_reaction_p12(self, p12):
-        p12_time = p12.time / 1000.0  
-        if (not self.new_curve_p12):
-            add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
-            add_data_to_plot(self.GPS_curve, random.uniform(0, 1001), random.uniform(0, 1001))
-        else:
-            self.Hight_GPS_curve.setData(np.array([[time.time(), random.uniform(1000, 2000)]]))
-            self.GPS_curve.setData(np.array([[random.uniform(0, 1001), random.uniform(0, 1001)]]))
-            self.new_curve_p12 = False
+
+
+
+
+
+        global Count12
+        p12_time = p12[-1].time
+        Hight_GPS_arr = [np.array([]), np.array([])]
+        #for i in range(len(p12)):
+            #Hight_GPS_curve = np.append(Hight_GPS_arr, [p12[i].time, p12[i].height_bme])
+            #Press_arr     = [np.append(Press_arr[0], p1[i].time) , np.append(Press_arr[1], p1[i].BME280_pressure)]
+        #print(Press_arr[0])
+        #print(Press_arr[1]) 
+        #if (not self.new_curve_p12):
+            #add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
+            #add_data_to_plot(self.GPS_curve, random.uniform(0, 1001), random.uniform(0, 1001))
+        #else:
+            #self.Hight_GPS_curve.setData(np.array([[time.time(), random.uniform(1000, 2000)]]))
+            #self.GPS_curve.setData(np.array([[random.uniform(0, 1001), random.uniform(0, 1001)]]))
+            #self.new_curve_p12 = False
         
-    #Обновление графиков    
+    #Обновление графиков p2   
     def new_data_reaction_p2(self, p2):
+
+
+
+        #self.lib1 = ctypes.CDLL("func_de_la_function/func_de_la_function/libtest.dll")
+
+
+
+
+        #global time_p2
+        #global time_pr
+
+
+
+
+
+        #time_pr = time_p2
+        #time_p2 = p2.time
+
+
+
+
+        #self.lib1.MadgwickAHRSupdateIMU(ctypes.pointer(p2.q), ctypes.pointer(p2.gyro_mdps[0]), ctypes.pointer(p2.gyro_mdps[1]), ctypes.pointer(p2.gyro_mdps[2]), ctypes.pointer(p2.acc_mg[0]), ctypes.pointer(p2.acc_mg[1]), ctypes.pointer(p2.acc_mg[2]), ctypes.pointer(time_p2) - time_pr, 0.3)
+
+
+
+
+
+        global f_quat
+        global Count2
         #quat = pyquaternion.Quaternion(p2.q)
-        print([float(num) for num in p2.q])
-        self.Orient._update_rotation([float(num) for num in p2.q])
-        p2_time = p2.time / 1000.0  
+        #print([float(num) for num in p2.q])
+
+        #f_quat.writelines([str(num) for num in p2.q])
+        #f_quat.write('hi')
+        #f_quat.write('/n')
+
+        #print("and here")
+
+        Boost_X_arr = [np.array([]), np.array([])]
+        Boost_Y_arr = [np.array([]), np.array([])]
+        Boost_Z_arr = [np.array([]), np.array([])]
+        C_speed_X_arr = [np.array([]), np.array([])]
+        C_speed_Y_arr = [np.array([]), np.array([])]
+        C_speed_Z_arr = [np.array([]), np.array([])]
+        Magnet_X_arr = [np.array([]), np.array([])]
+        Magnet_Y_arr = [np.array([]), np.array([])]
+        Magnet_Z_arr = [np.array([]), np.array([])] 
+        for i in range(len(p2)):
+            #Hight_BME_arr = np.append(Hight_BME_arr, [p1[i].time, p1[i].height_bme])
+            Boost_X_arr = [np.append(Boost_X_arr[0], p2[i].time) , np.append(Boost_X_arr[1], p2[i].acc_mg[0])]
+            Boost_Y_arr = [np.append(Boost_Y_arr[0], p2[i].time) , np.append(Boost_Y_arr[1], p2[i].acc_mg[1])]
+            Boost_Z_arr = [np.append(Boost_Z_arr[0], p2[i].time) , np.append(Boost_Z_arr[1], p2[i].acc_mg[2])]
+            C_speed_X_arr = [np.append(C_speed_X_arr[0], p2[i].time) , np.append(C_speed_X_arr[1], p2[i].gyro_mdps[0])]
+            C_speed_Y_arr = [np.append(C_speed_Y_arr[0], p2[i].time) , np.append(C_speed_Y_arr[1], p2[i].gyro_mdps[1])]
+            C_speed_Z_arr = [np.append(C_speed_Z_arr[0], p2[i].time) , np.append(C_speed_Z_arr[1], p2[i].gyro_mdps[2])]
+            Magnet_X_arr = [np.append(Magnet_X_arr[0], p2[i].time) , np.append(Magnet_X_arr[1], p2[i].LIS3MDL_magnetometer[0])]
+            Magnet_Y_arr = [np.append(Magnet_Y_arr[0], p2[i].time) , np.append(Magnet_Y_arr[1], p2[i].LIS3MDL_magnetometer[1])]
+            Magnet_Z_arr = [np.append(Magnet_Z_arr[0], p2[i].time) , np.append(Magnet_Z_arr[1], p2[i].LIS3MDL_magnetometer[2])]
+        #print(Press_arr[0])
+        #print(Press_arr[1])
+        self.Orient._update_rotation([float(num) for num in p2[-1].q])
+        #p2_time = p2.time
+        self.ui.label_12.setText("{:.2f}".format(p2[-1].gyro_mdps[0]))
+        self.ui.label_14.setText("{:.2f}".format(p2[-1].gyro_mdps[1]))
+        self.ui.label_16.setText("{:.2f}".format(p2[-1].gyro_mdps[2]))
+        self.ui.label_18.setText("{:.2f}".format(sqrt(p2[-1].gyro_mdps[0]*p2[-1].gyro_mdps[0]+p2[-1].gyro_mdps[1]*p2[-1].gyro_mdps[1]+p2[-1].gyro_mdps[2]*p2[-1].gyro_mdps[2])))
+        self.ui.label_21.setText("{:.2f}".format(p2[-1].q[0]))
+        self.ui.label_23.setText("{:.2f}".format(p2[-1].q[1]))
+        self.ui.label_25.setText("{:.2f}".format(p2[-1].q[2]))
+        self.ui.label_27.setText("{:.2f}".format(p2[-1].q[3]))
+        self.ui.label_63.setText("{:.2f}".format(p2[-1].lidar))
+        self.ui.label_6.setText("{:.2f}".format(p2[-1].acc_mg[0]))
+        self.ui.label_7.setText("{:.2f}".format(p2[-1].acc_mg[1]))
+        self.ui.label_8.setText("{:.2f}".format(p2[-1].acc_mg[2]))
+        self.ui.label_9.setText("{:.2f}".format(sqrt(p2[-1].acc_mg[0]*p2[-1].acc_mg[0]+p2[-1].acc_mg[1]*p2[-1].acc_mg[1]+p2[-1].acc_mg[2]*p2[-1].acc_mg[2])))
+        self.ui.label_30.setText("{:.2f}".format(p2[-1].LIS3MDL_magnetometer[0]))
+        self.ui.label_32.setText("{:.2f}".format(p2[-1].LIS3MDL_magnetometer[1]))
+        self.ui.label_34.setText("{:.2f}".format(p2[-1].LIS3MDL_magnetometer[2]))
+        self.ui.label_36.setText("{:.2f}".format(sqrt(p2[-1].LIS3MDL_magnetometer[0]*p2[-1].LIS3MDL_magnetometer[0]+p2[-1].LIS3MDL_magnetometer[1]*p2[-1].LIS3MDL_magnetometer[1]+p2[-1].LIS3MDL_magnetometer[2]*p2[-1].LIS3MDL_magnetometer[2])))
         if (not self.new_curve_p2):
-            self.ui.label_12.setText("{:.2f}".format(p2.gyro_mdps[0]))
-            self.ui.label_14.setText("{:.2f}".format(p2.gyro_mdps[1]))
-            self.ui.label_16.setText("{:.2f}".format(p2.gyro_mdps[2]))
-            self.ui.label_18.setText("{:.2f}".format(sqrt(p2.gyro_mdps[0]*p2.gyro_mdps[0]+p2.gyro_mdps[1]*p2.gyro_mdps[1]+p2.gyro_mdps[2]*p2.gyro_mdps[2])))
-            self.ui.label_21.setText("{:.2f}".format(p2.q[0]))
-            self.ui.label_23.setText("{:.2f}".format(p2.q[1]))
-            self.ui.label_25.setText("{:.2f}".format(p2.q[2]))
-            self.ui.label_27.setText("{:.2f}".format(p2.q[3]))
-            self.ui.label_63.setText("{:.2f}".format(p2.lidar))
-            self.ui.label_6.setText("{:.2f}".format(p2.acc_mg[0]))
-            self.ui.label_7.setText("{:.2f}".format(p2.acc_mg[1]))
-            self.ui.label_8.setText("{:.2f}".format(p2.acc_mg[2]))
-            self.ui.label_9.setText("{:.2f}".format(sqrt(p2.acc_mg[0]*p2.acc_mg[0]+p2.acc_mg[1]*p2.acc_mg[1]+p2.acc_mg[2]*p2.acc_mg[2])))
-            self.ui.label_30.setText("{:.2f}".format(p2.LIS3MDL_magnetometer[0]))
-            self.ui.label_32.setText("{:.2f}".format(p2.LIS3MDL_magnetometer[1]))
-            self.ui.label_34.setText("{:.2f}".format(p2.LIS3MDL_magnetometer[2]))
-            self.ui.label_36.setText("{:.2f}".format(sqrt(p2.LIS3MDL_magnetometer[0]*p2.LIS3MDL_magnetometer[0]+p2.LIS3MDL_magnetometer[1]*p2.LIS3MDL_magnetometer[1]+p2.LIS3MDL_magnetometer[2]*p2.LIS3MDL_magnetometer[2])))
-            add_data_to_plot(self.Boost_X_curve, p2_time, p2.acc_mg[0])
-            add_data_to_plot(self.Boost_Y_curve, p2_time, p2.acc_mg[1])
-            add_data_to_plot(self.Boost_Z_curve, p2_time, p2.acc_mg[2])
-            add_data_to_plot(self.C_speed_X_curve, p2_time, p2.gyro_mdps[0])
-            add_data_to_plot(self.C_speed_Y_curve, p2_time, p2.gyro_mdps[1])
-            add_data_to_plot(self.C_speed_Z_curve, p2_time, p2.gyro_mdps[2])
-            add_data_to_plot(self.Magnet_X_curve, p2_time, p2.LIS3MDL_magnetometer[0])
-            add_data_to_plot(self.Magnet_Y_curve, p2_time, p2.LIS3MDL_magnetometer[1])
-            add_data_to_plot(self.Magnet_Z_curve, p2_time, p2.LIS3MDL_magnetometer[2])
+            add_data_to_plot(self.Boost_X_curve, Boost_X_arr[0], Boost_X_arr[1])
+            add_data_to_plot(self.Boost_Y_curve, Boost_X_arr[0], Boost_X_arr[1])
+            add_data_to_plot(self.Boost_Z_curve, Boost_X_arr[0], Boost_X_arr[1])
+            add_data_to_plot(self.C_speed_X_curve, C_speed_X_arr[0], C_speed_X_arr[1])
+            add_data_to_plot(self.C_speed_Y_curve, C_speed_Y_arr[0], C_speed_Y_arr[1])
+            add_data_to_plot(self.C_speed_Z_curve, C_speed_Z_arr[0], C_speed_Z_arr[1])
+            add_data_to_plot(self.Magnet_X_curve, Magnet_X_arr[0], Magnet_X_arr[1])
+            add_data_to_plot(self.Magnet_Y_curve, Magnet_Y_arr[0], Magnet_Y_arr[1])
+            add_data_to_plot(self.Magnet_Z_curve, Magnet_Z_arr[0], Magnet_Z_arr[1])
         else:
-            self.ui.label_12.setText("{:.2f}".format(p2.gyro_mdps[0]))
-            self.ui.label_14.setText("{:.2f}".format(p2.gyro_mdps[1]))
-            self.ui.label_16.setText("{:.2f}".format(p2.gyro_mdps[2]))
-            self.ui.label_21.setText("{:.2f}".format(p2.q[0]))
-            self.ui.label_23.setText("{:.2f}".format(p2.q[1]))
-            self.ui.label_25.setText("{:.2f}".format(p2.q[2]))
-            self.ui.label_27.setText("{:.2f}".format(p2.q[3]))
-            self.ui.label_18.setText("{:.2f}".format(sqrt(p2.gyro_mdps[0]*p2.gyro_mdps[0]+p2.gyro_mdps[1]*p2.gyro_mdps[1]+p2.gyro_mdps[2]*p2.gyro_mdps[2])))
-            self.ui.label_27.setText("{:.2f}".format(p2.q[3]))
-            self.ui.label_63.setText("{:.2f}".format(p2.lidar))
-            self.ui.label_6.setText("{:.2f}".format(p2.acc_mg[0]))
-            self.ui.label_7.setText("{:.2f}".format(p2.acc_mg[1]))
-            self.ui.label_8.setText("{:.2f}".format(p2.acc_mg[2]))
-            self.ui.label_9.setText("{:.2f}".format(sqrt(p2.acc_mg[0]*p2.acc_mg[0]+p2.acc_mg[1]*p2.acc_mg[1]+p2.acc_mg[2]*p2.acc_mg[2])))
-            self.ui.label_30.setText("{:.2f}".format(p2.LIS3MDL_magnetometer[0]))
-            self.ui.label_32.setText("{:.2f}".format(p2.LIS3MDL_magnetometer[1]))
-            self.ui.label_34.setText("{:.2f}".format(p2.LIS3MDL_magnetometer[2]))
-            self.ui.label_36.setText("{:.2f}".format(sqrt(p2.LIS3MDL_magnetometer[0]*p2.LIS3MDL_magnetometer[0]+p2.LIS3MDL_magnetometer[1]*p2.LIS3MDL_magnetometer[1]+p2.LIS3MDL_magnetometer[2]*p2.LIS3MDL_magnetometer[2])))
-            self.Boost_X_curve.setData(np.array([[p2_time, p2.acc_mg[0]]]))
-            self.Boost_Y_curve.setData(np.array([[p2_time, p2.acc_mg[1]]]))
-            self.Boost_Z_curve.setData(np.array([[p2_time, p2.acc_mg[2]]]))
-            self.C_speed_X_curve.setData(np.array([[p2_time, p2.gyro_mdps[0]]]))
-            self.C_speed_Y_curve.setData(np.array([[p2_time, p2.gyro_mdps[1]]]))
-            self.C_speed_Z_curve.setData(np.array([[p2_time, p2.gyro_mdps[2]]]))
-            self.Magnet_X_curve.setData(np.array([[p2_time, p2.LIS3MDL_magnetometer[0]]]))
-            self.Magnet_Y_curve.setData(np.array([[p2_time, p2.LIS3MDL_magnetometer[1]]]))
-            self.Magnet_Z_curve.setData(np.array([[p2_time, p2.LIS3MDL_magnetometer[2]]]))
+            self.Boost_X_curve.setData(np.transpose(np.array(Boost_X_arr)))
+            self.Boost_Y_curve.setData(np.transpose(np.array(Boost_Y_arr)))
+            self.Boost_Z_curve.setData(np.transpose(np.array(Boost_Z_arr)))
+            self.C_speed_X_curve.setData(np.transpose(np.array(C_speed_X_arr)))
+            self.C_speed_Y_curve.setData(np.transpose(np.array(C_speed_Y_arr)))
+            self.C_speed_Z_curve.setData(np.transpose(np.array(C_speed_Z_arr)))
+            self.Magnet_X_curve.setData(np.transpose(np.array(Magnet_X_arr)))
+            self.Magnet_Y_curve.setData(np.transpose(np.array(Magnet_Y_arr)))
+            self.Magnet_Z_curve.setData(np.transpose(np.array(Magnet_Z_arr)))
             self.new_curve_p2 = False
         
     def closeEvent(self, evnt):
@@ -780,8 +1051,6 @@ class App(QWidget):
 if __name__ == "__main__":
 
 
-
-
     QtCore.QCoreApplication.setOrganizationName("CNIImash")
     QtCore.QCoreApplication.setApplicationName("Neon_Blade")
 
@@ -790,3 +1059,8 @@ if __name__ == "__main__":
     window.show()
     exit(application.exec_())
     application.exit()
+    f = f_quat.read()
+    print(f)
+    #f_quat.close()
+    file_acc.close()
+    file_mag.close()

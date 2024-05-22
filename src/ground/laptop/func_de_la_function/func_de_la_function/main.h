@@ -49,7 +49,7 @@ typedef struct
     typedef struct
     {
         uint16_t num;
-        uint32_t time;
+        float time;
 
         double BME280_pressure;
         double BME280_temperature;
@@ -62,7 +62,7 @@ typedef struct
     typedef struct
     {
         uint16_t num;
-        uint32_t time;
+        float time;
 
         float latitude;
         float longitude;
@@ -74,8 +74,7 @@ typedef struct
     typedef struct
     {
         uint16_t num;
-        uint32_t time;
-        uint32_t time_pr;
+        float time;
 
         float acc_mg[3];
         float gyro_mdps[3];

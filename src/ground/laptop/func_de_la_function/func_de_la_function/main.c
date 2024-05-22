@@ -1,11 +1,13 @@
-﻿//ERROR:
+﻿
+//ERROR:
 //1 - контрольная сумма не сходится
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include "main.h"
-#include <math.h> 
+#include <math.h>
+//#include "sofa\sofam.h"
 
 //КАЛИБРОВКА ГИРО АКСЕЛЬ МАГНЕТ
 #define kalib_gyro_0 -0,48461538;
@@ -19,6 +21,34 @@
 #define kalib_magn_0 0;
 #define kalib_magn_1 0;
 #define kalib_magn_2 0;
+
+float Kalib_acc_A[3][3] = { 1.052050,	-0.042355,	-0.023001,
+							-0.042355,	1.046937,	0.027873,
+							-0.023001,	0.027873,	1.005446 };
+float Kalib_acc_B[3] = { 0.207685, -0.010756, 0.034427 };
+
+
+float Kalib_gyro_B[3] = {0.42, -3.5, -3.08};
+
+
+float Kalib_magn_A[3][3] = { 2.394741,	-0.312813,	0.162253,
+							-0.312813,	2.531681,	0.454779,
+							0.162253,	0.454779,	2.271241 };
+float Kalib_magn_B[3] = { -0.047637, -0.371532, 0.684505 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 static float invSqrt(float x) {
 
@@ -45,7 +75,15 @@ unsigned short Crc16(unsigned char* buf, unsigned short len) {
 	return crc;
 }
 volatile float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;
-   
+
+
+
+
+
+
+
+
+
 
 void MadgwickAHRSupdateIMU(float* quaternion, float gx, float gy, float gz, float ax, float ay, float az, float dt, float beta)
 {
@@ -123,14 +161,143 @@ void MadgwickAHRSupdateIMU(float* quaternion, float gx, float gy, float gz, floa
 	quaternion[3] = q3;
 }
 
-float lsm6ds3_from_fs16g_to_mg(int16_t lsb)
-{
-	return ((float)lsb * 488.0f / 1000.0f);
+
+
+
+
+
+
+
+
+
+
+void MadgwickAHRSupdate(float* quaternion, float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz, float dt, float beta) {
+	float recipNorm;
+	float s0, s1, s2, s3;
+	float qDot1, qDot2, qDot3, qDot4;
+	float hx, hy;
+
+#	pragma GCC diagnostic push
+	// warning: variable '_2q2q3' set but not used [-Wunused-but-set-variable]
+	// warning: variable '_2q0q2' set but not used [-Wunused-but-set-variable]
+	// Мы доверяем этому коду
+#	pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+	float _2q0mx, _2q0my, _2q0mz, _2q1mx, _2bx, _2bz, _4bx, _4bz, _2q0, _2q1, _2q2, _2q3, _2q0q2, _2q2q3, q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
+#	pragma GCC diagnostic pop
+
+	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
+	if ((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f)) {
+		MadgwickAHRSupdateIMU(quaternion, gx, gy, gz, ax, ay, az, dt, beta);
+		return;
+	}
+
+	float sampleFreq = 1 / dt;
+
+	// Rate of change of quaternion from gyroscope
+	qDot1 = 0.5f * (-q1 * gx - q2 * gy - q3 * gz);
+	qDot2 = 0.5f * (q0 * gx + q2 * gz - q3 * gy);
+	qDot3 = 0.5f * (q0 * gy - q1 * gz + q3 * gx);
+	qDot4 = 0.5f * (q0 * gz + q1 * gy - q2 * gx);
+
+	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
+	if (!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
+
+		// Normalise accelerometer measurement
+		recipNorm = invSqrt(ax * ax + ay * ay + az * az);
+		ax *= recipNorm;
+		ay *= recipNorm;
+		az *= recipNorm;
+
+		// Normalise magnetometer measurement
+		recipNorm = invSqrt(mx * mx + my * my + mz * mz);
+		mx *= recipNorm;
+		my *= recipNorm;
+		mz *= recipNorm;
+
+		// Auxiliary variables to avoid repeated arithmetic
+		_2q0mx = 2.0f * q0 * mx;
+		_2q0my = 2.0f * q0 * my;
+		_2q0mz = 2.0f * q0 * mz;
+		_2q1mx = 2.0f * q1 * mx;
+		_2q0 = 2.0f * q0;
+		_2q1 = 2.0f * q1;
+		_2q2 = 2.0f * q2;
+		_2q3 = 2.0f * q3;
+		_2q0q2 = 2.0f * q0 * q2;
+		_2q2q3 = 2.0f * q2 * q3;
+		q0q0 = q0 * q0;
+		q0q1 = q0 * q1;
+		q0q2 = q0 * q2;
+		q0q3 = q0 * q3;
+		q1q1 = q1 * q1;
+		q1q2 = q1 * q2;
+		q1q3 = q1 * q3;
+		q2q2 = q2 * q2;
+		q2q3 = q2 * q3;
+		q3q3 = q3 * q3;
+
+		// Reference direction of Earth's magnetic field
+		hx = mx * q0q0 - _2q0my * q3 + _2q0mz * q2 + mx * q1q1 + _2q1 * my * q2 + _2q1 * mz * q3 - mx * q2q2 - mx * q3q3;
+		hy = _2q0mx * q3 + my * q0q0 - _2q0mz * q1 + _2q1mx * q2 - my * q1q1 + my * q2q2 + _2q2 * mz * q3 - my * q3q3;
+		_2bx = sqrt(hx * hx + hy * hy);
+		_2bz = -_2q0mx * q2 + _2q0my * q1 + mz * q0q0 + _2q1mx * q3 - mz * q1q1 + _2q2 * my * q3 - mz * q2q2 + mz * q3q3;
+		_4bx = 2.0f * _2bx;
+		_4bz = 2.0f * _2bz;
+		float _8bx = 2.0f * _4bx;
+		float _8bz = 2.0f * _4bz;
+
+		// Gradient decent algorithm corrective step
+		s0 = -_2q2 * (2 * (q1q3 - q0q2) - ax) + _2q1 * (2 * (q0q1 + q2q3) - ay) + -_4bz * q2*(_4bx*(0.5 - q2q2 - q3q3) + _4bz * (q1q3 - q0q2) - mx) + (-_4bx * q3 + _4bz * q1)*(_4bx*(q1q2 - q0q3) + _4bz * (q0q1 + q2q3) - my) + _4bx * q2*(_4bx*(q0q2 + q1q3) + _4bz * (0.5 - q1q1 - q2q2) - mz);
+		s1 = _2q3 * (2 * (q1q3 - q0q2) - ax) + _2q0 * (2 * (q0q1 + q2q3) - ay) + -4 * q1*(2 * (0.5 - q1q1 - q2q2) - az) + _4bz * q3*(_4bx*(0.5 - q2q2 - q3q3) + _4bz * (q1q3 - q0q2) - mx) + (_4bx*q2 + _4bz * q0)*(_4bx*(q1q2 - q0q3) + _4bz * (q0q1 + q2q3) - my) + (_4bx*q3 - _8bz * q1)*(_4bx*(q0q2 + q1q3) + _4bz * (0.5 - q1q1 - q2q2) - mz);
+		s2 = -_2q0 * (2 * (q1q3 - q0q2) - ax) + _2q3 * (2 * (q0q1 + q2q3) - ay) + (-4 * q2)*(2 * (0.5 - q1q1 - q2q2) - az) + (-_8bx * q2 - _4bz * q0)*(_4bx*(0.5 - q2q2 - q3q3) + _4bz * (q1q3 - q0q2) - mx) + (_4bx*q1 + _4bz * q3)*(_4bx*(q1q2 - q0q3) + _4bz * (q0q1 + q2q3) - my) + (_4bx*q0 - _8bz * q2)*(_4bx*(q0q2 + q1q3) + _4bz * (0.5 - q1q1 - q2q2) - mz);
+		s3 = _2q1 * (2 * (q1q3 - q0q2) - ax) + _2q2 * (2 * (q0q1 + q2q3) - ay) + (-_8bx * q3 + _4bz * q1)*(_4bx*(0.5 - q2q2 - q3q3) + _4bz * (q1q3 - q0q2) - mx) + (-_4bx * q0 + _4bz * q2)*(_4bx*(q1q2 - q0q3) + _4bz * (q0q1 + q2q3) - my) + (_4bx*q1)*(_4bx*(q0q2 + q1q3) + _4bz * (0.5 - q1q1 - q2q2) - mz);
+		recipNorm = invSqrt(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3); // normalise step magnitude
+		s0 *= recipNorm;
+		s1 *= recipNorm;
+		s2 *= recipNorm;
+		s3 *= recipNorm;
+
+		// Apply feedback step
+		qDot1 -= beta * s0;
+		qDot2 -= beta * s1;
+		qDot3 -= beta * s2;
+		qDot4 -= beta * s3;
+	}
+
+	// Integrate rate of change of quaternion to yield quaternion
+	q0 += qDot1 * (1.0f / sampleFreq);
+	q1 += qDot2 * (1.0f / sampleFreq);
+	q2 += qDot3 * (1.0f / sampleFreq);
+	q3 += qDot4 * (1.0f / sampleFreq);
+
+	// Normalise quaternion
+	recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
+	q0 *= recipNorm;
+	q1 *= recipNorm;
+	q2 *= recipNorm;
+	q3 *= recipNorm;
+
+	quaternion[0] = q0;
+	quaternion[1] = q1;
+	quaternion[2] = q2;
+	quaternion[3] = q3;
 }
 
-float lsm6ds3_from_fs2000dps_to_mdps(int16_t lsb)
+
+
+
+   
+
+
+
+float lsm6ds3_from_fs16g_to_mpss(int16_t lsb)
 {
-	return ((float)lsb * 70.0f);
+	return ((float)lsb * 0.488f / 1000.0f * 9.81);
+}
+
+float lsm6ds3_from_fs2000dps_to_degps(int16_t lsb)
+{
+	return ((float)lsb * 70.0f / 1000.0f);
 }
 
 float lis3mdl_from_fs16_to_gauss(int16_t lsb)
@@ -146,7 +313,7 @@ int pars_p11(packet_ma_type_11_t* packet_ma_type_11_in, new_packet_ma_type_11_t*
 	(*packet_new).state = (*packet_ma_type_11_in).state;
 	(*packet_new).height_bme = (*packet_ma_type_11_in).height_bme;
 	(*packet_new).num = (*packet_ma_type_11_in).num;
-	(*packet_new).time = (*packet_ma_type_11_in).time;
+	(*packet_new).time = (*packet_ma_type_11_in).time / 1000.0f;
 
 	return 0;
 }
@@ -158,29 +325,37 @@ int pars_p12(packet_ma_type_12_t* packet_ma_type_12_in, new_packet_ma_type_12_t*
 	(*packet_new).latitude = (*packet_ma_type_12_in).latitude;
 	(*packet_new).longitude = (*packet_ma_type_12_in).longitude;
 	(*packet_new).fix = (*packet_ma_type_12_in).fix;
-	(*packet_new).time = (*packet_ma_type_12_in).time;
+	(*packet_new).time = (*packet_ma_type_12_in).time / 1000.0f;
 	(*packet_new).num = (*packet_ma_type_12_in).num;
 	return 0;
 }
 
-int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_pack)
+int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_pack, float time_pr)
 {
 	//if (Crc16((uint8_t*)&packet_ma_type_2_in, sizeof(packet_ma_type_2_in) - 2) != packet_ma_type_2_in->sum) return 1;
 	float quat[4];
-	(*new_pack).acc_mg[0] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[0] )/1000 + kalib_acc_0;
-	(*new_pack).acc_mg[1] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[1] )/ 1000 + kalib_acc_1;
-	(*new_pack).acc_mg[2] = lsm6ds3_from_fs16g_to_mg((*packet_ma_type_2_in).acc_mg[2] )/ 1000 + kalib_acc_2;
-	(*new_pack).gyro_mdps[0] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[0] )/ 1000 + kalib_gyro_0;
-	(*new_pack).gyro_mdps[1] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[1] )/ 1000 + kalib_gyro_1;
-	(*new_pack).gyro_mdps[2] = lsm6ds3_from_fs2000dps_to_mdps((*packet_ma_type_2_in).gyro_mdps[2] )/ 1000 + kalib_gyro_2;
-	(*new_pack).LIS3MDL_magnetometer[0] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[0]) + kalib_magn_0;
-	(*new_pack).LIS3MDL_magnetometer[1] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[1]) + kalib_magn_1;
-	(*new_pack).LIS3MDL_magnetometer[2] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[2]) + kalib_magn_2;
+	(*new_pack).acc_mg[0] = lsm6ds3_from_fs16g_to_mpss((*packet_ma_type_2_in).acc_mg[0] );
+	(*new_pack).acc_mg[1] = lsm6ds3_from_fs16g_to_mpss((*packet_ma_type_2_in).acc_mg[1] );
+	(*new_pack).acc_mg[2] = lsm6ds3_from_fs16g_to_mpss((*packet_ma_type_2_in).acc_mg[2] );
+	
+	//float acc_amb[3];
+	//iauPmp((*new_pack).acc_mg, Kalib_acc_B, acc_amb);
+	//iauRxp(Kalib_acc_A, acc_amb, (*new_pack).acc_mg);
+
+
+
+
+	(*new_pack).gyro_mdps[0] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[0]) - Kalib_gyro_B[0];
+	(*new_pack).gyro_mdps[1] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[1]) - Kalib_gyro_B[1];
+	(*new_pack).gyro_mdps[2] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[2]) - Kalib_gyro_B[2];
+
+	(*new_pack).LIS3MDL_magnetometer[0] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[0]);
+	(*new_pack).LIS3MDL_magnetometer[1] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[1]);
+	(*new_pack).LIS3MDL_magnetometer[2] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[2]);
 	(*new_pack).lidar = (*packet_ma_type_2_in).lidar * 299792458 * 45 * pow(10, -12);//ответ в метрах. 45* = 90(пикосек)/2(путь туда-обратно)
 	(*new_pack).num = (*packet_ma_type_2_in).num;
-	(*new_pack).time_pr = (*new_pack).time;
-	(*new_pack).time = (*packet_ma_type_2_in).time;
-	MadgwickAHRSupdateIMU(quat, (*new_pack).gyro_mdps[0], (*new_pack).gyro_mdps[1], (*new_pack).gyro_mdps[2], (*new_pack).acc_mg[0], (*new_pack).acc_mg[1], (*new_pack).acc_mg[2], (*new_pack).time - (*new_pack).time_pr, 0.3);
+	(*new_pack).time = packet_ma_type_2_in->time / 1000.0f;
+	MadgwickAHRSupdate(quat, (*new_pack).gyro_mdps[0] / 180.0f*3.14, (*new_pack).gyro_mdps[1] /180.0f*3.14, (*new_pack).gyro_mdps[2] / 180.0f*3.14, (*new_pack).acc_mg[0], (*new_pack).acc_mg[1], (*new_pack).acc_mg[2], (*new_pack).LIS3MDL_magnetometer[0], (*new_pack).LIS3MDL_magnetometer[1], (*new_pack).LIS3MDL_magnetometer[2], (*new_pack).time - time_pr, 0.3);
 	(*new_pack).q[0] = quat[0];
 	(*new_pack).q[1] = quat[1];
 	(*new_pack).q[2] = quat[2];
