@@ -11,7 +11,6 @@ RM := rm -rf
 -include sources.mk
 -include stm32f4/stm32f4/nRF24L01_PL/src/subdir.mk
 -include stm32f4/stm32f4/Shift_Register/src/subdir.mk
--include stm32f4/stm32f4/Photorezistor/src/subdir.mk
 -include stm32f4/stm32f4/LSM6DS3/src/subdir.mk
 -include stm32f4/stm32f4/LIS3MDL/src/subdir.mk
 -include stm32f4/stm32f4/DWT_Delay/src/subdir.mk

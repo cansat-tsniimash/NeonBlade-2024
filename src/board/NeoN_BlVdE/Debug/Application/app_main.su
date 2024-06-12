@@ -1,4 +1,4 @@
-app_main.c:116:16:Crc16	24	static
-app_main.c:127:5:_write	24	static
-app_main.c:131:5:super_smart_write	32	static
-app_main.c:198:5:app_main	648	static
+app_main.c:126:16:Crc16	24	static
+app_main.c:137:5:_write	24	static
+app_main.c:141:5:super_smart_write	32	static
+app_main.c:208:5:app_main	672	static

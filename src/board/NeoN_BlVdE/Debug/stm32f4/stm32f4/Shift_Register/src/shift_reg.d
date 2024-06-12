@@ -34,6 +34,8 @@ stm32f4/stm32f4/Shift_Register/src/shift_reg.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\dwt_delay\dwt_delay.h
 
@@ -104,6 +106,10 @@ c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\shift_register\shift_reg.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 

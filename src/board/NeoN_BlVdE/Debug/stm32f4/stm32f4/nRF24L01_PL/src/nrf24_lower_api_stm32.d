@@ -33,6 +33,8 @@ stm32f4/stm32f4/nRF24L01_PL/src/nrf24_lower_api_stm32.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\nrf24l01_pl\nrf24_lower_api.h \
  c:\huinya\neon_blvde\lib-tsniimash-master\stm32f4\nrf24l01_pl\nrf24_lower_api_stm32.h \
@@ -106,6 +108,10 @@ stm32f4/stm32f4/nRF24L01_PL/src/nrf24_lower_api_stm32.o: \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 

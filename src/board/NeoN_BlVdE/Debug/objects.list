@@ -1,4 +1,5 @@
 "./Application/app_main.o"
+"./Application/photorezistor.o"
 "./Application/sebastian.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
@@ -54,7 +55,6 @@
 "./stm32f4/stm32f4/LIS3MDL/src/lis3mdl_reg.o"
 "./stm32f4/stm32f4/LSM6DS3/src/DLSM.o"
 "./stm32f4/stm32f4/LSM6DS3/src/lsm6ds3_reg.o"
-"./stm32f4/stm32f4/Photorezistor/src/photorezistor.o"
 "./stm32f4/stm32f4/Shift_Register/src/shift_reg.o"
 "./stm32f4/stm32f4/nRF24L01_PL/src/nrf24_lower_api_stm32.o"
 "./stm32f4/stm32f4/nRF24L01_PL/src/nrf24_upper_api.o"

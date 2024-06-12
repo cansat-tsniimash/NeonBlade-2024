@@ -32,6 +32,8 @@ Application/app_main.o: ../Application/app_main.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../FATFS/App/fatfs.h ../Middlewares/Third_Party/FatFs/src/ff.h \
  ../Middlewares/Third_Party/FatFs/src/integer.h ../FATFS/Target/ffconf.h \
@@ -40,8 +42,7 @@ Application/app_main.o: ../Application/app_main.c \
  ../Middlewares/Third_Party/FatFs/src/diskio.h \
  ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/sd_diskio.h \
  C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/lis3mdl_reg.h \
- C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/Photorezistor/photorezistor.h \
- ../Application/sebastian.h \
+ ../Application/photorezistor.h ../Application/sebastian.h \
  ../Application/../Drivers/BME280_I2C/its_bme280.h \
  ../Application/../Drivers/BME280_I2C/../../Application/freakheader.h \
  C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LSM6DS3/DLSM.h \
@@ -130,6 +131,10 @@ Application/app_main.o: ../Application/app_main.c \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
+
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
+
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
 ../FATFS/App/fatfs.h:
@@ -154,7 +159,7 @@ Application/app_main.o: ../Application/app_main.c \
 
 C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/LIS3MDL/lis3mdl_reg.h:
 
-C:/huinya/NeoN_BlVdE/lib-tsniimash-master/stm32f4/Photorezistor/photorezistor.h:
+../Application/photorezistor.h:
 
 ../Application/sebastian.h:
 

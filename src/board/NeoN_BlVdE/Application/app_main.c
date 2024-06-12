@@ -11,7 +11,7 @@
 #include <math.h>
 #include "fatfs.h"
 #include "stm32f4/LIS3MDL/lis3mdl_reg.h"
-#include "stm32f4/Photorezistor/photorezistor.h"
+#include "photorezistor.h"
 
 
 #include "sebastian.h"
@@ -30,16 +30,20 @@
 #define LIS_FLAG 1
 #define NEO_FLAG 0
 #define BME_FLAG 1
-#define GPS_FLAG 0
+#define GPS_FLAG 1
 #define SD_FLAG 1
 #define NRF_FLAG 1
 #define TDC_FLAG 0
+#define PHOTOREZ_FLAG 1
+#define VOLT_FLAG 1
+
 #define UNKNXW 0
 #define KOF 0.8
 #define TIME_STONE 5000
 #define TIME_LIDAR 500//ВРЕМЯ ВКЛ ЛИДАРА ПОСЛЕ ОТКР ПАРАШЮТА
 #define TIME_PARASHUTE 300
-
+#define TIME_FAST_SENS 5
+#define TIME_SLOW_SENS 100
 
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi5;
@@ -48,6 +52,7 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern I2C_HandleTypeDef hi2c1;
 extern ADC_HandleTypeDef hadc1;
+extern TIM_HandleTypeDef htim5;
 
 #define BUZZER_PORT GPIOB
 #define BUZZER_PIN GPIO_PIN_8
@@ -61,6 +66,9 @@ extern ADC_HandleTypeDef hadc1;
 #define LED_PORT GPIOB
 #define LED_PIN GPIO_PIN_14
 #pragma pack(push,1)
+
+
+float OPORNOE_VOLT = 1.98;
 
 typedef struct
 {
@@ -88,9 +96,11 @@ typedef struct
     float longitude;
     float altitude;
     uint8_t fix;
+    float volts;
+    float lux;
 
     uint16_t sum;//22
-    uint8_t null[10];
+    uint8_t nulll[2];
 
 }packet_ma_type_12_t;//SNAIL2(УЛИТКА)
 
@@ -105,7 +115,7 @@ typedef struct
     int16_t LIS3MDL_magnetometer[3];
     uint16_t lidar;
 
-    uint16_t sum;
+    uint16_t lux;
     uint8_t nulll[3];
 
 
@@ -260,10 +270,13 @@ int app_main()
     double bme_press_ground = 0;
     for(int i = 0; i < 10; i++)
     {
+    	HAL_Delay(100);
     	its_bme280_read(UNKNXW, &bme_important);
     	if(bme_important.pressure>90000){
-    	bme_press_ground += bme_important.pressure;bme_gnd_cnt++;}
+    	bme_press_ground += bme_important.pressure;
+    		bme_gnd_cnt++;}
     }
+    if(bme_gnd_cnt > 0)
     bme_press_ground = bme_press_ground/bme_gnd_cnt;
 
     int8_t state_sd = 0;//sd
@@ -389,10 +402,195 @@ int app_main()
     float magfloat[3] = {0};
     float temp_lis_float;
 
+    int time_to_fast_sens = 0;
+    int time_to_slow_sens = 0;
     bool impulse = false;
+
+	packet_ma_type_11.flag = 0xFF;
+	packet_ma_type_12.flag = 0xFA;
+	packet_ma_type_2.flag = 0xAA;
+
+
+	time_to_fast_sens = HAL_GetTick();
+	time_to_slow_sens = HAL_GetTick();
+	float volts;
+
+	int pulse_sosa = 250;
+
  	while(true)
 	{
- 		HAL_Delay(150);
+
+			nrf24_mode_tx(&nrf24_api_config);
+ 		/*HAL_ADC_Start(&hadc1);
+ 		HAL_ADC_PollForConversion(&hadc1, 100);
+ 		volts = HAL_ADC_GetValue(&hadc1) * 3.3 / 4095;	//Volts
+		nrf24_mode_tx(&nrf24_api_config);
+		for(int i = 0; i < 1000; i++)
+		{
+			__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, i);
+			HAL_Delay(5);
+		}*/
+ 		if(HAL_GetTick() - time_to_fast_sens > TIME_FAST_SENS)
+ 		{
+			time_to_fast_sens = HAL_GetTick();
+ 			if (LSM_FLAG)
+ 					{
+ 						lsmread(&lsmctx, &LSM_TEMP, &accc, &gyrooo);
+ 						lsm6ds3_temperature_raw_get(&lsmctx, &temperature_celsius_gyro);//ЗАПРОС СЫРЫХ ДАННЫХ
+ 			 			lsm6ds3_acceleration_raw_get(&lsmctx, acc_g);
+ 						lsm6ds3_angular_rate_raw_get(&lsmctx, gyro_dps);
+ 						packet_ma_type_2.acc_mg[0] = acc_g[0];
+ 						packet_ma_type_2.acc_mg[1] = acc_g[1];
+ 						packet_ma_type_2.acc_mg[2] = acc_g[2];
+ 						/*gyro_dps[0]-=0,48461538;
+ 						gyro_dps[1]+=3,45999986923;
+ 						gyro_dps[2]+=2,561433749;*/
+ 						packet_ma_type_2.gyro_mdps[0] = gyro_dps[0];
+ 						packet_ma_type_2.gyro_mdps[1] = gyro_dps[1];
+ 						packet_ma_type_2.gyro_mdps[2] = gyro_dps[2];
+ 						}
+
+ 					if (LIS_FLAG)
+ 					{
+ 						lisread(&ctx, &temp_lis_float, &magfloat);
+ 						lis3mdl_magnetic_raw_get(&ctx, mag);
+ 						//lis3mdl_temperature_raw_get(&ctx, &temp_lis);//ЗАПРОС СЫРЫХ ДАННЫХ
+ 						packet_ma_type_2.LIS3MDL_magnetometer[0] = mag[0];
+ 						packet_ma_type_2.LIS3MDL_magnetometer[1] = mag[1];
+ 						packet_ma_type_2.LIS3MDL_magnetometer[2] = mag[2];
+
+ 					}
+
+ 					if(SD_FLAG)
+ 					{
+ 						super_smart_write((uint8_t *)&packet_ma_type_11, 32, &state_sd);
+ 						super_smart_write((uint8_t *)&packet_ma_type_12, 32, &state_sd);
+ 						super_smart_write((uint8_t *)&packet_ma_type_2, 32, &state_sd);
+ 					}
+
+ 					if(TDC_FLAG)
+ 					{
+ 						/*uint8_t reg1[4] = {0b10101010, 0b00000000, 0b00000000, 0b11111111}; uint32_t reg1wr = 0b111111;
+ 						tdcgp21_write_register(&tdcgp21_api_config, TDC21_WREG1, reg1, 4);
+ 			 			//HAL_Delay(100);
+ 			 			tdc21_read_register(&tdcgp21_api_config, TDC21_REG1, (uint8_t*)&reg1wr, 1);
+ 						tdc21_full_reset(&tdcgp21_api_config);
+ 			 			HAL_Delay(125);
+ 			 			tdc21_read_register(&tdcgp21_api_config, TDC21_REG1, (uint8_t*)&reg1wr, 1);
+ 			 			HAL_Delay(5);*/
+ 			 			tdc21_start_tof(&tdcgp21_api_config);
+ 			 			//HAL_Delay(5);
+ 					}
+
+ 			       if(NRF_FLAG)
+ 			        {
+ 			    	   	num2++;
+ 						nrf24_fifo_flush_tx(&nrf24_api_config);
+ 						errrrrrrrrr = nrf24_irq_clear(&nrf24_api_config, IRQ_flags);
+ 						size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_2, 32, false);
+ 						nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+ 						nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+ 						nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
+						if (rx_status != NRF24_FIFO_EMPTY)
+						{
+							radio_read_err = nrf24_fifo_read(&nrf24_api_config, rx_buffer, 32);
+							nrf24_fifo_flush_rx(&nrf24_api_config);
+						   if(rx_status == NRF24_FIFO_FULL)
+							{
+								nrf24_fifo_flush_rx(&nrf24_api_config);
+								nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+							}
+						}
+						if (tx_status == NRF24_FIFO_EMPTY)
+						{
+							nrf24_fifo_flush_tx(&nrf24_api_config);
+							nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+							//errrrrrrrrr = nrf24_fifo_write_ack_pld(&nrf24_api_config, 0, (uint8_t *)&packet_ma_type_11, sizeof(packet_ma_type_11));
+							radio_flag = !radio_flag;//изменения от плт
+						}
+						//опускаем флаги
+						nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
+						irq_err = nrf24_irq_clear(&nrf24_api_config, NRF24_IRQ_RX_DR | NRF24_IRQ_TX_DR | NRF24_IRQ_MAX_RT);
+ 			        }
+ 		}
+
+ 		if(HAL_GetTick() - time_to_slow_sens > TIME_SLOW_SENS)
+ 	 	{
+ 			time_to_slow_sens = HAL_GetTick();
+ 	    	if(PHOTOREZ_FLAG){
+ 	    	lux = photorezistor_get_lux(photorezist);
+   	    	packet_ma_type_12.lux = lux;
+ 	    	}
+ 			if(GPS_FLAG)
+ 			{
+ 				gps_work();
+ 				gps_get_coords(&cookie,  &latitude,  &lontitude,&altitude, &fix);
+ 				packet_ma_type_12.latitude = latitude;
+ 				packet_ma_type_12.longitude =lontitude;
+ 				packet_ma_type_12.altitude = altitude;
+ 				packet_ma_type_12.fix = fix;
+ 				//printf("%f %f %f           %ld\n", (double)latitude, (double)lontitude, (double)altitude, fix);
+ 			}
+
+ 			if(BME_FLAG)
+ 			{
+ 				its_bme280_read(UNKNXW, &bme_important);
+ 				packet_ma_type_11.BME280_pressure = bme_important.pressure;
+ 				packet_ma_type_11.BME280_temperature = (float)bme_important.temperature;
+ 				packet_ma_type_11.height_bme = 44330.0*(1.0 - pow((float)packet_ma_type_11.BME280_pressure/bme_press_ground, 1.0/5.255));
+ 			}
+
+ 	        if(NRF_FLAG)
+ 	        {
+ 	       	    num1++;
+ 				nrf24_fifo_flush_tx(&nrf24_api_config);
+ 				errrrrrrrrr = nrf24_irq_clear(&nrf24_api_config, IRQ_flags);
+ 				size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_11, 32, false);// sizeof(packet_ma_type_1)
+ 				size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_12, 32, false);
+ 				nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+ 				nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+ 				nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
+				if (rx_status != NRF24_FIFO_EMPTY)
+				{
+					radio_read_err = nrf24_fifo_read(&nrf24_api_config, rx_buffer, 32);
+					nrf24_fifo_flush_rx(&nrf24_api_config);
+				   if(rx_status == NRF24_FIFO_FULL)
+					{
+						nrf24_fifo_flush_rx(&nrf24_api_config);
+						nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+					}
+				}
+				if (tx_status == NRF24_FIFO_EMPTY)
+				{
+					nrf24_fifo_flush_tx(&nrf24_api_config);
+					nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
+					//errrrrrrrrr = nrf24_fifo_write_ack_pld(&nrf24_api_config, 0, (uint8_t *)&packet_ma_type_11, sizeof(packet_ma_type_11));
+					radio_flag = !radio_flag;//изменения от плт
+				}
+				//опускаем флаги
+				nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
+				irq_err = nrf24_irq_clear(&nrf24_api_config, NRF24_IRQ_RX_DR | NRF24_IRQ_TX_DR | NRF24_IRQ_MAX_RT);
+ 	          }
+ 	 	}
+
+ 		if(VOLT_FLAG)
+ 		{
+    	 	//HAL_ADC_Start(&hadc1);
+ 			//HAL_ADC_PollForConversion(&hadc1, 100);
+ 	 		volts = get_voltage_cheto();	//Volts
+ 			if(volts <= OPORNOE_VOLT && pulse_sosa <= 950)
+ 			{
+ 				pulse_sosa=pulse_sosa+5;
+ 				__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, pulse_sosa);
+ 			}
+ 			else if(volts >= OPORNOE_VOLT && pulse_sosa >= 20){
+ 				pulse_sosa=pulse_sosa-5;
+ 				__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, pulse_sosa);
+ 			}
+
+ 		}
+ 		packet_ma_type_12.volts = volts;
+
  		if(impulse == false)
  		{
  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 1);
@@ -403,87 +601,16 @@ int app_main()
  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, 0);
  			impulse = false;
  		}
- 		packet_ma_type_11.flag = 0xFF;
- 		packet_ma_type_12.flag = 0xFA;
- 		packet_ma_type_2.flag = 0xAA;
+
  		packet_ma_type_11.time = time_on_board;
  		packet_ma_type_12.time = time_on_board;
  		packet_ma_type_2.time = time_on_board;
 		packet_ma_type_11.num = num1;
 		packet_ma_type_12.num = num1;
 		packet_ma_type_2.num = num2;
-    	num1++;
-    	num2++;
-    	lux = photorezistor_get_lux(photorezist);
-    		time_on_board = HAL_GetTick();
+
+    	time_on_board = HAL_GetTick();
 		retin = lis3mdl_read_reg(&ctx, 0x0F , (uint8_t *) &abobus, 6);
-
-		if(TDC_FLAG)
-		{
-			/*uint8_t reg1[4] = {0b10101010, 0b00000000, 0b00000000, 0b11111111}; uint32_t reg1wr = 0b111111;
-			tdcgp21_write_register(&tdcgp21_api_config, TDC21_WREG1, reg1, 4);
- 			//HAL_Delay(100);
- 			tdc21_read_register(&tdcgp21_api_config, TDC21_REG1, (uint8_t*)&reg1wr, 1);
-			tdc21_full_reset(&tdcgp21_api_config);
- 			HAL_Delay(125);
- 			tdc21_read_register(&tdcgp21_api_config, TDC21_REG1, (uint8_t*)&reg1wr, 1);
- 			HAL_Delay(5);*/
- 			tdc21_start_tof(&tdcgp21_api_config);
- 			//HAL_Delay(5);
-		}
-
-		if(SD_FLAG)
-		{
-			super_smart_write((uint8_t *)&packet_ma_type_11, 32, &state_sd);
-			super_smart_write((uint8_t *)&packet_ma_type_12, 32, &state_sd);
-			super_smart_write((uint8_t *)&packet_ma_type_2, 32, &state_sd);
-		}
-
-		if(GPS_FLAG)
-		{
-			gps_work();
-			gps_get_coords(&cookie,  &latitude,  &lontitude,&altitude, &fix);
-			packet_ma_type_12.latitude = latitude;
-			packet_ma_type_12.longitude = lontitude;
-			packet_ma_type_12.altitude = altitude;
-			//printf("%f %f %f           %ld\n", (double)latitude, (double)lontitude, (double)altitude, fix);
-		}
-
-		if (LSM_FLAG)
-		{
-			lsmread(&lsmctx, &LSM_TEMP, &accc, &gyrooo);
-			lsm6ds3_temperature_raw_get(&lsmctx, &temperature_celsius_gyro);//ЗАПРОС СЫРЫХ ДАННЫХ
- 			lsm6ds3_acceleration_raw_get(&lsmctx, acc_g);
-			lsm6ds3_angular_rate_raw_get(&lsmctx, gyro_dps);
-			packet_ma_type_2.acc_mg[0] = acc_g[0];
-			packet_ma_type_2.acc_mg[1] = acc_g[1];
-			packet_ma_type_2.acc_mg[2] = acc_g[2];
-			/*gyro_dps[0]-=0,48461538;
-			gyro_dps[1]+=3,45999986923;
-			gyro_dps[2]+=2,561433749;*/
-			packet_ma_type_2.gyro_mdps[0] = gyro_dps[0];
-			packet_ma_type_2.gyro_mdps[1] = gyro_dps[1];
-			packet_ma_type_2.gyro_mdps[2] = gyro_dps[2];
-			}
-
-		if (LIS_FLAG)
-		{
-			lisread(&ctx, &temp_lis_float, &magfloat);
-			lis3mdl_magnetic_raw_get(&ctx, mag);
-			//lis3mdl_temperature_raw_get(&ctx, &temp_lis);//ЗАПРОС СЫРЫХ ДАННЫХ
-			packet_ma_type_2.LIS3MDL_magnetometer[0] = mag[0];
-			packet_ma_type_2.LIS3MDL_magnetometer[1] = mag[1];
-			packet_ma_type_2.LIS3MDL_magnetometer[2] = mag[2];
-
-		}
-
-		if(BME_FLAG == 1)
-		{
-			its_bme280_read(UNKNXW, &bme_important);
-			packet_ma_type_11.BME280_pressure = bme_important.pressure;
-			packet_ma_type_11.BME280_temperature = (float)bme_important.temperature;
-			packet_ma_type_11.height_bme = 44330.0*(1.0 - pow((float)packet_ma_type_11.BME280_pressure/bme_press_ground, 1.0/5.255));
-		}
 
 		seb_time = HAL_GetTick();
 		//printf("mX = %f\tmY = %f\tmZ = %f\n", (double)-1* mag[0], (double) -1 * mag[1], (double)mag[2]);
@@ -506,69 +633,6 @@ int app_main()
 	    //nrf24_mode_tx(&nrf24_api_config);
 
 
-
-        if(NRF_FLAG)
-        {
-        	//nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-			nrf24_fifo_flush_tx(&nrf24_api_config);
-			errrrrrrrrr = nrf24_irq_clear(&nrf24_api_config, IRQ_flags);
-			//nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
-			//nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-			//nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
-
-			size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_11, 32, false);// sizeof(packet_ma_type_1)
-			//HAL_Delay(50);
-			size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_12, 32, false);
-			//HAL_Delay(50);
-			size_in_tx = nrf24_fifo_write(&nrf24_api_config, (uint8_t *)&packet_ma_type_2, 32, false);
-			//HAL_Delay(50);
-			//nrf24_read_register(&nrf24_api_config, NRF24_REGADDR_STATUS, &data_nrf_tx_ds, sizeof(data_nrf_tx_ds));
-
-			nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-			//printf("                   ");
-			//nrf24_mode_tx(&nrf24_api_config);
-			//HAL_Delay(100);
-			//nrf24_mode_standby(&nrf24_api_config);
-
-
-			//nrf24_dump_registers(&nrf24_api_config);
-
-			nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-			nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
-
-
-						if (rx_status != NRF24_FIFO_EMPTY)
-						{
-							radio_read_err = nrf24_fifo_read(&nrf24_api_config, rx_buffer, 32);
-							//HAL_GPIO_WritePin(GPIOC , GPIO_PIN_13, GPIO_PIN_RESET);
-							nrf24_fifo_flush_rx(&nrf24_api_config);
-						   if(rx_status == NRF24_FIFO_FULL)
-							{
-								nrf24_fifo_flush_rx(&nrf24_api_config);
-								nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-								for(int i = 0; i < 5; i++)
-								{
-									 //HAL_Delay(50);
-									//HAL_GPIO_WritePin(GPIOC , GPIO_PIN_13, GPIO_PIN_SET);
-									 //HAL_Delay(50);
-									// HAL_GPIO_WritePin(GPIOC , GPIO_PIN_13, GPIO_PIN_RESET);
-								}
-
-							}
-						}
-
-						if (tx_status == NRF24_FIFO_EMPTY)
-						{
-							nrf24_fifo_flush_tx(&nrf24_api_config);
-							nrf24_fifo_status(&nrf24_api_config, &rx_status, &tx_status);
-							//errrrrrrrrr = nrf24_fifo_write_ack_pld(&nrf24_api_config, 0, (uint8_t *)&packet_ma_type_11, sizeof(packet_ma_type_11));
-							radio_flag = !radio_flag;//изменения от плт
-						}
-
-						//опускаем флаги
-						nrf24_irq_get(&nrf24_api_config, &IRQ_flags);
-						irq_err = nrf24_irq_clear(&nrf24_api_config, NRF24_IRQ_RX_DR | NRF24_IRQ_TX_DR | NRF24_IRQ_MAX_RT);
-          }
         switch(fckng_state)
         {
         case STATE_ON_GND:
@@ -576,8 +640,7 @@ int app_main()
 			HAL_GPIO_WritePin(LED_PORT, LED_PIN, 1);
         	if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == true)
         	{
-        		if(HAL_GetTick() >= start_time_io + 50)
-				{
+        		HAL_Delay(100);
 					for(int i = 0; i < 10; i++)
 					{
 						lux_sun+=photorezistor_get_lux(photorezist);
@@ -586,7 +649,7 @@ int app_main()
 					fckng_state = STATE_IN_ROCKET;
 					packet_ma_type_11.state = 1;
 					start_time_io = HAL_GetTick();
-				}
+
         	}
         	else
         	{

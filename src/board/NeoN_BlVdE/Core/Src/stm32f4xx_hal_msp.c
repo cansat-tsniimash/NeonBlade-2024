@@ -57,7 +57,9 @@
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-/**
+
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+                    /**
   * Initializes the Global MSP.
   */
 void HAL_MspInit(void)
@@ -96,8 +98,9 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     __HAL_RCC_GPIOA_CLK_ENABLE();
     /**ADC1 GPIO Configuration
     PA0-WKUP     ------> ADC1_IN0
+    PA3     ------> ADC1_IN3
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_0;
+    GPIO_InitStruct.Pin = GPIO_PIN_0|APD_FB_VOLT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -127,8 +130,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 
     /**ADC1 GPIO Configuration
     PA0-WKUP     ------> ADC1_IN0
+    PA3     ------> ADC1_IN3
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0|APD_FB_VOLT_Pin);
 
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
 
@@ -475,6 +479,76 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
   /* USER CODE BEGIN SPI5_MspDeInit 1 */
 
   /* USER CODE END SPI5_MspDeInit 1 */
+  }
+
+}
+
+/**
+* @brief TIM_PWM MSP Initialization
+* This function configures the hardware resources used in this example
+* @param htim_pwm: TIM_PWM handle pointer
+* @retval None
+*/
+void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* htim_pwm)
+{
+  if(htim_pwm->Instance==TIM5)
+  {
+  /* USER CODE BEGIN TIM5_MspInit 0 */
+
+  /* USER CODE END TIM5_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_TIM5_CLK_ENABLE();
+  /* USER CODE BEGIN TIM5_MspInit 1 */
+
+  /* USER CODE END TIM5_MspInit 1 */
+  }
+
+}
+
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  if(htim->Instance==TIM5)
+  {
+  /* USER CODE BEGIN TIM5_MspPostInit 0 */
+
+  /* USER CODE END TIM5_MspPostInit 0 */
+
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    /**TIM5 GPIO Configuration
+    PA2     ------> TIM5_CH3
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF2_TIM5;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /* USER CODE BEGIN TIM5_MspPostInit 1 */
+
+  /* USER CODE END TIM5_MspPostInit 1 */
+  }
+
+}
+/**
+* @brief TIM_PWM MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param htim_pwm: TIM_PWM handle pointer
+* @retval None
+*/
+void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* htim_pwm)
+{
+  if(htim_pwm->Instance==TIM5)
+  {
+  /* USER CODE BEGIN TIM5_MspDeInit 0 */
+
+  /* USER CODE END TIM5_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_TIM5_CLK_DISABLE();
+  /* USER CODE BEGIN TIM5_MspDeInit 1 */
+
+  /* USER CODE END TIM5_MspDeInit 1 */
   }
 
 }

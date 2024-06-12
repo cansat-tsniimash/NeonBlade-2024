@@ -110,8 +110,8 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Application"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="TDC-GP21"/>
-						<entry excluding="stm32f4/BME280|stm32f4/Dosimeter|stm32f0|stm32f1|stm32f4/1Wire_DS18B20|stm32f4/AD5593 old|TDC_GP21|BME280|Shift_Register" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="stm32f4"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
+						<entry excluding="stm32f4/Photorezistor/src/photorezistor.c|stm32f4/BME280|stm32f4/Dosimeter|stm32f0|stm32f1|stm32f4/1Wire_DS18B20|stm32f4/AD5593 old|TDC_GP21|BME280|Shift_Register" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="stm32f4"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FATFS"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>

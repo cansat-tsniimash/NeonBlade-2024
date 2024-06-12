@@ -6,14 +6,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Application/app_main.c \
+../Application/photorezistor.c \
 ../Application/sebastian.c 
 
 OBJS += \
 ./Application/app_main.o \
+./Application/photorezistor.o \
 ./Application/sebastian.o 
 
 C_DEPS += \
 ./Application/app_main.d \
+./Application/photorezistor.d \
 ./Application/sebastian.d 
 
 
@@ -24,7 +27,7 @@ Application/%.o: ../Application/%.c Application/subdir.mk
 clean: clean-Application
 
 clean-Application:
-	-$(RM) ./Application/app_main.d ./Application/app_main.o ./Application/sebastian.d ./Application/sebastian.o
+	-$(RM) ./Application/app_main.d ./Application/app_main.o ./Application/photorezistor.d ./Application/photorezistor.o ./Application/sebastian.d ./Application/sebastian.o
 
 .PHONY: clean-Application
 

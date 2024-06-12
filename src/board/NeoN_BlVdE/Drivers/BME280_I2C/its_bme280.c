@@ -55,7 +55,7 @@ static its_bme280_t _devices[1] = {
 					.osr_h = BME280_OVERSAMPLING_16X,
 					.osr_p = BME280_OVERSAMPLING_16X,
 					.osr_t = BME280_OVERSAMPLING_16X,
-					.standby_time = BME280_STANDBY_TIME_500_MS
+					.standby_time = BME280_STANDBY_TIME_62_5_MS
 			}
 		}
 	}
