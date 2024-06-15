@@ -21,6 +21,7 @@ from itertools import chain
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+import datetime
 
 
 import ctypes
@@ -43,16 +44,132 @@ import struct
 #txt = f_quat.read()
 #print(txt)
 #print(1)
+now_str = datetime.datetime.now().replace(microsecond=0).isoformat().replace(":", "-")
+tlm_base_path = "telemetry\\"
+os.makedirs(tlm_base_path, exist_ok=True)
+
+file_acc = open(tlm_base_path + 'file_acc-' + now_str + '.txt', 'w+')
+file_mag = open(tlm_base_path + 'file_mag-' + now_str + '.txt', 'w+')
+file_p1 = open(tlm_base_path + 'file_p1-' + now_str + '.txt', 'w+')
+file_p1.write("Номер пакета")
+file_p1.write('\t')
+file_p1.write("Время")
+file_p1.write('\t')
+file_p1.write("Давление")
+file_p1.write('\t')
+file_p1.write("Температура")
+file_p1.write('\t')
+file_p1.write("Высота")
+file_p1.write('\t')
+file_p1.write("Состояние")
+file_p1.write('\n')
+file_p1.flush()
+file_p12 = open(tlm_base_path + 'file_p12-' + now_str + '.txt', 'w+')
+file_p12.write("Номер пакета")
+file_p12.write('\t')
+file_p12.write("Время")
+file_p12.write('\t')
+file_p12.write("Широта")
+file_p12.write('\t')
+file_p12.write("Долгота")
+file_p12.write('\t')
+file_p12.write("Высота")
+file_p12.write('\t')
+file_p12.write("fix GPS")
+file_p12.write('\n')
+file_p12.flush()
+file_p2 = open(tlm_base_path + 'file_p2-' + now_str + '.txt', 'w+')
+file_p2.write("Номер пакета")
+file_p2.write('\t')
+file_p2.write("Время")
+file_p2.write('\t')
+file_p2.write("acc_X")
+file_p2.write('\t')
+file_p2.write("acc_Y")
+file_p2.write('\t')
+file_p2.write("acc_Z")
+file_p2.write('\t')
+file_p2.write("gyro_X")
+file_p2.write('\t')
+file_p2.write("gyro_Y")
+file_p2.write('\t')
+file_p2.write("gyro_Z")
+file_p2.write('\t')
+file_p2.write("mag_X")
+file_p2.write('\t')
+file_p2.write("mag_Y")
+file_p2.write('\t')
+file_p2.write("mag_Z")
+file_p2.write('\t')
+file_p2.write("q0")
+file_p2.write('\t')
+file_p2.write("q1")
+file_p2.write('\t')
+file_p2.write("q2")
+file_p2.write('\t')
+file_p2.write("q3")
+file_p2.write('\t')
+file_p2.write("q4")
+file_p2.write('\t')
+file_p2.write("Лидар")
+file_p2.write('\n')
+file_p2.flush()
+file_points = open(tlm_base_path + 'file_points-' + now_str + '.txt', 'w+')
+file_points.write("Время")
+file_points.write("\t")
+file_points.write("X")
+file_points.write("\t")
+file_points.write("Y")
+file_points.write("\t")
+file_points.write("Z")
+file_points.write("\n")
+file_points.flush()
+file_p1_raw = open(tlm_base_path + 'file_p1_raw-' + now_str + '.txt', 'w+')
+file_p1_raw.write("Номер пакета")
+file_p1_raw.write('\t')
+file_p1_raw.write("Время")
+file_p1_raw.write('\t')
+file_p1_raw.write("Давление")
+file_p1_raw.write('\t')
+file_p1_raw.write("Температура")
+file_p1_raw.write('\t')
+file_p1_raw.write("Высота")
+file_p1_raw.write('\t')
+file_p1_raw.write("Состояние")
+file_p1_raw.write('\n')
+file_p1_raw.flush()
+file_p12_raw = open(tlm_base_path + 'file_p12_raw-' + now_str + '.txt', 'w+')
+file_p12_raw.write("Номер пакета")
+file_p12_raw.write('\t')
+file_p12_raw.write("Время")
+file_p12_raw.write('\t')
+file_p12_raw.write("Давление")
+file_p12_raw.write('\t')
+file_p12_raw.write("Температура")
+file_p12_raw.write('\t')
+file_p12_raw.write("Высота")
+file_p12_raw.write('\t')
+file_p12_raw.write("Состояние")
+file_p12_raw.write('\n')
+file_p12_raw.flush()
+file_p2_raw = open(tlm_base_path + 'file_p2_raw-' + now_str + '.txt', 'w+')
+file_p2_raw.write("Номер пакета")
+file_p2_raw.write('\t')
+file_p2_raw.write("Время")
+file_p2_raw.write('\t')
+file_p2_raw.write("Давление")
+file_p2_raw.write('\t')
+file_p2_raw.write("Температура")
+file_p2_raw.write('\t')
+file_p2_raw.write("Высота")
+file_p2_raw.write('\t')
+file_p2_raw.write("Состояние")
+file_p2_raw.write('\n')
+file_p2_raw.flush()
 
 
-file_acc = open('file_acc.txt', 'w+')
-file_mag = open('file_mag.txt', 'w+')
-file_p1 = open('file_p1.txt', 'w+')
-file_p12 = open('file_p12.txt', 'w+')
-file_p2 = open('file_p2.txt', 'w+')
 
-
-
+coordinate = np.array([])
 
 
 pg.setConfigOption('background', '#646464')
@@ -61,8 +178,8 @@ pg.setConfigOption('foreground', '#ffffff')
 
 MESH_PATH = os.path.abspath('Sat_Simple2.stl')
 
-print("Укажите с какой частотой обновлять графики в секундах:")
-N = float(input())
+# print("Укажите с какой частотой обновлять графики в секундах:")
+N = float(sys.argv[1])
 Count1 = 0
 Count12 = 0
 Count2 = 0
@@ -70,8 +187,15 @@ Count2 = 0
 t = time.time()
 timer = time.time() - t
 
-time_pr = 0
+time_pr1 = 0
+time_p1 = 0
+time_pr12 = 0
+time_p12 = 0
+time_pr2 = 0
 time_p2 = 0
+dt1 = 0
+dt12 = 0
+dt2 = 0
 
 
 class packet_ma_type_11_t(ctypes.Structure):
@@ -92,7 +216,10 @@ class packet_ma_type_12_t(ctypes.Structure):
                 ('longitude', ctypes.c_float),
                 ('altitude', ctypes.c_float),
                 ('fix', ctypes.c_uint8), 
-                ('sum', ctypes.c_uint16)]
+                ('volts', ctypes.c_float),
+                ('lux', ctypes.c_float),
+                ('sum', ctypes.c_uint16),
+                ('null', ctypes.c_uint8 * 2)]
 
 class packet_ma_type_2_t(ctypes.Structure):
     _fields_ = [('flag', ctypes.c_uint8),
@@ -119,7 +246,10 @@ class new_packet_ma_type_12_t(ctypes.Structure):
                 ('latitude', ctypes.c_float),
                 ('longitude', ctypes.c_float),
                 ('altitude', ctypes.c_float),
-                ('fix', ctypes.c_uint8)]
+                ('fix', ctypes.c_uint8),
+                ('volts', ctypes.c_float),
+                ('lux', ctypes.c_float)]
+
                 
 
 class new_packet_ma_type_2_t(ctypes.Structure):
@@ -130,6 +260,19 @@ class new_packet_ma_type_2_t(ctypes.Structure):
                 ('LIS3MDL_magnetometer', ctypes.c_float * 3),
                 ('lidar', ctypes.c_double),
                 ('q', ctypes.c_float * 4)]
+#class coordinate_t(ctypes.Structure):
+#    _fields_ = [('time', ctypes.c_float),
+#                ('x_lat', ctypes.c_float),
+#                ('y_lon', ctypes.c_float),
+#                ('z_bme', ctypes.c_float)]
+
+class point_t(ctypes.Structure):
+    _fields_ = [('time', ctypes.c_float),
+                ('x', ctypes.c_float),
+                ('y', ctypes.c_float),
+                ('z', ctypes.c_float)]
+class pointArray_t(ctypes.Structure):
+    _fields_ = [('pointArray', point_t * 10)]
 
 
 
@@ -163,8 +306,11 @@ class DataManager(QtCore.QObject):
           
         self.lib1 = ctypes.CDLL("func_de_la_function/func_de_la_function/libtest.dll")
 
-        self.lib1.MadgwickAHRSupdateIMU.argtypes = (ctypes.POINTER(ctypes.c_float), ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float,)
-        self.lib1.MadgwickAHRSupdateIMU.restype = ctypes.c_void_p
+        self.lib1.MadgwickAHRSupdate.argtypes = (ctypes.POINTER(ctypes.c_float), ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float)
+        self.lib1.MadgwickAHRSupdate.restype = ctypes.c_void_p
+
+        self.lib1.GetCoordinates.argtypes = (ctypes.POINTER(new_packet_ma_type_11_t), ctypes.POINTER(new_packet_ma_type_12_t), ctypes.POINTER(new_packet_ma_type_2_t))# ctypes.POINTER(coordinate_t))
+        self.lib1.GetCoordinates.restype = ctypes.c_int
 
         self.lib1.lsm6ds3_from_fs16g_to_mpss.argtypes = [ctypes.c_int16]
         self.lib1.lsm6ds3_from_fs16g_to_mpss.restype = ctypes.c_float
@@ -178,15 +324,26 @@ class DataManager(QtCore.QObject):
         self.lib1.pars_p11.argtypes = [ctypes.POINTER(packet_ma_type_11_t), ctypes.POINTER(new_packet_ma_type_11_t)]
         self.lib1.pars_p12.argtypes = [ctypes.POINTER(packet_ma_type_12_t), ctypes.POINTER(new_packet_ma_type_12_t)]
         self.lib1.pars_2.argtypes = [ctypes.POINTER(packet_ma_type_2_t), ctypes.POINTER(new_packet_ma_type_2_t), ctypes.c_float]
+
+        self.lib1.GetCoordinates.argtypes = [ctypes.POINTER(new_packet_ma_type_11_t), ctypes.POINTER(new_packet_ma_type_12_t), ctypes.POINTER(new_packet_ma_type_2_t), ctypes.POINTER(pointArray_t), ctypes.c_int]
         print("UDP server up and listening")
 
+#Парсинг пакетов
     def run(self):
         #global f_quat
 
         global file_acc
         global file_mag
-        global time_pr
+        global time_pr1
+        global time_p1
+        global time_pr12
+        global time_p12
+        global time_pr2
         global time_p2
+        global dt1
+        global dt12
+        global dt2
+
         global N
         #global Count1
         #global Count12
@@ -195,6 +352,8 @@ class DataManager(QtCore.QObject):
         new_packet_ma_type_11 = new_packet_ma_type_11_t()
         new_packet_ma_type_12 = new_packet_ma_type_12_t()
         new_packet_ma_type_2 = new_packet_ma_type_2_t()
+        point = point_t()
+        pointArray = pointArray_t()
         self.mutex.lock()
         self.close_flag = 0
         self.mutex.unlock()
@@ -226,10 +385,19 @@ class DataManager(QtCore.QObject):
 
             if data[0][0] == 0xff:
                 #print(1111111111111111111111111111111111111111111111111111111111111111)
+
                 pack = struct.unpack("<BHLdfdBHBB", data[0])
                 #print(data[0])
                 packet_ma_type_11 = packet_ma_type_11_t(pack[0], pack[1], pack[2], pack[3], pack[4], pack[5], pack[6], pack[7])
                 new_packet_ma_type_11 = new_packet_ma_type_11_t()
+
+                time_pr1 = time_p1
+                time_p1 = packet_ma_type_11.time
+                dt1 = time_p1 - time_pr1
+                #print(time_pr1)
+                #print(time_p1)
+                #print(dt1)
+
                 self.lib1.pars_p11(ctypes.pointer(packet_ma_type_11), ctypes.pointer(new_packet_ma_type_11))
                 #print("num:", new_packet_ma_type_11.num)
                 #print(new_packet_ma_type_11)
@@ -237,7 +405,7 @@ class DataManager(QtCore.QObject):
                 #print("bme_press:", new_packet_ma_type_11.BME280_pressure)
                 #print("bme_temperature:", new_packet_ma_type_11.BME280_temperature)
                 #print("bme_height:", new_packet_ma_type_11.height_bme)
-                #print("state:", new_ma_packet_11.state)
+                #print("state:", new_packet_ma_type_11.state)
                 #print("num:", packet_ma_type_11.num)
                 #print(packet_ma_type_11)
                 #print("time:", packet_ma_type_11.time)
@@ -246,17 +414,59 @@ class DataManager(QtCore.QObject):
                 #print("bme_height:", packet_ma_type_11.height_bme)
 
                 #Count1 += 1
+
+                file_p1_raw.write(str(packet_ma_type_11.num))
+                file_p1_raw.write('\t')
+                file_p1_raw.write(str(packet_ma_type_11.time))
+                file_p1_raw.write('\t')
+                file_p1_raw.write(str(packet_ma_type_11.BME280_pressure))
+                file_p1_raw.write('\t')
+                file_p1_raw.write(str(packet_ma_type_11.BME280_temperature))
+                file_p1_raw.write('\t')
+                file_p1_raw.write(str(packet_ma_type_11.height_bme))
+                file_p1_raw.write('\t')
+                file_p1_raw.write(str(packet_ma_type_11.state))
+                file_p1_raw.write('\n')
+                file_p1_raw.flush()
+
+                file_p1.write(str(new_packet_ma_type_11.num))
+                file_p1.write('\t')
+                file_p1.write(str(new_packet_ma_type_11.time))
+                file_p1.write('\t')
+                file_p1.write(str(new_packet_ma_type_11.BME280_pressure))
+                file_p1.write('\t')
+                file_p1.write(str(new_packet_ma_type_11.BME280_temperature))
+                file_p1.write('\t')
+                file_p1.write(str(new_packet_ma_type_11.height_bme))
+                file_p1.write('\t')
+                file_p1.write(str(new_packet_ma_type_11.state))
+                file_p1.write('\n')
+                file_p1.flush()
+
+
+
                 p1_lst.append(new_packet_ma_type_11)
                 #self.new_data_p1.emit(new_packet_ma_type_11)
 
 
 
+
+
+
+
             if data[0][0] == 0xfa:
                 #print(11111111111111111111111111112222222222222222222222222222222222)
-                pack = struct.unpack("<BHL3fBH10B", data[0])
+                print(data[0])
+                pack = struct.unpack("<BHL3fB2fH2B", data[0])
                 #print(data[0])
-                packet_ma_type_12 = packet_ma_type_12_t(pack[0], pack[1], pack[2], pack[3], pack[4], pack[5], pack[6], pack[7])
+                packet_ma_type_12 = packet_ma_type_12_t(pack[0], pack[1], pack[2], pack[3], pack[4], pack[5], pack[6], pack[7], pack[8], pack[9])
                 new_packet_ma_type_12 = new_packet_ma_type_12_t()
+
+                time_pr12 = time_p12
+                time_p12 = packet_ma_type_12.time
+                dt12 = time_p12 - time_pr12
+                #print(dt12)
+
                 self.lib1.pars_p12(ctypes.pointer(packet_ma_type_12), ctypes.pointer(new_packet_ma_type_12))
                 #print("num:", new_packet_ma_type_12.num)
                 #print("time:", new_packet_ma_type_12.time)
@@ -264,6 +474,8 @@ class DataManager(QtCore.QObject):
                 #print("longitude:", new_packet_ma_type_12.longitude)
                 #print("altitude:", new_packet_ma_type_12.altitude)
                 #print("fix:", new_packet_ma_type_12.fix)
+                #print("volts:", new_packet_ma_type_12.volts)
+                #print("lux:", new_packet_ma_type_12.lux)
                 #print("num:", packet_ma_type_12.num)
                 #print("time:", packet_ma_type_12.time)
                 #print("latitude:", packet_ma_type_12.latitude)
@@ -272,6 +484,35 @@ class DataManager(QtCore.QObject):
                 #print("fix:", packet_ma_type_12.fix)
 
                 #Count12 += 1
+
+                file_p12_raw.write(str(packet_ma_type_12.num))
+                file_p12_raw.write('\t')
+                file_p12_raw.write(str(packet_ma_type_12.time))
+                file_p12_raw.write('\t')
+                file_p12_raw.write(str(packet_ma_type_12.latitude))
+                file_p12_raw.write('\t')
+                file_p12_raw.write(str(packet_ma_type_12.longitude))
+                file_p12_raw.write('\t')
+                file_p12_raw.write(str(packet_ma_type_12.altitude))
+                file_p12_raw.write('\t')
+                file_p12_raw.write(str(packet_ma_type_12.fix))
+                file_p12_raw.write('\n')
+                file_p12_raw.flush()
+
+                file_p12.write(str(new_packet_ma_type_12.num))
+                file_p12.write('\t')
+                file_p12.write(str(new_packet_ma_type_12.time))
+                file_p12.write('\t')
+                file_p12.write(str(new_packet_ma_type_12.latitude))
+                file_p12.write('\t')
+                file_p12.write(str(new_packet_ma_type_12.longitude))
+                file_p12.write('\t')
+                file_p12.write(str(new_packet_ma_type_12.altitude))
+                file_p12.write('\t')
+                file_p12.write(str(new_packet_ma_type_12.fix))
+                file_p12.write('\n')
+                file_p12.flush()
+
                 p12_lst.append(new_packet_ma_type_12)
                 #self.new_data_p12.emit(new_packet_ma_type_12)
                 
@@ -304,9 +545,10 @@ class DataManager(QtCore.QObject):
                 #packet_ma_type_2.gyro_mdps[2] = int(g3/70.0*1000.0)
 
 
-                time_pr = time_p2
-                time_p2 = new_packet_ma_type_2.time
-                #print("время прош пакета", time_p2)
+                time_pr2 = time_p2
+                time_p2 = packet_ma_type_2.time
+                dt2 = time_p2 - time_pr2
+                #print(dt2)
 
 
                 packet_ma_type_2.LIS3MDL_magnetometer[0] = pack[9]
@@ -319,7 +561,7 @@ class DataManager(QtCore.QObject):
                 #print(time_pr)
 
 
-                self.lib1.pars_2(ctypes.pointer(packet_ma_type_2), ctypes.pointer(new_packet_ma_type_2), time_pr)
+                self.lib1.pars_2(ctypes.pointer(packet_ma_type_2), ctypes.pointer(new_packet_ma_type_2), time_pr2)
                 #print("num:", new_packet_ma_type_2.num)
                 #print("time:", new_packet_ma_type_2.time)
                 #print("acc1:", new_packet_ma_type_2.acc_mg[0])
@@ -336,6 +578,68 @@ class DataManager(QtCore.QObject):
                 #print("q1", new_packet_ma_type_2.q[1])
                 #print("q2", new_packet_ma_type_2.q[2])
                 #print("q3", new_packet_ma_type_2.q[3])
+
+
+                file_p2_raw.write(str(packet_ma_type_2.num))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.time))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.acc_mg[0]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.acc_mg[1]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.acc_mg[2]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.gyro_mdps[0]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.gyro_mdps[1]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.gyro_mdps[2]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.LIS3MDL_magnetometer[0]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.LIS3MDL_magnetometer[1]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.LIS3MDL_magnetometer[2]))
+                file_p2_raw.write('\t')
+                file_p2_raw.write(str(packet_ma_type_2.lidar))
+                file_p2_raw.write('\n')
+                file_p2_raw.flush()
+
+                file_p2.write(str(new_packet_ma_type_2.num))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.time))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.acc_mg[0]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.acc_mg[1]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.acc_mg[2]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.gyro_mdps[0]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.gyro_mdps[1]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.gyro_mdps[2]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.LIS3MDL_magnetometer[0]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.LIS3MDL_magnetometer[1]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.LIS3MDL_magnetometer[2]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.lidar))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.q[0]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.q[1]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.q[2]))
+                file_p2.write('\t')
+                file_p2.write(str(new_packet_ma_type_2.q[3]))
+                file_p2.write('\n')
+                file_p2.flush()
+
 
 
                 file_acc.write(str(new_packet_ma_type_2.acc_mg[0]))
@@ -400,8 +704,12 @@ class DataManager(QtCore.QObject):
 
 
 
+            self.lib1.GetCoordinates(ctypes.pointer(new_packet_ma_type_11), ctypes.pointer(new_packet_ma_type_12), ctypes.pointer(new_packet_ma_type_2), ctypes.pointer(pointArray), 10)
 
-            
+
+
+
+            #Эмит пакетов каждые N секунд
             if time.time() - start_time > N:
                 self.new_data_p1.emit(p1_lst)
                 self.new_data_p12.emit(p12_lst)
@@ -410,7 +718,7 @@ class DataManager(QtCore.QObject):
                 p1_lst = []
                 p12_lst = []
                 p2_lst = []
-                
+#
 
 
             
@@ -436,16 +744,20 @@ class TopData():
 
 
 
-
-def add_data_to_plot(curve, x, y):
+#Функция обновления графиков
+def add_data_to_plot(curve, x, y, limit=100):
     data = curve.getData()
-    if len(curve.getData()[0]) + 1 > 100:
-        curve.setData(np.append(curve.getData()[0][2:], x), np.append(curve.getData()[1][2:], y))
+    dlen = len(x)
+    if len(curve.getData()[0]) + 1 > limit:
+        curve.setData(np.append(curve.getData()[0][dlen:], x), np.append(curve.getData()[1][dlen:], y))
     else:
         curve.setData(np.append(curve.getData()[0], x), np.append(curve.getData()[1], y))
+#
 
 
 
+
+#Создание класса 3д отображения аппарата
 class PlaneWidget(gl.GLViewWidget):
     def __init__(self, mesh_path, *args, **kwargs):
         super(PlaneWidget, self).__init__(*args, **kwargs)
@@ -503,41 +815,19 @@ class PlaneWidget(gl.GLViewWidget):
         self._transform_object(self.mesh, move=False)
 
         self._transform_object(self.plane_axis, move=False)
+#
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Создание массивов телеметрии
 a = time.time()
 arr_p1 = np.array([])
 arr_p12 = np.array([])
 arr_p2 = np.array([])
+#
 
 
-
-
-
-
-
-
-
-
-
-
-
-            
+#Создание окна программы и работа в программы          
 class App(QWidget):
     global Count1
     global Count12
@@ -575,7 +865,6 @@ class App(QWidget):
 
         Top.setStyleSheet('background-color:#646464;')
 
-    
         #Создание экземпляра объекта Figure из matplotlib
         self.figure = Figure()
     
@@ -599,11 +888,10 @@ class App(QWidget):
         self.axes.xaxis.pane.fill = False # Left pane
         self.axes.yaxis.pane.fill = False # Right pane
         self.figure.subplots_adjust(left=0.0, bottom=0.0, top=1.0, hspace=0.7)
-
         
 
 
-        
+#Создание графиков
 
         #График высоты
         self.Hight_graph = pg.GraphicsLayoutWidget()
@@ -627,9 +915,9 @@ class App(QWidget):
         self.legend.addItem(self.Hight_GPS_curve, 'высота по GPS')
 
         axis_x = pg.AxisItem(orientation='bottom')
-        axis_x.setLabel("Время")
+        axis_x.setLabel("Время, c")
         axis_y = pg.AxisItem(orientation='left')
-        axis_y.setLabel("Высота")
+        axis_y.setLabel("Высота, м")
         self.Hight_plot.setAxisItems({'bottom': axis_x, 'left': axis_y})
 
 
@@ -661,9 +949,9 @@ class App(QWidget):
         self.legend.addItem(self.Boost_Z_curve, 'Z')
 
         axis_x = pg.AxisItem(orientation='bottom')
-        axis_x.setLabel("Время")
+        axis_x.setLabel("Время, c")
         axis_y = pg.AxisItem(orientation='left')
-        axis_y.setLabel("Ускорение")
+        axis_y.setLabel("Ускорение, м/с²")
         self.plot1.setAxisItems({'bottom': axis_x, 'left': axis_y})
         
 
@@ -685,9 +973,9 @@ class App(QWidget):
         self.legend.addItem(self.GPS_curve, 'координаты')
         
         axis_x = pg.AxisItem(orientation='bottom')
-        axis_x.setLabel("Широта")
+        axis_x.setLabel("←запад ㅤㅤㅤ м ㅤㅤㅤ восток→")
         axis_y = pg.AxisItem(orientation='left')
-        axis_y.setLabel("Долгота")
+        axis_y.setLabel("←юг ㅤㅤㅤ м ㅤㅤㅤ север→")
         self.GPS_plot.setAxisItems({'bottom': axis_x, 'left': axis_y})
         
 
@@ -719,9 +1007,9 @@ class App(QWidget):
         self.legend.addItem(self.C_speed_Z_curve, 'Z')
 
         axis_x = pg.AxisItem(orientation='bottom')
-        axis_x.setLabel("Время")
+        axis_x.setLabel("Время, с")
         axis_y = pg.AxisItem(orientation='left')
-        axis_y.setLabel("Скорость")
+        axis_y.setLabel("Скорость, м/с")
         self.C_speed_plot.setAxisItems({'bottom': axis_x, 'left': axis_y})
         
 
@@ -743,9 +1031,9 @@ class App(QWidget):
         self.legend.addItem(self.Press_curve, 'давление')
 
         axis_x = pg.AxisItem(orientation='bottom')
-        axis_x.setLabel("Время")
+        axis_x.setLabel("Время, с")
         axis_y = pg.AxisItem(orientation='left')
-        axis_y.setLabel("Давление")
+        axis_y.setLabel("Давление, Па")
         self.Press_plot.setAxisItems({'bottom': axis_x, 'left': axis_y})
         
 
@@ -777,9 +1065,9 @@ class App(QWidget):
         self.legend.addItem(self.Magnet_Z_curve, 'Z')
 
         axis_x = pg.AxisItem(orientation='bottom')
-        axis_x.setLabel("Время")
+        axis_x.setLabel("Время, с")
         axis_y = pg.AxisItem(orientation='left')
-        axis_y.setLabel("Гс")
+        axis_y.setLabel("Сила магн. поля, Гс")
         self.Magnet_plot.setAxisItems({'bottom': axis_x, 'left': axis_y})
         
 
@@ -801,12 +1089,12 @@ class App(QWidget):
         self.legend.addItem(self.Temp_curve, 'температура')
 
         axis_x = pg.AxisItem(orientation='bottom')
-        axis_x.setLabel("Время")
+        axis_x.setLabel("Время, с")
         axis_y = pg.AxisItem(orientation='left')
-        axis_y.setLabel("Температура")
+        axis_y.setLabel("Температура, °С")
         self.Temp_plot.setAxisItems({'bottom': axis_x, 'left': axis_y})
+#
 
-        
 
 
 
@@ -819,17 +1107,7 @@ class App(QWidget):
 
 
 
-
-
-
-
-
-
-
-
-
-
-    #Обновление графиков p1   
+#Обновление графиков p1 (закоментировано)   
     #def new_data_reaction_p1(self, p1):
     #    global a
     #    global arr_p1
@@ -861,82 +1139,140 @@ class App(QWidget):
     #            self.Temp_curve.setData(np.array([[arr_p1[8], arr_p1[9]]]))
     #            self.new_curve_p1 = False
     #        a = time.time()
+#
             
 
 
-
-
-
-
-
-    #Обновление графиков p1   
+#Обновление графиков p1   
     def new_data_reaction_p1(self, p1):
+        global dt1
         #for p1 in p1_list: p1_list[-1]:
 
-        p1_time = p1[-1].time  
-        self.ui.label_54.setText(str("{:.2f}".format(p1_time)))
+
+        #p1_time = p1[-1].time  
+        
         self.ui.label_57.setText("{:.2f}".format(p1[-1].BME280_pressure / 1000.0))
         self.ui.label_59.setText("{:.2f}".format(p1[-1].BME280_temperature))
         self.ui.label_61.setText("{:.2f}".format(p1[-1].height_bme))
+        self.ui.label_53.setText(str(dt1))
         global Count1
         p1_time = p1[-1].time
-        #Hight_BME_arr = np.array([[]]) 
+        Hight_BME_arr = [np.array([]), np.array([])]
         Press_arr = [np.array([]), np.array([])] 
+        Temp_arr = [np.array([]), np.array([])] 
+
         for i in range(len(p1)):
-            #Hight_BME_arr = np.append(Hight_BME_arr, [p1[i].time, p1[i].height_bme])
+            Hight_BME_arr = [np.append(Hight_BME_arr[0], p1[i].time), np.append(Hight_BME_arr[1], p1[i].height_bme)]
             Press_arr     = [np.append(Press_arr[0], p1[i].time) , np.append(Press_arr[1], p1[i].BME280_pressure)]
-        print(Press_arr[0])
-        print(Press_arr[1])
+        #print(Press_arr[0])
+        #print(Press_arr[1])
+            Temp_arr = [np.append(Temp_arr[0], p1[i].time) , np.append(Temp_arr[1], p1[i].BME280_temperature)]
 
         if (not self.new_curve_p1):
-            pass#add_data_to_plot(self.Hight_BME_curve, p1_time, p1.height_bme)
+            add_data_to_plot(self.Hight_BME_curve, Hight_BME_arr[0], Hight_BME_arr[1], 1000)
             #add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
             #add_data_to_plot(self.GPS_curve, random.uniform(0, 1001), random.uniform(0, 1001))
-            add_data_to_plot(self.Press_curve, Press_arr[0], Press_arr[1])
-            #add_data_to_plot(self.Temp_curve, p1_time, p1.BME280_temperature)
+            add_data_to_plot(self.Press_curve, Press_arr[0], Press_arr[1], 1000)
+            add_data_to_plot(self.Temp_curve, Temp_arr[0], Temp_arr[1], 1000)
         else:
-            #self.Hight_BME_curve.setData(Hight_BME_arr)
+            self.Hight_BME_curve.setData(np.transpose(np.array(Hight_BME_arr)))
             #self.Hight_GPS_curve.setData(np.array([[time.time(), random.uniform(1000, 2000)]]))
             #self.GPS_curve.setData(np.array([[random.uniform(0, 1001), random.uniform(0, 1001)]]))
             self.Press_curve.setData(np.transpose(np.array(Press_arr)))
-            #self.Temp_curve.setData(np.array([[p1_time, p1.BME280_temperature]]))
+            self.Temp_curve.setData(np.transpose(np.array(Temp_arr)))
             self.new_curve_p1 = False
+#
+
+
+
+#Обновление состояния аппарата (p1)
+        if p1[i].state == 0:
+            self.ui.graphicsView_2.setStyleSheet("background-color: #fff078")
+            self.ui.graphicsView_24.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_25.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_26.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_27.setStyleSheet("background-color: #646464")
+        if p1[i].state == 1:
+            self.ui.graphicsView_2.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_24.setStyleSheet("background-color: #fff078")
+            self.ui.graphicsView_25.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_26.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_27.setStyleSheet("background-color: #646464")
+        if p1[i].state == 2:
+            self.ui.graphicsView_2.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_24.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_25.setStyleSheet("background-color: #fff078")
+            self.ui.graphicsView_26.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_27.setStyleSheet("background-color: #646464")
+        if p1[i].state == 3:
+            self.ui.graphicsView_2.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_24.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_25.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_26.setStyleSheet("background-color: #fff078")
+            self.ui.graphicsView.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_27.setStyleSheet("background-color: #646464")
+        if p1[i].state == 4:
+            self.ui.graphicsView_2.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_24.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_25.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_26.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView.setStyleSheet("background-color: #fff078")
+            self.ui.graphicsView_27.setStyleSheet("background-color: #646464")
+        if p1[i].state == 5:
+            self.ui.graphicsView_2.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_24.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_25.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_26.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView.setStyleSheet("background-color: #646464")
+            self.ui.graphicsView_27.setStyleSheet("background-color: #fff078")
+
         Press_arr = [np.array([]), np.array([])] 
+#
 
 
 
-
-
-
-
-    #Обновление графиков p12   
+#Обновление графиков p12   
     def new_data_reaction_p12(self, p12):
+        global dt12
 
-
-
-
+        self.ui.label_48.setText("{:.2f}".format(p12[-1].latitude))
+        self.ui.label_50.setText("{:.2f}".format(p12[-1].longitude))
+        self.ui.label_52.setText("{:.2f}".format(p12[-1].altitude))
+        self.ui.label_85.setText(str(p12[-1].fix))
+        self.ui.label_86.setText(str("{:.2f}".format(p12[-1].lux)))
+        self.ui.label_88.setText(str("{:.2f}".format(p12[-1].volts)))
+        self.ui.label_68.setText(str(dt12))
 
         global Count12
-        p12_time = p12[-1].time
+        #p12_time = p12[-1].time
+
+        GPS_arr = [np.array([]), np.array([])]
         Hight_GPS_arr = [np.array([]), np.array([])]
-        #for i in range(len(p12)):
-            #Hight_GPS_curve = np.append(Hight_GPS_arr, [p12[i].time, p12[i].height_bme])
-            #Press_arr     = [np.append(Press_arr[0], p1[i].time) , np.append(Press_arr[1], p1[i].BME280_pressure)]
+        for i in range(len(p12)):
+            Hight_GPS_arr = [np.append(Hight_GPS_arr[0], p12[i].time), np.append(Hight_GPS_arr[1], p12[i].altitude), 1000]
+            GPS_arr     = [np.append(GPS_arr[0], p12[i].latitude) , np.append(GPS_arr[1], p12[i].longitude), 10000]
         #print(Press_arr[0])
         #print(Press_arr[1]) 
-        #if (not self.new_curve_p12):
-            #add_data_to_plot(self.Hight_GPS_curve, time.time(), random.uniform(1000, 2000))
-            #add_data_to_plot(self.GPS_curve, random.uniform(0, 1001), random.uniform(0, 1001))
-        #else:
-            #self.Hight_GPS_curve.setData(np.array([[time.time(), random.uniform(1000, 2000)]]))
-            #self.GPS_curve.setData(np.array([[random.uniform(0, 1001), random.uniform(0, 1001)]]))
-            #self.new_curve_p12 = False
-        
-    #Обновление графиков p2   
+        if (not self.new_curve_p12):
+            add_data_to_plot(self.Hight_GPS_curve, Hight_GPS_arr[0], Hight_GPS_arr[1], 10000)
+            add_data_to_plot(self.GPS_curve, GPS_arr[0], GPS_arr[1], 10000)
+        else:
+            self.Hight_GPS_curve.setData(np.transpose(np.array(Hight_GPS_arr)))
+            self.GPS_curve.setData(np.transpose(np.array(GPS_arr)))
+            self.new_curve_p12 = False
+#
+
+
+
+#Обновление графиков p2   
     def new_data_reaction_p2(self, p2):
+        global dt2
 
-
-
+        self.ui.label_54.setText(str("{:.2f}".format(p2[0].time)))
+        self.ui.label_71.setText(str(dt2))
         #self.lib1 = ctypes.CDLL("func_de_la_function/func_de_la_function/libtest.dll")
 
 
@@ -1014,15 +1350,16 @@ class App(QWidget):
         self.ui.label_34.setText("{:.2f}".format(p2[-1].LIS3MDL_magnetometer[2]))
         self.ui.label_36.setText("{:.2f}".format(sqrt(p2[-1].LIS3MDL_magnetometer[0]*p2[-1].LIS3MDL_magnetometer[0]+p2[-1].LIS3MDL_magnetometer[1]*p2[-1].LIS3MDL_magnetometer[1]+p2[-1].LIS3MDL_magnetometer[2]*p2[-1].LIS3MDL_magnetometer[2])))
         if (not self.new_curve_p2):
-            add_data_to_plot(self.Boost_X_curve, Boost_X_arr[0], Boost_X_arr[1])
-            add_data_to_plot(self.Boost_Y_curve, Boost_X_arr[0], Boost_X_arr[1])
-            add_data_to_plot(self.Boost_Z_curve, Boost_X_arr[0], Boost_X_arr[1])
-            add_data_to_plot(self.C_speed_X_curve, C_speed_X_arr[0], C_speed_X_arr[1])
-            add_data_to_plot(self.C_speed_Y_curve, C_speed_Y_arr[0], C_speed_Y_arr[1])
-            add_data_to_plot(self.C_speed_Z_curve, C_speed_Z_arr[0], C_speed_Z_arr[1])
-            add_data_to_plot(self.Magnet_X_curve, Magnet_X_arr[0], Magnet_X_arr[1])
-            add_data_to_plot(self.Magnet_Y_curve, Magnet_Y_arr[0], Magnet_Y_arr[1])
-            add_data_to_plot(self.Magnet_Z_curve, Magnet_Z_arr[0], Magnet_Z_arr[1])
+            imu_limit = 500
+            add_data_to_plot(self.Boost_X_curve, Boost_X_arr[0], Boost_X_arr[1], imu_limit)
+            add_data_to_plot(self.Boost_Y_curve, Boost_X_arr[0], Boost_Y_arr[1], imu_limit)
+            add_data_to_plot(self.Boost_Z_curve, Boost_X_arr[0], Boost_Z_arr[1], imu_limit)
+            add_data_to_plot(self.C_speed_X_curve, C_speed_X_arr[0], C_speed_X_arr[1], imu_limit)
+            add_data_to_plot(self.C_speed_Y_curve, C_speed_Y_arr[0], C_speed_Y_arr[1], imu_limit)
+            add_data_to_plot(self.C_speed_Z_curve, C_speed_Z_arr[0], C_speed_Z_arr[1], imu_limit)
+            add_data_to_plot(self.Magnet_X_curve, Magnet_X_arr[0], Magnet_X_arr[1], imu_limit)
+            add_data_to_plot(self.Magnet_Y_curve, Magnet_Y_arr[0], Magnet_Y_arr[1], imu_limit)
+            add_data_to_plot(self.Magnet_Z_curve, Magnet_Z_arr[0], Magnet_Z_arr[1], imu_limit)
         else:
             self.Boost_X_curve.setData(np.transpose(np.array(Boost_X_arr)))
             self.Boost_Y_curve.setData(np.transpose(np.array(Boost_Y_arr)))
@@ -1034,6 +1371,10 @@ class App(QWidget):
             self.Magnet_Y_curve.setData(np.transpose(np.array(Magnet_Y_arr)))
             self.Magnet_Z_curve.setData(np.transpose(np.array(Magnet_Z_arr)))
             self.new_curve_p2 = False
+#
+
+
+
         
     def closeEvent(self, evnt):
         self.data_object.finish()
@@ -1043,7 +1384,7 @@ class App(QWidget):
                 break
             time.sleep(0.01)
         super(App, self).closeEvent(evnt)
-
+#
 
 
 

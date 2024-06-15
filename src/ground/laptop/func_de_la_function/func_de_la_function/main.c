@@ -1,12 +1,17 @@
 ﻿
+
 //ERROR:
 //1 - контрольная сумма не сходится
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "main.h"
 #include <math.h>
+#include "Quaternion-master/Quaternion.h"
+#include "Quaternion-master/Quaternion.c"
+
 //#include "sofa\sofam.h"
 
 //КАЛИБРОВКА ГИРО АКСЕЛЬ МАГНЕТ
@@ -40,16 +45,6 @@ float Kalib_magn_B[3] = { -0.047637, -0.371532, 0.684505 };
 
 
 
-
-
-
-
-
-
-
-
-
-
 static float invSqrt(float x) {
 
 	/*float halfx = 0.5f * x;
@@ -76,6 +71,81 @@ unsigned short Crc16(unsigned char* buf, unsigned short len) {
 }
 volatile float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;
 
+coordinate_t coordinate[10] = { 0 };
+float time_p12_pr = 0;
+float time_p11_pr = 0;
+float time_p2_pr = 0;
+int incriment = 0;
+float x_lat_pr = 0;
+float y_lon_pr = 0;
+float z_bme_pr = 0;
+double L0[3] = { 0.866, 0, -0.5 };
+
+int GetCoordinates(new_packet_ma_type_11_t*packet11_new, new_packet_ma_type_12_t*packet12_new, new_packet_ma_type_2_t*packet2_new, pointArray_t*pointArray, int point_len) {
+	if ((packet12_new->time > time_p12_pr) && (packet11_new->time > time_p11_pr)) {
+		for (int i = 0; i < incriment; i++) {
+			coordinate[i].x_lat = x_lat_pr + (coordinate[i].time - time_p12_pr) * (packet12_new->latitude - x_lat_pr) / (packet12_new->time - time_p12_pr);
+			coordinate[i].y_lon = y_lon_pr + (coordinate[i].time - time_p12_pr) * (packet12_new->longitude - y_lon_pr) / (packet12_new->time - time_p12_pr);
+			coordinate[i].z_bme = z_bme_pr + (coordinate[i].time - time_p11_pr) * (packet11_new->height_bme - z_bme_pr) / (packet11_new->time - time_p11_pr);
+			
+			double L[3] = { coordinate[i].lidar * L0[0], coordinate[i].lidar * L0[1], coordinate[i].lidar * L0[2] };
+
+			Quaternion quat;
+			quat.w = packet2_new->q[0];
+			quat.v[0] = packet2_new->q[1];
+			quat.v[1] = packet2_new->q[2];
+			quat.v[2] = packet2_new->q[3];
+			double vec[3] = { 0 };
+
+			Quaternion_rotate(&quat, L, vec);
+			pointArray->pointArray[i].x = vec[0] + coordinate[i].x_lat;
+			pointArray->pointArray[i].y = vec[1] + coordinate[i].y_lon;
+			pointArray->pointArray[i].z = vec[2] + coordinate[i].z_bme;
+			printf("New_Packet_number %d:\t", i);
+			printf("%f\t%f\t%f\t%f\n", pointArray->pointArray[i].time, pointArray->pointArray[i].x, pointArray->pointArray[i].y, pointArray->pointArray[i].z);
+
+
+			printf("Old_Packet_number %d:\t", i);
+			printf("%f\t%f\t%f\t%f\n", coordinate[i].time, coordinate[i].x_lat, coordinate[i].y_lon, coordinate[i].z_bme);
+		}
+		int n = incriment;
+		printf("%d\n", n);
+		incriment = 0;
+		time_p12_pr = packet12_new->time;
+		time_p11_pr = packet11_new->time;
+		x_lat_pr = packet12_new->latitude;
+		y_lon_pr = packet12_new->longitude;
+		z_bme_pr = packet11_new->height_bme;
+
+		/*printf(" GPS BME:\n");
+		for (int i = 0; i < incriment; i++) {
+		printf("%f\t%f\t%f\t%f\n", coordinate[i].time, coordinate[i].x_lat, coordinate[i].y_lon, coordinate[i].z_bme);
+		}*/
+
+		return n;
+	}
+
+	if (packet2_new->time > time_p2_pr) {
+	
+		time_p2_pr = packet2_new->time;
+		coordinate[incriment].time = packet2_new->time;
+		coordinate[incriment].lidar = packet2_new->lidar;
+		coordinate[incriment].q[0] = packet2_new->q[0];
+		coordinate[incriment].q[1] = packet2_new->q[1];
+		coordinate[incriment].q[2] = packet2_new->q[2];
+		coordinate[incriment].q[3] = packet2_new->q[3];
+		printf("Quaternion: \t");
+		printf("%f\t%f\t%f\t%f\n", coordinate[incriment].q[0], coordinate[incriment].q[1], coordinate[incriment].q[2], coordinate[incriment].q[3]);
+		if (incriment < point_len) incriment++;
+		else incriment = 0;
+	}
+	
+
+	return 0;
+}
+
+	
+	
 
 
 
@@ -318,17 +388,51 @@ int pars_p11(packet_ma_type_11_t* packet_ma_type_11_in, new_packet_ma_type_11_t*
 	return 0;
 }
 
-int pars_p12(packet_ma_type_12_t* packet_ma_type_12_in, new_packet_ma_type_12_t*packet_new)
+
+float start_lat = 0;
+float start_lon = 0;
+
+int pars_p12(packet_ma_type_12_t*packet_ma_type_12_in, new_packet_ma_type_12_t*packet_new)
 {
 	//if (Crc16((uint8_t*)&packet_ma_type_12_in, sizeof(packet_ma_type_12_in) - 2) != packet_ma_type_12_in->sum) return 1;
-	(*packet_new).altitude = (*packet_ma_type_12_in).altitude;
-	(*packet_new).latitude = (*packet_ma_type_12_in).latitude;
-	(*packet_new).longitude = (*packet_ma_type_12_in).longitude;
 	(*packet_new).fix = (*packet_ma_type_12_in).fix;
 	(*packet_new).time = (*packet_ma_type_12_in).time / 1000.0f;
 	(*packet_new).num = (*packet_ma_type_12_in).num;
-	return 0;
+	(*packet_new).volts = (*packet_ma_type_12_in).volts;
+	(*packet_new).lux = (*packet_ma_type_12_in).lux;
+	//printf("volts and lux:");
+	//printf("\t%f\t%f\n", (*packet_new).volts, (*packet_new).lux);
+	//printf("\t%f\t%f\n", (*packet_ma_type_12_in).volts, (*packet_ma_type_12_in).lux);
+
+	if ((*packet_ma_type_12_in).fix) {
+		if (!start_lat) {
+
+			start_lat = (*packet_ma_type_12_in).latitude / 57.2958;
+			start_lon = (*packet_ma_type_12_in).longitude / 57.2958;
+		}
+		(*packet_new).altitude = (*packet_ma_type_12_in).altitude;
+		(*packet_new).latitude = (*packet_ma_type_12_in).latitude / 57.2958;
+		(*packet_new).longitude = (*packet_ma_type_12_in).longitude / 57.2958;
+		
+		double rx = ((*packet_new).latitude - start_lat) * 6371100;
+		double ry = ((*packet_new).longitude - start_lon) * 6371100 * cos((*packet_new).latitude);
+		//(*packet_new).latitude = (*packet_new).latitude * 500;
+		//(*packet_new).longitude = (*packet_new).longitude * 500;
+		(*packet_new).latitude = rx; // В метрах
+		(*packet_new).longitude = ry; // В метрах
+
+
+		
+		
+
+		return 0;
+	}
+	
 }
+
+
+static float prev_time = 0;
+
 
 int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_pack, float time_pr)
 {
@@ -342,26 +446,73 @@ int pars_2(packet_ma_type_2_t* packet_ma_type_2_in, new_packet_ma_type_2_t*new_p
 	//iauPmp((*new_pack).acc_mg, Kalib_acc_B, acc_amb);
 	//iauRxp(Kalib_acc_A, acc_amb, (*new_pack).acc_mg);
 
+	/*
+	printf(
+		"%6d %6d %6d\n",
+		(int)packet_ma_type_2_in->LIS3MDL_magnetometer[0],
+		(int)packet_ma_type_2_in->LIS3MDL_magnetometer[1],
+		(int)packet_ma_type_2_in->LIS3MDL_magnetometer[2]
+	); */
 
+	new_pack->gyro_mdps[0] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[0]);// -Kalib_gyro_B[0];
+	new_pack->gyro_mdps[1] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[1]);// -Kalib_gyro_B[1];
+	new_pack->gyro_mdps[2] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[2]);// -Kalib_gyro_B[2];
 
+	new_pack->LIS3MDL_magnetometer[0] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[0]);
+	new_pack->LIS3MDL_magnetometer[1] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[1]);
+	new_pack->LIS3MDL_magnetometer[2] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[2]);
+	new_pack->lidar = (*packet_ma_type_2_in).lidar * 299792458 * 45 * pow(10, -12);//ответ в метрах. 45* = 90(пикосек)/2(путь туда-обратно)
+	new_pack->num = (*packet_ma_type_2_in).num;
+	new_pack->time = packet_ma_type_2_in->time / 1000.0f;
+	const float dt = new_pack->time - prev_time;
+	//MadgwickAHRSupdate(
+	MadgwickAHRSupdateIMU(
+		quat,
+		(*new_pack).gyro_mdps[0] / 180.0f*M_PI,
+		(*new_pack).gyro_mdps[1] / 180.0f*M_PI,
+		(*new_pack).gyro_mdps[2] / 180.0f*M_PI,
+		(*new_pack).acc_mg[0],
+		(*new_pack).acc_mg[1],
+		(*new_pack).acc_mg[2],
+		//(*new_pack).LIS3MDL_magnetometer[0], 
+		//(*new_pack).LIS3MDL_magnetometer[1], 
+		//(*new_pack).LIS3MDL_magnetometer[2], 
+		dt, //(*new_pack).time - time_pr,
+		0.3
+	);
+	prev_time = new_pack->time;
+	new_pack->q[0] = quat[0];
+	new_pack->q[1] = quat[1];
+	new_pack->q[2] = quat[2];
+	new_pack->q[3] = quat[3];
+	
+	/*
+	printf(
+		"%+14f %+14f %+14f ... %+14f %+14f %+14f ... %+14f %+14f %+14f ... %+14f\n",
+		(*new_pack).gyro_mdps[0],
+		(*new_pack).gyro_mdps[1],
+		(*new_pack).gyro_mdps[2],
+		(*new_pack).acc_mg[0],
+		(*new_pack).acc_mg[1],
+		(*new_pack).acc_mg[2],
+		(*new_pack).LIS3MDL_magnetometer[0],
+		(*new_pack).LIS3MDL_magnetometer[1],
+		(*new_pack).LIS3MDL_magnetometer[2],
+		dt
+	);
+	*/
 
-	(*new_pack).gyro_mdps[0] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[0]) - Kalib_gyro_B[0];
-	(*new_pack).gyro_mdps[1] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[1]) - Kalib_gyro_B[1];
-	(*new_pack).gyro_mdps[2] = lsm6ds3_from_fs2000dps_to_degps((*packet_ma_type_2_in).gyro_mdps[2]) - Kalib_gyro_B[2];
+	return 0;
+}
 
-	(*new_pack).LIS3MDL_magnetometer[0] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[0]);
-	(*new_pack).LIS3MDL_magnetometer[1] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[1]);
-	(*new_pack).LIS3MDL_magnetometer[2] = lis3mdl_from_fs16_to_gauss((*packet_ma_type_2_in).LIS3MDL_magnetometer[2]);
-	(*new_pack).lidar = (*packet_ma_type_2_in).lidar * 299792458 * 45 * pow(10, -12);//ответ в метрах. 45* = 90(пикосек)/2(путь туда-обратно)
-	(*new_pack).num = (*packet_ma_type_2_in).num;
-	(*new_pack).time = packet_ma_type_2_in->time / 1000.0f;
-	MadgwickAHRSupdate(quat, (*new_pack).gyro_mdps[0] / 180.0f*3.14, (*new_pack).gyro_mdps[1] /180.0f*3.14, (*new_pack).gyro_mdps[2] / 180.0f*3.14, (*new_pack).acc_mg[0], (*new_pack).acc_mg[1], (*new_pack).acc_mg[2], (*new_pack).LIS3MDL_magnetometer[0], (*new_pack).LIS3MDL_magnetometer[1], (*new_pack).LIS3MDL_magnetometer[2], (*new_pack).time - time_pr, 0.3);
-	(*new_pack).q[0] = quat[0];
-	(*new_pack).q[1] = quat[1];
-	(*new_pack).q[2] = quat[2];
-	(*new_pack).q[3] = quat[3];
+//L = (0, 8660254; 0; -0.5)
+void GetPoint(float quat[4]) {
+
 
 }
+
+
+
 
 int main()
 {

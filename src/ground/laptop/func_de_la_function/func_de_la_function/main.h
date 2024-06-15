@@ -1,4 +1,5 @@
 ﻿
+
 #pragma once
 typedef struct
 {
@@ -25,7 +26,8 @@ typedef struct
     float longitude;
     float altitude;
     uint8_t fix;
-
+	float volts;
+	float lux;
     uint16_t sum;
 
 }packet_ma_type_12_t;//SNAIL2(УЛИТКА)
@@ -68,6 +70,9 @@ typedef struct
         float longitude;
         float altitude;
         uint8_t fix;
+		float volts;
+		float lux;
+		uint8_t null[2];
 
     }new_packet_ma_type_12_t;//SNAIL2(УЛИТКА)
 
@@ -83,3 +88,32 @@ typedef struct
         float q[4];
 
     }new_packet_ma_type_2_t;//SPEED
+
+
+
+	typedef struct
+	{
+		float time;
+		float x_lat;
+		float y_lon;
+		double z_bme;
+		double lidar;
+		float q[4];
+
+	}coordinate_t;
+
+
+	typedef struct
+	{
+		float time;
+		float x;
+		float y;
+		float z;
+
+	}point_t;
+
+	typedef struct
+	{
+		point_t pointArray[10];
+
+	}pointArray_t;
