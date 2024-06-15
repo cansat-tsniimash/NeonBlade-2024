@@ -143,13 +143,13 @@ file_p12_raw.write("Номер пакета")
 file_p12_raw.write('\t')
 file_p12_raw.write("Время")
 file_p12_raw.write('\t')
-file_p12_raw.write("Давление")
+file_p12_raw.write("Широта")
 file_p12_raw.write('\t')
-file_p12_raw.write("Температура")
+file_p12_raw.write("Долгота")
 file_p12_raw.write('\t')
 file_p12_raw.write("Высота")
 file_p12_raw.write('\t')
-file_p12_raw.write("Состояние")
+file_p12_raw.write("fix GPS")
 file_p12_raw.write('\n')
 file_p12_raw.flush()
 file_p2_raw = open(tlm_base_path + 'file_p2_raw-' + now_str + '.txt', 'w+')
@@ -157,13 +157,25 @@ file_p2_raw.write("Номер пакета")
 file_p2_raw.write('\t')
 file_p2_raw.write("Время")
 file_p2_raw.write('\t')
-file_p2_raw.write("Давление")
+file_p2_raw.write("acc_X")
 file_p2_raw.write('\t')
-file_p2_raw.write("Температура")
+file_p2_raw.write("acc_Y")
 file_p2_raw.write('\t')
-file_p2_raw.write("Высота")
+file_p2_raw.write("acc_Z")
 file_p2_raw.write('\t')
-file_p2_raw.write("Состояние")
+file_p2_raw.write("gyro_X")
+file_p2_raw.write('\t')
+file_p2_raw.write("gyro_Y")
+file_p2_raw.write('\t')
+file_p2_raw.write("gyro_Z")
+file_p2_raw.write('\t')
+file_p2_raw.write("mag_X")
+file_p2_raw.write('\t')
+file_p2_raw.write("mag_Y")
+file_p2_raw.write('\t')
+file_p2_raw.write("mag_Z")
+file_p2_raw.write('\t')
+file_p2_raw.write("Лидар")
 file_p2_raw.write('\n')
 file_p2_raw.flush()
 
@@ -704,8 +716,23 @@ class DataManager(QtCore.QObject):
 
 
 
-            self.lib1.GetCoordinates(ctypes.pointer(new_packet_ma_type_11), ctypes.pointer(new_packet_ma_type_12), ctypes.pointer(new_packet_ma_type_2), ctypes.pointer(pointArray), 10)
-
+            arr_len = self.lib1.GetCoordinates(ctypes.pointer(new_packet_ma_type_11), ctypes.pointer(new_packet_ma_type_12), ctypes.pointer(new_packet_ma_type_2), ctypes.pointer(pointArray), 10)
+            print("Points_len:", arr_len)
+            for i in range(arr_len):
+                P_time = pointArray.pointArray[i].time
+                x = pointArray.pointArray[i].x
+                y = pointArray.pointArray[i].y
+                z = pointArray.pointArray[i].z
+                print("Points_arr", P_time, x, y, z)
+                file_points.write(str(P_time))
+                file_points.write("\t")
+                file_points.write(str(x))
+                file_points.write("\t")
+                file_points.write(str(y))
+                file_points.write("\t")
+                file_points.write(str(z))
+                file_points.write("\n")
+                file_points.flush()
 
 
 
@@ -1252,13 +1279,13 @@ class App(QWidget):
         GPS_arr = [np.array([]), np.array([])]
         Hight_GPS_arr = [np.array([]), np.array([])]
         for i in range(len(p12)):
-            Hight_GPS_arr = [np.append(Hight_GPS_arr[0], p12[i].time), np.append(Hight_GPS_arr[1], p12[i].altitude), 1000]
-            GPS_arr     = [np.append(GPS_arr[0], p12[i].latitude) , np.append(GPS_arr[1], p12[i].longitude), 10000]
+            Hight_GPS_arr = [np.append(Hight_GPS_arr[0], p12[i].time), np.append(Hight_GPS_arr[1], p12[i].altitude)]
+            GPS_arr     = [np.append(GPS_arr[0], p12[i].latitude) , np.append(GPS_arr[1], p12[i].longitude)]
         #print(Press_arr[0])
         #print(Press_arr[1]) 
         if (not self.new_curve_p12):
-            add_data_to_plot(self.Hight_GPS_curve, Hight_GPS_arr[0], Hight_GPS_arr[1], 10000)
-            add_data_to_plot(self.GPS_curve, GPS_arr[0], GPS_arr[1], 10000)
+            add_data_to_plot(self.Hight_GPS_curve, Hight_GPS_arr[0], Hight_GPS_arr[1], 1000)
+            add_data_to_plot(self.GPS_curve, GPS_arr[0], GPS_arr[1], 1000)
         else:
             self.Hight_GPS_curve.setData(np.transpose(np.array(Hight_GPS_arr)))
             self.GPS_curve.setData(np.transpose(np.array(GPS_arr)))

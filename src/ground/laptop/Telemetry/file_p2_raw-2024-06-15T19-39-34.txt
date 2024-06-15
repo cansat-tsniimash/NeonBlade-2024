@@ -1,0 +1,1 @@
+Номер пакета	Время	acc_X	acc_Y	acc_Z	gyro_X	gyro_Y	gyro_Z	mag_X	mag_Y	mag_Z	Лидар
